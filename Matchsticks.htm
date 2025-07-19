@@ -291,37 +291,41 @@
 //	  console.log(num2 + " " + JSON.stringify(conf2));
 //	  console.log(arr[3] + " " + JSON.stringify(conf3));
 		for (let i = 0; i < conf1.length; i++) {
-		if (Math.abs(conf1[i].add) <= sticksToMove) {
-			// console.log("This is loop iteration #" + i);
-			
-			sticksMoved = conf1[i].move != null ? conf1[i].move : 0;
-			sticksFloating = conf1[i].add != null  ? -1 * conf1[i].add : 0;
+			var sticksMoved1 = conf1[i].move != null ? conf1[i].move : 0;
+			var sticksFloating1 = conf1[i].add != null  ? -1 * conf1[i].add : 0;
 			if (conf1[i].add != null && conf1[i].add < 0) {
-				sticksMoved += -1 * conf1[i].add;
-			}
-			
+				sticksMoved1 += -1 * conf1[i].add;
+			}		
+		if (Math.abs(sticksFloating1) <= sticksToMove && sticksMoved1 < sticksToMove) {
+			// console.log("This is loop iteration #" + i);
+					
 			for (let j = 0; j < conf2.length; j++) { //
-				if (Math.abs(conf2[j].add) <= sticksToMove) {
-				sticksMoved += conf2[j].move != null ? conf2[j].move : sticksMoved;
-				sticksFloating += conf2[j].add != null  ? -1 * conf2[j].add : sticksFloating;
+				var sticksMoved2 = conf2[j].move != null ? sticksMoved1 + conf2[j].move : sticksMoved1;
+				var sticksFloating2 = conf2[j].add != null  ? sticksFloating1 + -1 * conf2[j].add : sticksFloating1;
 				if (conf2[j].add != null && conf2[j].add < 0) {
-					sticksMoved += -1 * conf2[j].add;
+					sticksMoved2 += -1 * conf2[j].add;
 				}
+				if (sticksMoved2 <= sticksToMove && Math.abs(sticksFloating2) <= sticksToMove) {	
 				// console.log(sticksFloating + " " + sticksMoved);
 				for (let k = 0; k < conf3.length; k++) {
 					// console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove + " " + conf2[j].add);
-					if (sticksMoved == sticksToMove && (resultStr === null || resultStr === undefined)) {
+					var sticksMoved3 = conf3[k].move != null ? sticksMoved3 + conf3[k].move : sticksMoved2;
+					var sticksFloating3 = conf3[k].add != null  ? sticksFloating3 + -1 * conf3[k].add : sticksFloating2;
+					if (conf3[k].add != null && conf3[k].add < 0) {
+						sticksMoved3 += -1 * conf3[k].add;
+					}
+					if (sticksMoved3 == sticksToMove && Math.abs(sticksFloating3) <= sticksToMove && (resultStr === null || resultStr === undefined)) {
 						//console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove);
 						//console.log(conf1[i].destination + " " + conf2[j].destination + " " + conf3[k].destination);
-						resultStr = resultStr ? resultStr : verify(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating);
+						resultStr = resultStr ? resultStr : verify(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3);
 						console.log(resultStr);
 					}
 				}
-				sticksMoved = conf1[i].move != null ? conf1[i].move : 0;
-				sticksFloating = conf1[i].add != null  ? -1 * conf1[i].add : 0;
-				if (conf1[i].add != null && conf1[i].add < 0) {
-					sticksMoved = conf1[i].add;
-				}
+				//sticksMoved = conf1[i].move != null ? conf1[i].move : 0;
+				//sticksFloating = conf1[i].add != null  ? -1 * conf1[i].add : 0;
+				//if (conf1[i].add != null && conf1[i].add < 0) {
+					//sticksMoved = conf1[i].add;
+				//}
 			}
 			}
 		}
@@ -393,7 +397,7 @@
 					if (numb1 + numb2 === numb3) {
 						return  numb1 + " + " + numb2 + "=" + numb3;
 					}
-					if (-1*numb1 + numb2 === numb3) {
+					if (-1*numb1 - numb2 === numb3) {
 						return  "-" + numb1 + op + numb2 + "=" + numb3;
 					}
 				}
