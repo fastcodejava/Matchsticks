@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Textbox and Dropdown Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 50px;
+    }
+    label, select, input {
+      font-size: 16px;
+      margin: 10px 0;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <h2>Enter Text and Select an Option</h2>
+  <label for="textbox">Text Box:</label>
+  <input type="text" id="textbox" placeholder="Type something..." />
+
+  <label for="dropdown">Matchsticks to move :</label>
+  <select id="dropdown">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <!--option value="option3">Option 3</option-->
+  </select>
+
+  <button onclick="showInput()">Submit</button>
+
+  <p id="output"></p>
+
+  <script>
+    var num1, num2, result;
+	
+	const identity = [{
+			"destination": null,
+			"add": null,
+			"move": null
+		}];
+	const conf = {
+0 : [{
+  "destination": 3,
+  "add": -1,
+  "move": 1
+  }, {
+  "destination": 5,
+  "add": -1,
+  "move": 1
+}, {
+  "destination": 2,
+  "add": -1,
+  "move": 1
+}, {
+  "destination": 8,
+  "add": 1,
+  "move": null
+  }
+  ],
+1 : [{
+  "destination": 11,
+  "add": 2,
+  "move": null
+  }, {
+  "destination": 3,
+  "add": 2,
+  "move": null
+}, {
+  "destination": 7,
+  "add": 1,
+  "move": null
+}, {
+  "destination": 4,
+  "add": 2,
+  "move": null
+}, {
+  "destination": 11,
+  "add": 2,
+  "move": null
+}
+  ],
+2 : [{
+  "destination": 5,
+  "add": null,
+  "move": 2 
+  }, {
+  "destination": 3,
+  "add": null,
+  "move": 2 
+  }, {
+  "destination": 0,
+  "add": 1,
+  "move": 1 
+  }],
+3 : [{
+  "destination": 5,
+  "add": null,
+  "move": 1
+  }, {
+  "destination": 0,
+  "add": 1,
+  "move": 1
+  }, {
+  "destination": 2,
+  "add": null,
+  "move": 1
+  }, {
+  "destination": 6,
+  "add": 1,
+  "move": 1 
+  }, {
+  "destination": 7,
+  "add": -2,
+  "move": null 
+  }, {
+  "destination": 8,
+  "add": 2,
+  "move": null 
+  }, {
+  "destination": 9,
+  "add": 1,
+  "move": null 
+  }],
+4 : [{
+  "destination": 11,
+  "add": null,
+  "move": 1
+  }, {
+  "destination": 1,
+  "add": -2,
+  "move": null
+  }, {
+  "destination": 3,
+  "add": 1,
+  "move": 1
+  }, {
+  "destination": 7,
+  "add": -1,
+  "move": 1
+  }, {
+  "destination": 9,
+  "add": 2,
+  "move": null
+  }],
+5 : [{
+  "destination": 0,
+  "add": 1,
+  "move": 1
+  }, {
+  "destination": 3,
+  "add": null,
+  "move": 1
+  }, {
+  "destination": 6,
+  "add": 1,
+  "move": null
+  }],
+
+6 : [{
+  "destination": 0,
+  "add": null,
+  "move": 1
+  }, {
+  "destination": 3,
+  "add": -1,
+  "move": 1
+  }, {
+  "destination": 5,
+  "add": -1,
+  "move": null
+  }, {
+  "destination": 8,
+  "add": 1,
+  "move": null
+  }, {
+  "destination": 9,
+  "add": null,
+  "move": 1
+  }],
+7 : [{
+  "destination": 1,
+  "add": -1,
+  "move": null
+  }, {
+  "destination": 3,
+  "add": 2,
+  "move": null
+  }, {
+  "destination": 4,
+  "add": 1,
+  "move": 1
+  }, {
+  "destination": 11,
+  "add": 1,
+  "move": 1
+  }],
+8 : [{
+  "destination": 0,
+  "add": -1,
+  "move": null
+  }, {
+  "destination": 5,
+  "add": -2,
+  "move": null
+  }, {
+  "destination": 2,
+  "add": -2,
+  "move": null
+  }, {
+  "destination": 3,
+  "add": -2,
+  "move": null
+  }, {
+  "destination": 6,
+  "add": -1,
+  "move": null
+  }, {
+  "destination": 9,
+  "add": -1,
+  "move": null
+  }],
+9 : [{
+  "destination": 0,
+  "add": null,
+  "move": 1
+  }, {
+  "destination": 3,
+  "add": -1,
+  "move": null
+  }, {
+  "destination": 2,
+  "add": -1,
+  "move": 1
+  }, {
+  "destination": 4,
+  "add": -2,
+  "move": null
+  }, {
+  "destination": 5,
+  "add": -1,
+  "move": null
+  }, {
+  "destination": 6,
+  "add": null,
+  "move": 1
+  }],
+10 : [{
+  "destination": 0,
+  "add": -2,
+  "move": null
+  }, {
+  "destination": 8,
+  "add": -1,
+  "move": null,
+  }],
+11 : [{
+  "destination": 4,
+  "add": null, 
+  "move": 1
+  }, {
+  "destination": 7,
+  "add": -1,
+  "move": 1
+  }, {
+  "destination": 10,
+  "add": 2,
+  "move": null
+  }]
+};
+	
+	
+	
+    function showInput() {
+      const text = document.getElementById('textbox').value;
+      const dropdown = document.getElementById('dropdown').value;
+	  const arr = parseInput(text, "=");
+	  const operation = arr[0];
+	  result = arr[3];
+	  num1 = arr[1];
+	  num2 = arr[2];
+	  
+	  const sticksToMove = parseInt(dropdown);
+	  var sticksMoved = 0, sticksFloating = 0;
+	  const conf1 = addIdentity(conf[num1], num1);
+	  const conf2 = addIdentity(conf[num2], num2);
+	  const conf3 = addIdentity(conf[arr[3]], arr[3]);
+	  var resultStr = null;
+//	  console.log(num1 + " " + JSON.stringify(conf1));
+//	  console.log(num2 + " " + JSON.stringify(conf2));
+//	  console.log(arr[3] + " " + JSON.stringify(conf3));
+		for (let i = 0; i < conf1.length; i++) {
+		if (Math.abs(conf1[i].add) <= sticksToMove) {
+			// console.log("This is loop iteration #" + i);
+			
+			sticksMoved = conf1[i].move != null ? conf1[i].move : 0;
+			sticksFloating = conf1[i].add != null  ? -1 * conf1[i].add : 0;
+			if (conf1[i].add != null && conf1[i].add < 0) {
+				sticksMoved += -1 * conf1[i].add;
+			}
+			
+			for (let j = 0; j < conf2.length; j++) { //
+				if (Math.abs(conf2[j].add) <= sticksToMove) {
+				sticksMoved += conf2[j].move != null ? conf2[j].move : sticksMoved;
+				sticksFloating += conf2[j].add != null  ? -1 * conf2[j].add : sticksFloating;
+				if (conf2[j].add != null && conf2[j].add < 0) {
+					sticksMoved += -1 * conf2[j].add;
+				}
+				// console.log(sticksFloating + " " + sticksMoved);
+				for (let k = 0; k < conf3.length; k++) {
+					// console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove + " " + conf2[j].add);
+					if (sticksMoved == sticksToMove && (resultStr === null || resultStr === undefined)) {
+						//console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove);
+						//console.log(conf1[i].destination + " " + conf2[j].destination + " " + conf3[k].destination);
+						resultStr = resultStr ? resultStr : verify(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating);
+						console.log(resultStr);
+					}
+				}
+				sticksMoved = conf1[i].move != null ? conf1[i].move : 0;
+				sticksFloating = conf1[i].add != null  ? -1 * conf1[i].add : 0;
+				if (conf1[i].add != null && conf1[i].add < 0) {
+					sticksMoved = conf1[i].add;
+				}
+			}
+			}
+		}
+		}
+
+	  
+      const output = `You entered: "${text}" and selected: "${dropdown}"`;
+      //document.getElementById('output').textContent = num1 + ' ' + operation + ' ' + num2 + ' = ' + result + ' ' + JSON.stringify(conf[num1]);
+      document.getElementById('output').textContent = resultStr;
+    }
+	
+	function parseInput(str, delim) {
+		const arr = [];
+		// 1 + 5 = 8
+		const i = str.indexOf(delim);
+		arr[3] = parseInt(str.substring(i+1).trim());
+		const s = str.substring(0, i).trim();
+		var j = str.indexOf("+");
+		if (j > 0) {
+			arr[0] = "+";
+			arr[1] = parseInt(s.substring(0, j).trim());
+			arr[2] = parseInt(s.substring(j+1).trim());
+			return arr;
+		}
+		var j = str.indexOf("-");
+		if (j > 0) {
+			arr[0] = "-";
+			arr[1] = parseInt(s.substring(0, j).trim());
+			arr[2] = parseInt(s.substring(j+1).trim());		
+		}
+		return arr;
+	}
+	
+	function addIdentity(arr, num) {
+		const res = [{
+			"destination": num,
+			"add": null,
+			"move": null}].concat(arr);
+		//res[0].destination = num;
+		return res;
+	}
+
+	function verify(numb1, numb2, numb3, op, stcksFlting) {
+		console.log(numb1 + " " + numb2 + " " + numb3 + "  " + stcksFlting);
+		switch (op) {
+			case "+": {
+				if (stcksFlting === 0) {
+					if (numb1 + numb2 === numb3) {
+						return numb1 + op + numb2 + "=" + numb3;
+					}
+				}
+				if (stcksFlting === 1) {
+					if (numb1 + numb2 === numb3) {
+						return  numb1 + op + numb2 + "=" + numb3 + "^1";
+					}
+					if (-1*numb1 + numb2 === numb3) {
+						return  "-" + numb1 + op + numb2 + "=" + numb3;
+					}
+				}
+			}
+				break;
+			case "-": {
+				if (stcksFlting === 0) {
+					if (numb1 - numb2 === numb3) {
+						return numb1 + op + numb2 + "=" + numb3;
+					}
+				}
+				if (stcksFlting === 1) {
+					if (numb1 + numb2 === numb3) {
+						return  numb1 + " + " + numb2 + "=" + numb3;
+					}
+					if (-1*numb1 + numb2 === numb3) {
+						return  "-" + numb1 + op + numb2 + "=" + numb3;
+					}
+				}
+				}
+				break;
+		}
+		// return res;
+	}
+
+
+
+  </script>
+</body>
+</html>
