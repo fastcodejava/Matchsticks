@@ -296,7 +296,7 @@
 			if (conf1[i].add != null && conf1[i].add < 0) {
 				sticksMoved1 += -1 * conf1[i].add;
 			}		
-		if (Math.abs(sticksFloating1) <= sticksToMove && sticksMoved1 < sticksToMove) {
+		if (Math.abs(sticksFloating1) <= sticksToMove && sticksMoved1 <= sticksToMove) {
 			// console.log("This is loop iteration #" + i);
 					
 			for (let j = 0; j < conf2.length; j++) { //
