@@ -309,8 +309,8 @@
 				// console.log(sticksFloating + " " + sticksMoved);
 				for (let k = 0; k < conf3.length; k++) {
 					// console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove + " " + conf2[j].add);
-					var sticksMoved3 = conf3[k].move != null ? sticksMoved3 + conf3[k].move : sticksMoved2;
-					var sticksFloating3 = conf3[k].add != null  ? sticksFloating3 + -1 * conf3[k].add : sticksFloating2;
+					var sticksMoved3 = conf3[k].move != null ? sticksMoved2 + conf3[k].move : sticksMoved2;
+					var sticksFloating3 = conf3[k].add != null  ? sticksFloating2 + -1 * conf3[k].add : sticksFloating2;
 					if (conf3[k].add != null && conf3[k].add < 0) {
 						sticksMoved3 += -1 * conf3[k].add;
 					}
