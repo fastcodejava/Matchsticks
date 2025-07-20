@@ -40,6 +40,7 @@
 			"add": null,
 			"move": null
 		}];
+	
 	const conf = {
 0 : [{
   "destination": 3,
@@ -56,46 +57,46 @@
 }, {
   "destination": 8,
   "add": 1,
-  "move": null
+  "move": 0
   }, {
   "destination": 9,
-  "add": null,
+  "add": 0,
   "move": 1
   }, {
   "destination": 6,
-  "add": null,
+  "add": 0,
   "move": 1
   }
   ],
 1 : [{
   "destination": 11,
   "add": 2,
-  "move": null
+  "move": 0
   }, {
   "destination": 3,
   "add": 3,
-  "move": null
+  "move": 0
 }, {
   "destination": 7,
   "add": 1,
-  "move": null
+  "move": 0
 }, {
   "destination": 4,
   "add": 2,
-  "move": null
+  "move": 0
 }, {
   "destination": 11,
   "add": 2,
-  "move": null
+  "move": 0
 }
   ],
 2 : [{
   "destination": 5,
-  "add": null,
+  "add": 0,
   "move": 2 
   }, {
   "destination": 3,
-  "add": null,
+  "add": 0,
   "move": 2 
   }, {
   "destination": 0,
@@ -104,7 +105,7 @@
   }],
 3 : [{
   "destination": 5,
-  "add": null,
+  "add": 0,
   "move": 1
   }, {
   "destination": 0,
@@ -112,7 +113,7 @@
   "move": 1
   }, {
   "destination": 2,
-  "add": null,
+  "add": 0,
   "move": 1
   }, {
   "destination": 6,
@@ -121,24 +122,24 @@
   }, {
   "destination": 7,
   "add": -2,
-  "move": null 
+  "move": 0 
   }, {
   "destination": 8,
   "add": 2,
-  "move": null 
+  "move": 0 
   }, {
   "destination": 9,
   "add": 1,
-  "move": null 
+  "move": 0 
   }],
 4 : [{
   "destination": 11,
-  "add": null,
+  "add": 0,
   "move": 1
   }, {
   "destination": 1,
   "add": -2,
-  "move": null
+  "move": 0
   }, {
   "destination": 3,
   "add": 1,
@@ -150,7 +151,7 @@
   }, {
   "destination": 9,
   "add": 2,
-  "move": null
+  "move": 0
   }],
 5 : [{
   "destination": 0,
@@ -158,17 +159,17 @@
   "move": 1
   }, {
   "destination": 3,
-  "add": null,
+  "add": 0,
   "move": 1
   }, {
   "destination": 6,
   "add": 1,
-  "move": null
+  "move": 0
   }],
 
 6 : [{
   "destination": 0,
-  "add": null,
+  "add": 0,
   "move": 1
   }, {
   "destination": 3,
@@ -177,24 +178,24 @@
   }, {
   "destination": 5,
   "add": -1,
-  "move": null
+  "move": 0
   }, {
   "destination": 8,
   "add": 1,
-  "move": null
+  "move": 0
   }, {
   "destination": 9,
-  "add": null,
+  "add": 0,
   "move": 1
   }],
 7 : [{
   "destination": 1,
   "add": -1,
-  "move": null
+  "move": 0
   }, {
   "destination": 3,
   "add": 2,
-  "move": null
+  "move": 0
   }, {
   "destination": 4,
   "add": 1,
@@ -207,36 +208,36 @@
 8 : [{
   "destination": 0,
   "add": -1,
-  "move": null
+  "move": 0
   }, {
   "destination": 5,
   "add": -2,
-  "move": null
+  "move": 0
   }, {
   "destination": 2,
   "add": -2,
-  "move": null
+  "move": 0
   }, {
   "destination": 3,
   "add": -2,
-  "move": null
+  "move": 0
   }, {
   "destination": 6,
   "add": -1,
-  "move": null
+  "move": 0
   }, {
   "destination": 9,
   "add": -1,
-  "move": null
+  "move": 0
   }],
 9 : [{
   "destination": 0,
-  "add": null,
+  "add": 0,
   "move": 1
   }, {
   "destination": 3,
   "add": -1,
-  "move": null
+  "move": 0
   }, {
   "destination": 2,
   "add": -1,
@@ -244,28 +245,28 @@
   }, {
   "destination": 4,
   "add": -2,
-  "move": null
+  "move": 0
   }, {
   "destination": 5,
   "add": -1,
-  "move": null
+  "move": 0
   }, {
   "destination": 6,
-  "add": null,
+  "add": 0,
   "move": 1
   }],
 10 : [{
   "destination": 0,
   "add": -2,
-  "move": null
+  "move": 0
   }, {
   "destination": 8,
   "add": -1,
-  "move": null,
+  "move": 0,
   }],
 11 : [{
   "destination": 4,
-  "add": null, 
+  "add": 0, 
   "move": 1
   }, {
   "destination": 7,
@@ -274,10 +275,9 @@
   }, {
   "destination": 10,
   "add": 2,
-  "move": null
+  "move": 0
   }]
 };
-	
 	
 	
     function showInput() {
@@ -299,27 +299,28 @@
 //	  console.log(num2 + " " + JSON.stringify(conf2));
 //	  console.log(arr[3] + " " + JSON.stringify(conf3));
 		for (let i = 0; i < conf1.length; i++) {
-			var sticksMoved1 = conf1[i].move != null ? conf1[i].move : 0;
-			var sticksFloating1 = conf1[i].add != null  ? -1 * conf1[i].add : 0;
-			if (conf1[i].add != null && conf1[i].add < 0) {
+			var sticksMoved1 = conf1[i].move;
+			var sticksFloating1 = -1 * conf1[i].add;
+			if (conf1[i].add < 0) {
 				sticksMoved1 += -1 * conf1[i].add;
 			}		
 		if (Math.abs(sticksFloating1) <= sticksToMove && sticksMoved1 <= sticksToMove) {
 			// console.log("This is loop iteration #" + i);
 					
 			for (let j = 0; j < conf2.length; j++) { //
-				var sticksMoved2 = conf2[j].move != null ? sticksMoved1 + conf2[j].move : sticksMoved1;
-				var sticksFloating2 = conf2[j].add != null  ? sticksFloating1 + -1 * conf2[j].add : sticksFloating1;
-				if (conf2[j].add != null && conf2[j].add < 0) {
+				var sticksMoved2 = sticksMoved1 + conf2[j].move;
+				var sticksFloating2 = -1 * conf2[j].add + sticksFloating1;
+
+				if (conf2[j].add < 0) {
 					sticksMoved2 += -1 * conf2[j].add;
 				}
 				if (sticksMoved2 <= sticksToMove && Math.abs(sticksFloating2) <= sticksToMove) {	
 				// console.log(sticksFloating + " " + sticksMoved);
 				for (let k = 0; k < conf3.length; k++) {
 					// console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove + " " + conf2[j].add);
-					var sticksMoved3 = conf3[k].move != null ? sticksMoved2 + conf3[k].move : sticksMoved2;
-					var sticksFloating3 = conf3[k].add != null  ? sticksFloating2 + -1 * conf3[k].add : sticksFloating2;
-					if (conf3[k].add != null && conf3[k].add < 0) {
+					var sticksMoved3 = sticksMoved2 + conf3[k].move;
+					var sticksFloating3 = sticksFloating2 + -1 * conf3[k].add;
+					if (conf3[k].add < 0) {
 						sticksMoved3 += -1 * conf3[k].add;
 					}
 					if (sticksMoved3 == sticksToMove && Math.abs(sticksFloating3) <= sticksToMove) {
@@ -399,6 +400,11 @@
 					if (numb1 + numb2 === -1*numb3) {
 						return  numb1 + op + numb2 + " = -" + numb3;
 					}
+				}
+				if (stcksFlting === -1) {
+					if (numb1 - numb2 === numb3) {
+						return  numb1 + " - " + numb2 + " = " + numb3;
+					}					
 				}
 			}
 				break;
