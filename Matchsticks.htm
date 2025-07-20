@@ -388,6 +388,9 @@
 					if (-1*numb1 + numb2 === numb3) {
 						return  "-" + numb1 + op + numb2 + "=" + numb3;
 					}
+					if (numb1 + numb2 === -1*numb3) {
+						return  numb1 + op + numb2 + " = -" + numb3;
+					}
 				}
 			}
 				break;
@@ -403,6 +406,9 @@
 					}
 					if (-1*numb1 - numb2 === numb3) {
 						return  "-" + numb1 + op + numb2 + "=" + numb3;
+					}
+					if (numb1 - numb2 === -1*numb3) {
+						return  numb1 + op + numb2 + " = -" + numb3;
 					}
 				}
 				}
