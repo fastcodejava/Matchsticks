@@ -323,7 +323,7 @@
 					if (conf3[k].add < 0) {
 						sticksMoved3 += -1 * conf3[k].add;
 					}
-					if (sticksMoved3 == sticksToMove && Math.abs(sticksFloating3) <= sticksToMove) {
+					if (sticksMoved3 <= sticksToMove && Math.abs(sticksFloating3) <= sticksToMove) {
 						//console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove);
 						//console.log(conf1[i].destination + " " + conf2[j].destination + " " + conf3[k].destination);
 						//resultStr = resultStr ? resultStr : verify(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3);
@@ -387,15 +387,15 @@
 			case "+": {
 				if (stcksFlting === 0) {
 					if (numb1 + numb2 === numb3) {
-						return numb1 + op + numb2 + "=" + numb3;
+						return numb1 + op + numb2 + " = " + numb3;
 					}
 				}
 				if (stcksFlting === 1) {
 					if (numb1 + numb2 === numb3) {
-						return  numb1 + op + numb2 + "=" + numb3 + "^1";
+						return  numb1 + op + numb2 + " = " + numb3 + "^1";
 					}
 					if (-1*numb1 + numb2 === numb3) {
-						return  "-" + numb1 + op + numb2 + "=" + numb3;
+						return  "-" + numb1 + op + numb2 + " = " + numb3;
 					}
 					if (numb1 + numb2 === -1*numb3) {
 						return  numb1 + op + numb2 + " = -" + numb3;
@@ -411,15 +411,15 @@
 			case "-": {
 				if (stcksFlting === 0) {
 					if (numb1 - numb2 === numb3) {
-						return numb1 + op + numb2 + "=" + numb3;
+						return numb1 + op + numb2 + " = " + numb3;
 					}
 				}
 				if (stcksFlting === 1) {
 					if (numb1 + numb2 === numb3) {
-						return  numb1 + " + " + numb2 + "=" + numb3;
+						return  numb1 + " + " + numb2 + " = " + numb3;
 					}
 					if (-1*numb1 - numb2 === numb3) {
-						return  "-" + numb1 + op + numb2 + "=" + numb3;
+						return  "-" + numb1 + op + numb2 + " = " + numb3;
 					}
 					if (numb1 - numb2 === -1*numb3) {
 						return  numb1 + op + numb2 + " = -" + numb3;
