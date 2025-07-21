@@ -108,7 +108,7 @@
   "move": 1 
   }, {
   "destination": 8,
-  "add": 3,
+  "add": 2,
   "move": 0 
   }, {
   "destination": 9,
@@ -300,7 +300,7 @@
 	  result = arr[3];
 	  num1 = arr[1];
 	  num2 = arr[2];
-	  
+	  console.log(num1 + " " + num2 + " " + result);
 	  const sticksToMove = parseInt(dropdown);
 	  var sticksMoved = 0, sticksFloating = 0;
 	  const conf1 = addIdentity(conf[num1], num1);
@@ -393,13 +393,11 @@
 	}
 
 	function verify(numb1, numb2, numb3, op, stcksFlting, movesRemaining) {
-		console.log(numb1 + " " + numb2 + " " + numb3 + "  " + stcksFlting);
+		console.log(numb1 + " " + numb2 + " " + numb3 + "  " + stcksFlting + " " + movesRemaining);
 		switch (op) {
 			case "+": {
-				if (stcksFlting === 0) {
-					if (numb1 + numb2 === numb3) {
-						return createResponse(numb1, numb2, numb3, op);
-					}
+				if (stcksFlting === 0 && movesRemaining == 0 && numb1 + numb2 === numb3) {
+					return createResponse(numb1, numb2, numb3, op);
 				}
 				if (stcksFlting === 1) {
 					if (numb1 + numb2 === numb3) {
@@ -417,13 +415,17 @@
 						return createResponse(numb1, numb2, numb3, "-");
 					}					
 				}
+				if (stcksFlting === 2 && numb1 + numb2 === numb3) { // TODO
+					return createResponse(numb1, numb2, numb3, "+");
+				}
+				if (stcksFlting === 2 && -numb1 + numb2 === -numb3) { // TODO
+					return createResponse(-numb1, numb2, -numb3, "+");
+				}
 			}
 				break;
 			case "-": {
-				if (stcksFlting === 0) {
-					if (numb1 - numb2 === numb3) {
-						createResponse(numb1, numb2, numb3, op);
-					}
+				if (stcksFlting === 0 && movesRemaining == 0 && numb1 - numb2 === numb3) {
+					return createResponse(numb1, numb2, numb3, op);
 				}
 				if (stcksFlting === 1) {
 					if (numb1 + numb2 === numb3) {
@@ -432,8 +434,16 @@
 					if (-1*numb1 - numb2 === numb3) {
 						return createResponse(-1*numb1, numb2, numb3, op);
 					}
-					if (numb1 - numb2 === -1*numb3) {
+					if (numb3 > 0 && numb1 - numb2 === -1*numb3) {
 						return createResponse(numb1, numb2, -1*numb3, op);
+					}
+				}
+				if (stcksFlting === 2) {
+					if (-1*numb1 + numb2 === numb3) {
+						return createResponse(-1*numb1, numb2, numb3, "+");
+					}
+					if (-numb1 - numb2 === -numb3) {
+						return createResponse(-numb1, numb2, -numb3, "-");
 					}
 				}
 				}
