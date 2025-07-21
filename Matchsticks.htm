@@ -339,7 +339,7 @@
 						//console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove);
 						//console.log(conf1[i].destination + " " + conf2[j].destination + " " + conf3[k].destination);
 						//resultStr = resultStr ? resultStr : verify(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3);
-						const reslt = verify(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3);
+						const reslt = verify(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3, sticksToMove - sticksMoved3);
 						if (reslt) {
 							resultStr.push(reslt);
 						}
@@ -385,15 +385,14 @@
 	}
 	
 	function addIdentity(arr, num) {
-		const res = [{
+		const ar = [{
 			"destination": num,
 			"add": null,
-			"move": null}].concat(arr);
-		//res[0].destination = num;
-		return res;
+			"move": null}];
+		return arr ? ar.concat(arr) : ar;
 	}
 
-	function verify(numb1, numb2, numb3, op, stcksFlting) {
+	function verify(numb1, numb2, numb3, op, stcksFlting, movesRemaining) {
 		console.log(numb1 + " " + numb2 + " " + numb3 + "  " + stcksFlting);
 		switch (op) {
 			case "+": {
@@ -413,7 +412,7 @@
 						return createResponse(numb1, numb2, -1*numb3, op);
 					}
 				}
-				if (stcksFlting === -1) {
+				if (stcksFlting === -1 && movesRemaining > 0) {
 					if (numb1 - numb2 === numb3) {
 						return createResponse(numb1, numb2, numb3, "-");
 					}					
