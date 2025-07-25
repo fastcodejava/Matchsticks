@@ -43,6 +43,7 @@
 
 	// const SUPERSCRIPT1 = "&lt;sup style=\"vertical-align: super; font-size: smaller;\"&gt;1&lt;/sup&gt;";
 	//const SUPERSCRIPT1 = "<sup>1</sup>";
+	// const SUPERSCRIPT1 = "&sup1;";
 	const SUPERSCRIPT1 = "^1";
 	let conf = {
 0 : [{
@@ -388,13 +389,16 @@
 					if (sticksMoved3 <= sticksToMove && Math.abs(sticksFloating3) <= sticksToMove) {
 						//console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove);
 						//console.log(conf1[i].destination + " " + conf2[j].destination + " " + conf3[k].destination);
-						//resultStr = resultStr ? resultStr : verify(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3);
-						const reslt = verify(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3, sticksToMove - sticksMoved3);
-						if (Array.isArray(reslt)) {
-                          results = results.concat(reslt);
-                        } else if (reslt) {
-                          results.push(reslt);
+						//resultStr = resultStr ? resultStr : verifyAndCreateResponse(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3);
+						const reslt = verifyAndCreateResponse(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3, sticksToMove - sticksMoved3);
+                        if (reslt.length > 0) {
+                            results = results.concat(reslt);
                         }
+						// if (Array.isArray(reslt)) {
+                        //   results = results.concat(reslt);
+                        // } else if (reslt) {
+                        //   results.push(reslt);
+                        // }
 						// console.log(results);
 					}
 				}
@@ -444,70 +448,71 @@
 		return arr ? ar.concat(arr) : ar;
 	}
 
-	function verify(numb1, numb2, numb3, op, stcksFlting, movesRemaining) {
+	function verifyAndCreateResponse(numb1, numb2, numb3, op, stcksFlting, movesRemaining) {
 		// console.log(numb1 + " "	 + numb2 + " " + numb3 + "  " + stcksFlting + " " + movesRemaining);
+        let results = [];
 		switch (op) {
 			case "+": {
 				if (stcksFlting === 0 && movesRemaining == 0 && numb1 + numb2 === numb3) {
-					return createResponse(numb1, numb2, numb3, op);
+					results.push(createResponse(numb1, numb2, numb3, op));
 				}
 				if (stcksFlting === 1) {
 					if (numb1 + numb2 === numb3) {
-						return createResponseWithSuperscript(numb1, numb2, numb3, op);
+						results.push(createResponseWithSuperscript(numb1, numb2, numb3, op));
 					}
 					if (-1*numb1 + numb2 === numb3) {
-						return createResponse(-1*numb1, numb2, numb3, op);
+						results.push(createResponse(-1*numb1, numb2, numb3, op));
 					}
 					if (numb1 + numb2 === -1*numb3) {
-						return createResponse(numb1, numb2, -1*numb3, op);
+						results.push(createResponse(numb1, numb2, -1*numb3, op));
 					}
 				}
 				if (stcksFlting === -1 && movesRemaining > 0) {
 					if (numb1 - numb2 === numb3) {
-						return createResponse(numb1, numb2, numb3, "-");
+						results.push(createResponse(numb1, numb2, numb3, "-"));
 					}					
 				}
 				if (stcksFlting === 2 && numb1 + numb2 === numb3) { // TODO
-					return createResponse(numb1, numb2, numb3, "+");
+					results.push(createResponse(numb1, numb2, numb3, "+"));
 				}
 				if (stcksFlting === 2 && -numb1 + numb2 === -numb3) { // TODO
-					return createResponse(-numb1, numb2, -numb3, "+");
+					results.push(createResponse(-numb1, numb2, -numb3, "+"));
 				}
 			}
 				break;
 			case "-": {
 				if (stcksFlting === 0 && movesRemaining == 0 && numb1 - numb2 === numb3) {
-					return createResponse(numb1, numb2, numb3, op);
+					results.push(createResponse(numb1, numb2, numb3, op));
 				}
 				if (stcksFlting === 1) {
 					if (numb1 + numb2 === numb3) {
-						return createResponse(numb1, numb2, numb3, "+");
+						results.push(createResponse(numb1, numb2, numb3, "+"));
 					}
-					if (numb1 - numb2 === numb3) {
-						return createResponseWithSuperscript(numb1, numb2, numb3, op);
+					if (numb1 - numb2 === numb3 && movesRemaining === 0) {
+						results.push(createResponseWithSuperscript(numb1, numb2, numb3, op));
 					}
 					if (-1*numb1 - numb2 === numb3) {
-						return createResponse(-1*numb1, numb2, numb3, op);
+						results.push(createResponse(-1*numb1, numb2, numb3, op));
 					}
 					if (numb3 > 0 && numb1 - numb2 === -1*numb3) {
-						return createResponse(numb1, numb2, -1*numb3, op);
+						results.push(createResponse(numb1, numb2, -1*numb3, op));
 					}
 				}
 				if (stcksFlting === 2) {
 					if (-1*numb1 + numb2 === numb3) {
-						return createResponse(-1*numb1, numb2, numb3, "+");
+						results.push(createResponse(-1*numb1, numb2, numb3, "+"));
 					}
 					if (-numb1 - numb2 === -numb3) {
-						return createResponse(-numb1, numb2, -numb3, "-");
+						results.push(createResponse(-numb1, numb2, -numb3, "-"));
 					}
 					if (numb1 + numb2 === numb3) {
-						return createResponseWithSuperscript(numb1, numb2, numb3, "+");
+						results.push(createResponseWithSuperscript(numb1, numb2, numb3, "+"));
 					}
 				}
 				}
 				break;
 		}
-		// return res;
+		return results;
 	}
 
 	function addToConfiguration(conf) {
