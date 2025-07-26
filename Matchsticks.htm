@@ -624,78 +624,88 @@
 		// console.log(numb1 + " "	 + numb2 + " " + numb3 + "  " + stcksFlting + " " + movesRemaining);
         let results = [];
 		switch (op) {
-			case "+": {
-				if (stcksFlting === 0 && movesRemaining == 0 && numb1 + numb2 === numb3) {
-					results.push(createResponse(numb1, numb2, numb3, op));
-				}
-				if (stcksFlting === 1) {
-					if (numb1 + numb2 === numb3) {
-						results.push(createResponseWithSuperscript(numb1, numb2, numb3, op));
-					}
-					if (-1*numb1 + numb2 === numb3) {
-						results.push(createResponse(-1*numb1, numb2, numb3, op));
-					}
-					if (numb1 + numb2 === -1*numb3) {
-						results.push(createResponse(numb1, numb2, -1*numb3, op));
-					}
-				}
-				if (stcksFlting === -1 && movesRemaining > 0) {
-					if (numb1 - numb2 === numb3) {
-						results.push(createResponse(numb1, numb2, numb3, "-"));
-					}					
-				}
-				if (stcksFlting === 2 && numb1 + numb2 === numb3) { // TODO
-					results.push(createResponse(numb1, numb2, numb3, "+"));
-				}
-				if (stcksFlting === 2 && -numb1 + numb2 === -numb3) { // TODO
-					results.push(createResponse(-numb1, numb2, -numb3, "+"));
-				}
-			}
+			case "+":
+			    results = verifyAndCreateResponsePlus(numb1, numb2, numb3, op, stcksFlting, movesRemaining);
 				break;
-			case "-": {
-				if (stcksFlting === 0 && movesRemaining == 0 && numb1 - numb2 === numb3) {
-					results.push(createResponse(numb1, numb2, numb3, op));
-				}
-				if (stcksFlting === 1) {
-					if (numb1 + numb2 === numb3) {
-						results.push(createResponse(numb1, numb2, numb3, "+"));
-					}
-					if (numb1 - numb2 === numb3 && movesRemaining === 0) {
-						results.push(createResponseWithSuperscript(numb1, numb2, numb3, op));
-					}
-					if (-1*numb1 - numb2 === numb3) {
-						results.push(createResponse(-1*numb1, numb2, numb3, op));
-					}
-					if (numb3 > 0 && numb1 - numb2 === -1*numb3) {
-						results.push(createResponse(numb1, numb2, -1*numb3, op));
-					}
-				}
-				if (stcksFlting === 2) {
-					if (-1*numb1 + numb2 === numb3) {
-						results.push(createResponse(-1*numb1, numb2, numb3, "+"));
-					}
-					if (-numb1 - numb2 === -numb3) {
-						results.push(createResponse(-numb1, numb2, -numb3, "-"));
-					}
-					if (numb3 < 10 && numb1 - numb2 === 10 + numb3) {
-                        console.log(numb1 + " "	 + numb2 + " " + numb3 + "  " + stcksFlting + " " + movesRemaining);
-                        results.push(createResponse(numb1, numb2, 10 + numb3, "-"));
-					}
-					if (numb2 < 10 && numb1 - (10 + numb2) === numb3) {
-                        console.log(numb1 + " "	 + numb2 + " " + numb3 + "  " + stcksFlting + " " + movesRemaining);
-                        results.push(createResponse(numb1, 10 + numb2, numb3, "-"));
-					}
-					if (numb1 + numb2 === numb3) {
-						results.push(createResponseWithSuperscript(numb1, numb2, numb3, "+"));
-					}
-				}
-				}
-				break;
+			case "-":
+                results = verifyAndCreateResponseMinus(numb1, numb2, numb3, op, stcksFlting, movesRemaining);
+                break;
 		}
 		return results;
 	}
 
-	function addToConfiguration(conf) {
+    function verifyAndCreateResponsePlus(numb1, numb2, numb3, op, stcksFlting, movesRemaining) {
+        let results = [];
+        if (stcksFlting === 0 && movesRemaining == 0 && numb1 + numb2 === numb3) {
+            results.push(createResponse(numb1, numb2, numb3, op));
+        }
+        if (stcksFlting === 1) {
+            if (numb1 + numb2 === numb3) {
+                results.push(createResponseWithSuperscript(numb1, numb2, numb3, op));
+            }
+            if (-1*numb1 + numb2 === numb3) {
+                results.push(createResponse(-1*numb1, numb2, numb3, op));
+            }
+            if (numb1 + numb2 === -1*numb3) {
+                results.push(createResponse(numb1, numb2, -1*numb3, op));
+            }
+        }
+        if (stcksFlting === -1 && movesRemaining > 0) {
+            if (numb1 - numb2 === numb3) {
+                results.push(createResponse(numb1, numb2, numb3, "-"));
+            }
+        }
+        if (stcksFlting === 2 && numb1 + numb2 === numb3) { // TODO
+            results.push(createResponse(numb1, numb2, numb3, "+"));
+        }
+        if (stcksFlting === 2 && -numb1 + numb2 === -numb3) { // TODO
+            results.push(createResponse(-numb1, numb2, -numb3, "+"));
+        }
+        return results;
+    }
+
+    function verifyAndCreateResponseMinus(numb1, numb2, numb3, op, stcksFlting, movesRemaining) {
+        let results = [];
+        if (stcksFlting === 0 && movesRemaining == 0 && numb1 - numb2 === numb3) {
+            results.push(createResponse(numb1, numb2, numb3, op));
+        }
+        if (stcksFlting === 1) {
+            if (numb1 + numb2 === numb3) {
+                results.push(createResponse(numb1, numb2, numb3, "+"));
+            }
+            if (numb1 - numb2 === numb3 && movesRemaining === 0) {
+                results.push(createResponseWithSuperscript(numb1, numb2, numb3, op));
+            }
+            if (-1*numb1 - numb2 === numb3) {
+                results.push(createResponse(-1*numb1, numb2, numb3, op));
+            }
+            if (numb3 > 0 && numb1 - numb2 === -1*numb3) {
+                results.push(createResponse(numb1, numb2, -1*numb3, op));
+            }
+        }
+        if (stcksFlting === 2) {
+            if (-1*numb1 + numb2 === numb3) {
+                results.push(createResponse(-1*numb1, numb2, numb3, "+"));
+            }
+            if (-numb1 - numb2 === -numb3) {
+                results.push(createResponse(-numb1, numb2, -numb3, "-"));
+            }
+            if (numb3 < 10 && numb1 - numb2 === 10 + numb3) {
+                console.log(numb1 + " "	 + numb2 + " " + numb3 + "  " + stcksFlting + " " + movesRemaining);
+                results.push(createResponse(numb1, numb2, 10 + numb3, "-"));
+            }
+            if (numb2 < 10 && numb1 - (10 + numb2) === numb3) {
+                console.log(numb1 + " "	 + numb2 + " " + numb3 + "  " + stcksFlting + " " + movesRemaining);
+                results.push(createResponse(numb1, 10 + numb2, numb3, "-"));
+            }
+            if (numb1 + numb2 === numb3) {
+                results.push(createResponseWithSuperscript(numb1, numb2, numb3, "+"));
+            }
+        }
+        return results;
+    }
+
+    function addToConfiguration(conf) {
 		Object.keys(conf).forEach(key => {
 			// console.log(`${key}: ${conf[key]}`);
 			console.log(key);
