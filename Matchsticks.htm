@@ -28,6 +28,7 @@
     <!--option value="option3">Option 3</option-->
   </select>
 
+<!--  <button onclick="print(12, 20)">Submit</button>-->
   <button onclick="solve()">Submit</button>
 
   <div id="output"></div>
@@ -41,304 +42,474 @@
 			"move": null
 		}];
 
-	// const SUPERSCRIPT1 = "&lt;sup style=\"vertical-align: super; font-size: smaller;\"&gt;1&lt;/sup&gt;";
-	//const SUPERSCRIPT1 = "<sup>1</sup>";
-	// const SUPERSCRIPT1 = "&sup1;";
-	const SUPERSCRIPT1 = "^1";
-	let conf = {
-0 : [{
-  "destination": 3,
-  "add": -1,
-  "move": 1
-  }, {
-  "destination": 5,
-  "add": -1,
-  "move": 1
-}, {
-  "destination": 2,
-  "add": -1,
-  "move": 1
-}, {
-  "destination": 8,
-  "add": 1,
-  "move": 0
-  }, {
-  "destination": 9,
-  "add": 0,
-  "move": 1
-  }, {
-  "destination": 6,
-  "add": 0,
-  "move": 1
-  }
-  ],
-1 : [{
-  "destination": 11,
-  "add": 2,
-  "move": 0
-  }, {
-  "destination": 3,
-  "add": 3,
-  "move": 0
-}, {
-  "destination": 7,
-  "add": 1,
-  "move": 0
-}, {
-  "destination": 4,
-  "add": 2,
-  "move": 0
-}, {
-  "destination": 11,
-  "add": 2,
-  "move": 0
-}
-  ],
-2 : [{
-  "destination": 5,
-  "add": 0,
-  "move": 2 
-  }, {
-  "destination": 3,
-  "add": 0,
-  "move": 1 
-  }, {
-  "destination": 6,
-  "add": 1,
-  "move": 1 
-  }, {
-  "destination": 0,
-  "add": 1,
-  "move": 1 
-  }, {
-  "destination": 8,
-  "add": 2,
-  "move": 0 
-  }, {
-  "destination": 9,
-  "add": 1,
-  "move": 1 
-  } ],
-3 : [{
-  "destination": 5,
-  "add": 0,
-  "move": 1
-  }, {
-  "destination": 0,
-  "add": 1,
-  "move": 1
-  }, {
-  "destination": 2,
-  "add": 0,
-  "move": 1
-  }, {
-  "destination": 4,
-  "add": -1,
-  "move": 1
-  }, {
-  "destination": 6,
-  "add": 1,
-  "move": 1 
-  }, {
-  "destination": 7,
-  "add": -2,
-  "move": 0 
-  }, {
-  "destination": 8,
-  "add": 2,
-  "move": 0 
-  }, {
-  "destination": 9,
-  "add": 1,
-  "move": 0 
-  }],
-4 : [{
-  "destination": 11,
-  "add": 0,
-  "move": 1
-  }, {
-  "destination": 1,
-  "add": -2,
-  "move": 0
-  }, {
-  "destination": 3,
-  "add": 1,
-  "move": 1
-  }, {
-  "destination": 5,
-  "add": 1,
-  "move": 1
-  }, {
-  "destination": 7,
-  "add": -1,
-  "move": 1
-  }, {
-  "destination": 9,
-  "add": 2,
-  "move": 0
-  }],
-5 : [{
-  "destination": 0,
-  "add": 1,
-  "move": 1
-  }, {
-  "destination": 2,
-  "add": 0,
-  "move": 2
-  }, {
-  "destination": 3,
-  "add": 0,
-  "move": 1
-  }, {
-  "destination": 6,
-  "add": 1,
-  "move": 0
-  }, {
-  "destination": 7,
-  "add": -1,
-  "move": 1
-  }, {
-  "destination": 8,
-  "add": 2,
-  "move": 0
-  }, {
-  "destination": 9,
-  "add": 1,
-  "move": 0
-  }],
+	const SUPERSCRIPT1 = "<sup>1</sup>";
+    let conf = {
+        "0": [
+            {
+                "destination": 3,
+                "add": -1,
+                "move": 1
+            },
+            {
+                "destination": 5,
+                "add": -1,
+                "move": 1
+            },
+            {
+                "destination": 2,
+                "add": -1,
+                "move": 1
+            },
+            {
+                "destination": 8,
+                "add": 1,
+                "move": 0
+            },
+            {
+                "destination": 9,
+                "add": 0,
+                "move": 1
+            },
+            {
+                "destination": 6,
+                "add": 0,
+                "move": 1
+            },
+            {
+                "destination": 10,
+                "add": 2,
+                "move": 0
+            },
+            {
+                "destination": 11,
+                "add": -2,
+                "move": 0
+            }
+        ],
+        "1": [
+            {
+                "destination": 11,
+                "add": 2,
+                "move": 0
+            },
+            {
+                "destination": 3,
+                "add": 3,
+                "move": 0
+            },
+            {
+                "destination": 7,
+                "add": 1,
+                "move": 0
+            },
+            {
+                "destination": 4,
+                "add": 2,
+                "move": 0
+            },
+            {
+                "destination": 11,
+                "add": 2,
+                "move": 0
+            }
+        ],
+        "2": [
+            {
+                "destination": 5,
+                "add": 0,
+                "move": 2
+            },
+            {
+                "destination": 3,
+                "add": 0,
+                "move": 1
+            },
+            {
+                "destination": 6,
+                "add": 1,
+                "move": 1
+            },
+            {
+                "destination": 0,
+                "add": 1,
+                "move": 1
+            },
+            {
+                "destination": 8,
+                "add": 2,
+                "move": 0
+            },
+            {
+                "destination": 9,
+                "add": 1,
+                "move": 1
+            }
+        ],
+        "3": [
+            {
+                "destination": 5,
+                "add": 0,
+                "move": 1
+            },
+            {
+                "destination": 0,
+                "add": 1,
+                "move": 1
+            },
+            {
+                "destination": 2,
+                "add": 0,
+                "move": 1
+            },
+            {
+                "destination": 4,
+                "add": -1,
+                "move": 1
+            },
+            {
+                "destination": 6,
+                "add": 1,
+                "move": 1
+            },
+            {
+                "destination": 7,
+                "add": -2,
+                "move": 0
+            },
+            {
+                "destination": 8,
+                "add": 2,
+                "move": 0
+            },
+            {
+                "destination": 9,
+                "add": 1,
+                "move": 0
+            }
+        ],
+        "4": [
+            {
+                "destination": 11,
+                "add": 0,
+                "move": 1
+            },
+            {
+                "destination": 1,
+                "add": -2,
+                "move": 0
+            },
+            {
+                "destination": 3,
+                "add": 1,
+                "move": 1
+            },
+            {
+                "destination": 5,
+                "add": 1,
+                "move": 1
+            },
+            {
+                "destination": 7,
+                "add": -1,
+                "move": 1
+            },
+            {
+                "destination": 9,
+                "add": 2,
+                "move": 0
+            }
+        ],
+        "5": [
+            {
+                "destination": 0,
+                "add": 1,
+                "move": 1
+            },
+            {
+                "destination": 2,
+                "add": 0,
+                "move": 2
+            },
+            {
+                "destination": 3,
+                "add": 0,
+                "move": 1
+            },
+            {
+                "destination": 6,
+                "add": 1,
+                "move": 0
+            },
+            {
+                "destination": 7,
+                "add": -1,
+                "move": 1
+            },
+            {
+                "destination": 8,
+                "add": 2,
+                "move": 0
+            },
+            {
+                "destination": 9,
+                "add": 1,
+                "move": 0
+            }
+        ],
+        "6": [
+            {
+                "destination": 0,
+                "add": 0,
+                "move": 1
+            },
+            {
+                "destination": 3,
+                "add": -1,
+                "move": 1
+            },
+            {
+                "destination": 5,
+                "add": -1,
+                "move": 0
+            },
+            {
+                "destination": 8,
+                "add": 1,
+                "move": 0
+            },
+            {
+                "destination": 9,
+                "add": 0,
+                "move": 1
+            }
+        ],
+        "7": [
+            {
+                "destination": 1,
+                "add": -1,
+                "move": 0
+            },
+            {
+                "destination": 3,
+                "add": 2,
+                "move": 0
+            },
+            {
+                "destination": 4,
+                "add": 1,
+                "move": 1
+            },
+            {
+                "destination": 11,
+                "add": 1,
+                "move": 1
+            }
+        ],
+        "8": [
+            {
+                "destination": 0,
+                "add": -1,
+                "move": 0
+            },
+            {
+                "destination": 5,
+                "add": -2,
+                "move": 0
+            },
+            {
+                "destination": 2,
+                "add": -2,
+                "move": 0
+            },
+            {
+                "destination": 3,
+                "add": -2,
+                "move": 0
+            },
+            {
+                "destination": 6,
+                "add": -1,
+                "move": 0
+            },
+            {
+                "destination": 9,
+                "add": -1,
+                "move": 0
+            },
+            {
+                "destination": 10,
+                "add": 1,
+                "move": 1
+            },
+            {
+                "destination": 12,
+                "add": 0,
+                "move": 2
+            },
+            {
+                "destination": 13,
+                "add": 0,
+                "move": 2
+            },
+            {
+                "destination": 15,
+                "add": 0,
+                "move": 2
+            }
+        ],
+        "9": [
+            {
+                "destination": 0,
+                "add": 0,
+                "move": 1
+            },
+            {
+                "destination": 3,
+                "add": -1,
+                "move": 0
+            },
+            {
+                "destination": 2,
+                "add": -1,
+                "move": 1
+            },
+            {
+                "destination": 4,
+                "add": -2,
+                "move": 0
+            },
+            {
+                "destination": 5,
+                "add": -1,
+                "move": 0
+            },
+            {
+                "destination": 6,
+                "add": 0,
+                "move": 1
+            },
+            {
+                "destination": 8,
+                "add": 1,
+                "move": 0
+            }
+        ],
+        "10": [
+            {
+                "destination": 0,
+                "add": -2,
+                "move": 0
+            },
+            {
+                "destination": 8,
+                "add": -1,
+                "move": 1
+            }
+        ],
+        "11": [
+            {
+                "destination": 4,
+                "add": 0,
+                "move": 1
+            },
+            {
+                "destination": 7,
+                "add": -1,
+                "move": 1
+            },
+            {
+                "destination": 10,
+                "add": 2,
+                "move": 0
+            }
+        ],
+        "12": [
+            {
+                "destination": 8,
+                "add": 0,
+                "move": 2
+            },
+            {
+                "destination": 6,
+                "add": -1,
+                "move": 2
+            },
+            {
+                "destination": 9,
+                "add": -1,
+                "move": 2
+            }
+        ],
+        "13": [
+            {
+                "destination": 9,
+                "add": -1,
+                "move": 1
+            },
+            {
+                "destination": 8,
+                "add": 0,
+                "move": 2
+            },
+            {
+                "destination": 6,
+                "add": -1,
+                "move": 2
+            }
+        ],
+        "14": [
+            {
+                "destination": 9,
+                "add": 0,
+                "move": 2
+            },
+            {
+                "destination": 5,
+                "add": -1,
+                "move": 2
+            }
+        ],
+        "15": [
+            {
+                "destination": 1,
+                "add": 0,
+                "move": 0
+            }
+        ],
+        "16": [
+            {
+                "destination": 8,
+                "add": -1,
+                "move": 1
+            }
+        ],
+        "17": [
+            {
+                "destination": 11,
+                "add": -1,
+                "move": 2
+            },
+            {
+                "destination": 4,
+                "add": 2,
+                "move": -1
+            }
+        ],
+        "18": [
+            {
+                "destination": 8,
+                "add": -2,
+                "move": 0
+            }
+        ],
+        "19": [
+            {
+                "destination": 8,
+                "add": 1,
+                "move": -1
+            }
+        ]};
 
-6 : [{
-  "destination": 0,
-  "add": 0,
-  "move": 1
-  }, {
-  "destination": 3,
-  "add": -1,
-  "move": 1
-  }, {
-  "destination": 5,
-  "add": -1,
-  "move": 0
-  }, {
-  "destination": 8,
-  "add": 1,
-  "move": 0
-  }, {
-  "destination": 9,
-  "add": 0,
-  "move": 1
-  }],
-7 : [{
-  "destination": 1,
-  "add": -1,
-  "move": 0
-  }, {
-  "destination": 3,
-  "add": 2,
-  "move": 0
-  }, {
-  "destination": 4,
-  "add": 1,
-  "move": 1
-  }, {
-  "destination": 11,
-  "add": 1,
-  "move": 1
-  }],
-8 : [{
-  "destination": 0,
-  "add": -1,
-  "move": 0
-  }, {
-  "destination": 5,
-  "add": -2,
-  "move": 0
-  }, {
-  "destination": 2,
-  "add": -2,
-  "move": 0
-  }, {
-  "destination": 3,
-  "add": -2,
-  "move": 0
-  }, {
-  "destination": 6,
-  "add": -1,
-  "move": 0
-  }, {
-  "destination": 9,
-  "add": -1,
-  "move": 0
-  }, {
-  "destination": 10,
-  "add": 1,
-  "move": 1
-  }, {
-  "destination": 12,
-  "add": 0,
-  "move": 2
-  }, {
-  "destination": 13,
-  "add": 0,
-  "move": 2
-  }, {
-  "destination": 15,
-  "add": 0,
-  "move": 2
-  }],
-9 : [{
-  "destination": 0,
-  "add": 0,
-  "move": 1
-  }, {
-  "destination": 3,
-  "add": -1,
-  "move": 0
-  }, {
-  "destination": 2,
-  "add": -1,
-  "move": 1
-  }, {
-  "destination": 4,
-  "add": -2,
-  "move": 0
-  }, {
-  "destination": 5,
-  "add": -1,
-  "move": 0
-  }, {
-  "destination": 6,
-  "add": 0,
-  "move": 1
-  }, {
-  "destination": 8,
-  "add": 1,
-  "move": 0
-  }],
-10 : [{
-  "destination": 0,
-  "add": -2,
-  "move": 0
-  }, {
-  "destination": 8,
-  "add": -1,
-  "move": 1,
-  }],
-11 : [{
-  "destination": 4,
-  "add": 0, 
-  "move": 1
-  }, {
-  "destination": 7,
-  "add": -1,
-  "move": 1
-  }, {
-  "destination": 10,
-  "add": 2,
-  "move": 0
-  }]
-};
-	
 	
     function solve() {
       const text = document.getElementById('textbox').value;
@@ -415,7 +586,8 @@
 	  
       const output = `You entered: "${text}" and selected: "${dropdown}"`;
       //document.getElementById('output').textContent = num1 + ' ' + operation + ' ' + num2 + ' = ' + result + ' ' + JSON.stringify(conf[num1]);
-      document.getElementById('output').textContent = results;
+      // document.getElementById('output').textContent = results.join("< br\>");
+      document.getElementById('output').innerHTML = results.join("<br \>");
     }
 	
 	function parseInput(str, delim) {
@@ -505,6 +677,14 @@
 					if (-numb1 - numb2 === -numb3) {
 						results.push(createResponse(-numb1, numb2, -numb3, "-"));
 					}
+					if (numb3 < 10 && numb1 - numb2 === 10 + numb3) {
+                        console.log(numb1 + " "	 + numb2 + " " + numb3 + "  " + stcksFlting + " " + movesRemaining);
+                        results.push(createResponse(numb1, numb2, 10 + numb3, "-"));
+					}
+					if (numb2 < 10 && numb1 - (10 + numb2) === numb3) {
+                        console.log(numb1 + " "	 + numb2 + " " + numb3 + "  " + stcksFlting + " " + movesRemaining);
+                        results.push(createResponse(numb1, 10 + numb2, numb3, "-"));
+					}
 					if (numb1 + numb2 === numb3) {
 						results.push(createResponseWithSuperscript(numb1, numb2, numb3, "+"));
 					}
@@ -520,11 +700,11 @@
 			// console.log(`${key}: ${conf[key]}`);
 			console.log(key);
 			const key1 = 10 + parseInt(key);
-			if (!conf.hasOwnProperty(key1)) {
-				conf[key1] = [];
-			}
+			// if (!conf.hasOwnProperty(key1)) {
+			// 	conf[key1] = [];
+			// }
           console.log(conf[key1]);
-          if (conf[key1].length === 0) {
+          if (conf.hasOwnProperty(key1) && conf[key1].length < conf[key].length) {
 				//const arr = Array.from(conf[key]);
 				const arr = JSON.parse(JSON.stringify(conf[key]));
               // if (key === 6) console.log(arr);
@@ -563,6 +743,23 @@
 		      numb1 + " " + op + " " + numb2 + SUPERSCRIPT1 + " = " + numb3,
 		      numb1 + " " + op + " " + numb2 + " = " + numb3 + SUPERSCRIPT1];
 	}
+
+    function print(low, high) {
+        let obj = {};
+        let ob = {
+            "destination": 1,
+            "add": 0,
+            "move": 0
+        }
+        for (let i = low; i < high; i++) {
+            obj[i] = [];
+            obj[i].push(ob);
+        }
+        // console.log(JSON.stringify(obj, null, 2));
+        console.log(JSON.stringify(conf, null, 2));
+        return obj;
+    }
+
 
   </script>
 </body>
