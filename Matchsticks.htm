@@ -143,6 +143,11 @@
                 "destination": 9,
                 "add": 1,
                 "move": 1
+            },
+            {
+                "destination": 12,
+                "add": 2,
+                "move": 0
             }
         ],
         "3": [
@@ -185,6 +190,11 @@
                 "destination": 9,
                 "add": 1,
                 "move": 0
+            },
+            {
+                "destination": 13,
+                "add": 2,
+                "move": 0
             }
         ],
         "4": [
@@ -215,6 +225,11 @@
             },
             {
                 "destination": 9,
+                "add": 2,
+                "move": 0
+            },
+            {
+                "destination": 14,
                 "add": 2,
                 "move": 0
             }
@@ -254,6 +269,11 @@
                 "destination": 9,
                 "add": 1,
                 "move": 0
+            },
+            {
+                "destination": 15,
+                "add": 2,
+                "move": 0
             }
         ],
         "6": [
@@ -281,6 +301,11 @@
                 "destination": 9,
                 "add": 0,
                 "move": 1
+            },
+            {
+                "destination": 16,
+                "add": 2,
+                "move": 0
             }
         ],
         "7": [
@@ -303,6 +328,11 @@
                 "destination": 11,
                 "add": 1,
                 "move": 1
+            },
+            {
+                "destination": 17,
+                "add": 2,
+                "move": 0
             }
         ],
         "8": [
@@ -355,6 +385,11 @@
                 "destination": 15,
                 "add": 0,
                 "move": 2
+            },
+            {
+                "destination": 18,
+                "add": 2,
+                "move": 0
             }
         ],
         "9": [
@@ -391,6 +426,11 @@
             {
                 "destination": 8,
                 "add": 1,
+                "move": 0
+            },
+            {
+                "destination": 19,
+                "add": 2,
                 "move": 0
             }
         ],
@@ -630,6 +670,13 @@
 			case "-":
                 results = verifyAndCreateResponseMinus(numb1, numb2, numb3, op, stcksFlting, movesRemaining);
                 break;
+			case "*":
+			case "x":
+                results = verifyAndCreateResponseMultiply(numb1, numb2, numb3, op, stcksFlting, movesRemaining);
+                break;
+			case "/":
+                results = verifyAndCreateResponseDivision(numb1, numb2, numb3, op, stcksFlting, movesRemaining);
+                break;
 		}
 		return results;
 	}
@@ -705,6 +752,14 @@
         return results;
     }
 
+    function verifyAndCreateResponseMultiply(numb1, numb2, numb3, op, stcksFlting, movesRemaining) {
+
+    }
+
+    function verifyAndCreateResponseDivision(numb1, numb2, numb3, op, stcksFlting, movesRemaining) {
+
+    }
+
     function addToConfiguration(conf) {
 		Object.keys(conf).forEach(key => {
 			// console.log(`${key}: ${conf[key]}`);
@@ -713,7 +768,7 @@
 			// if (!conf.hasOwnProperty(key1)) {
 			// 	conf[key1] = [];
 			// }
-          console.log(conf[key1]);
+          // console.log(conf[key1]);
           if (conf.hasOwnProperty(key1) && conf[key1].length < conf[key].length) {
 				//const arr = Array.from(conf[key]);
 				const arr = JSON.parse(JSON.stringify(conf[key]));
