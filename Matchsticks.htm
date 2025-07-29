@@ -44,6 +44,10 @@
 		}];
 
 	const SUPERSCRIPT1 = "<sup>1</sup>";
+	const PLUS = "+";
+	const MINUS = "-";
+	const MULTIPLICATION = "x";
+	const DIVISION = "/";
     var results = [];
     let conf = {
         "0": [
@@ -826,28 +830,36 @@
     }
 	
 	function parseInput(str, delim) {
-		const arr = [];
 		// 1 + 5 = 8
 		const i = str.indexOf(delim);
-		arr[3] = parseInt(str.substring(i+1).trim());
+        const num3 = parseInt(str.substring(i+1).trim());
 		const s = str.substring(0, i).trim();
-		var j = str.indexOf("+");
-		if (j > 0) {
-			arr[0] = "+";
-			arr[1] = parseInt(s.substring(0, j).trim());
-			arr[2] = parseInt(s.substring(j+1).trim());
-			return arr;
-		}
-		var j = str.indexOf("-");
-		if (j > 0) {
-			arr[0] = "-";
-			arr[1] = parseInt(s.substring(0, j).trim());
-			arr[2] = parseInt(s.substring(j+1).trim());		
-		}
+        let arr = breakInput(s, num3, PLUS);
+        if (arr) return arr;
+        arr = breakInput(s, num3, MINUS);
+        if (arr) return arr;
+        arr = breakInput(s, num3, MULTIPLICATION);
+        if (arr) return arr;
+        arr = breakInput(s, num3, DIVISION);
+        if (arr) return arr;
+
 		return arr;
 	}
-	
-	function addIdentity(arr, num) {
+
+    function breakInput(str, num3, sign) {
+      const arr = [];
+      const j = str.indexOf(sign);
+      if (j > 0) {
+        arr[0] = sign;
+        arr[1] = parseInt(str.substring(0, j).trim());
+        arr[2] = parseInt(str.substring(j+1).trim());
+        arr[3] = num3;
+        return arr;
+      }
+      return null;
+    }
+
+      function addIdentity(arr, num) {
 		const ar = [{
 			"destination": num,
 			"add": 0,
@@ -859,13 +871,13 @@
 		// console.log(numb1 + " "	 + numb2 + " " + numb3 + "  " + stcksFlting + " " + movesRemaining);
         let results = [];
 		switch (op) {
-			case "+":
+			case PLUS:
 			    results = verifyAndCreateResponsePlus(numb1, numb2, numb3, op, stcksFlting, movesRemaining);
 				break;
-			case "-":
+			case MINUS:
                 results = verifyAndCreateResponseMinus(numb1, numb2, numb3, op, stcksFlting, movesRemaining);
                 break;
-			case "*":
+			// case "*":
 			case "x":
                 results = verifyAndCreateResponseMultiply(numb1, numb2, numb3, op, stcksFlting, movesRemaining);
                 break;
@@ -885,28 +897,28 @@
             if (numb1 + numb2 === numb3) {
                 results.push(createResponseWithSuperscript(numb1, numb2, numb3, op));
             }
-            if (-1*numb1 + numb2 === numb3) {
-                results.push(createResponse(-1*numb1, numb2, numb3, op));
+            if (-numb1 + numb2 === numb3) {
+                results.push(createResponse(MINUS + numb1, numb2, numb3, op));
             }
             if (numb1 + numb2 === -1*numb3) {
-                results.push(createResponse(numb1, numb2, -1*numb3, op));
+                results.push(createResponse(numb1, numb2, MINUS + numb3, op));
             }
         }
 		if (movesRemaining > 0 && stcksFlting === 0) {
 			if (numb1 - numb2 === -numb3) {
-				results.push(createResponse(numb1, numb2, -numb3, "-"));
+				results.push(createResponse(numb1, numb2, -numb3, PLUS));
 			}
 		}
         if (stcksFlting === -1 && movesRemaining > 0) {
             if (numb1 - numb2 === numb3) {
-                results.push(createResponse(numb1, numb2, numb3, "-"));
+                results.push(createResponse(numb1, numb2, numb3, MINUS));
             }
         }
         if (stcksFlting === 2 && numb1 + numb2 === numb3) { // TODO
-            results.push(createResponse(numb1, numb2, numb3, "+"));
+            results.push(createResponse(numb1, numb2, "+" + numb3, "+"));
         }
         if (stcksFlting === 2 && -numb1 + numb2 === -numb3) { // TODO
-            results.push(createResponse(-numb1, numb2, -numb3, "+"));
+            results.push(createResponse(MINUS + numb1, numb2, MINUS + numb3, PLUS));
         }
         return results;
     }
@@ -917,7 +929,7 @@
             results.push(createResponse(numb1, numb2, numb3, op));
         }
         if (stcksFlting === 1) {
-            if (numb1 + numb2 === numb3) {
+            if (numb1 + numb2 === numb3 && movesRemaining === 0) {
                 results.push(createResponse(numb1, numb2, numb3, "+"));
             }
             if (numb1 - numb2 === numb3 && movesRemaining === 0) {
@@ -935,15 +947,15 @@
                 results.push(createResponse(-1*numb1, numb2, numb3, "+"));
             }
             if (-numb1 - numb2 === -numb3) {
-                results.push(createResponse(-numb1, numb2, -numb3, "-"));
+                results.push(createResponse(-numb1, numb2, -numb3, MINUS));
             }
             if (numb3 < 10 && numb1 - numb2 === 10 + numb3) {
                 console.log(numb1 + " "	 + numb2 + " " + numb3 + "  " + stcksFlting + " " + movesRemaining);
-                results.push(createResponse(numb1, numb2, 10 + numb3, "-"));
+                results.push(createResponse(numb1, numb2, 10 + numb3, MINUS));
             }
             if (numb2 < 10 && numb1 - (10 + numb2) === numb3) {
                 console.log(numb1 + " "	 + numb2 + " " + numb3 + "  " + stcksFlting + " " + movesRemaining);
-                results.push(createResponse(numb1, 10 + numb2, numb3, "-"));
+                results.push(createResponse(numb1, 10 + numb2, numb3, MINUS));
             }
             if (numb1 + numb2 === numb3) {
                 results.push(createResponseWithSuperscript(numb1, numb2, numb3, "+"));
@@ -953,11 +965,36 @@
     }
 
     function verifyAndCreateResponseMultiply(numb1, numb2, numb3, op, stcksFlting, movesRemaining) {
-
+      let results = [];
+      if (stcksFlting === 0 && movesRemaining == 0 && numb1 * numb2 === numb3) {
+        results.push(createResponse(numb1, numb2, numb3, op));
+      }
+      if (stcksFlting === -1) {
+        if (numb1 / numb2 === numb3 && movesRemaining > 0) {
+          results.push(createResponse(numb1, numb2, numb3, DIVISION));
+        }
+      }
+      if (stcksFlting === 2) {
+        if (numb1 * numb2 === numb3) {
+          results.push(createResponse(MINUS + numb1, numb2, MINUS + numb3, MULTIPLICATION));
+          results.push(createResponse(MINUS + numb1, MINUS + numb2, numb3, MULTIPLICATION));
+          results.push(createResponse(numb1, MINUS + numb2, MINUS + numb3, MULTIPLICATION));
+        }
+      }
+      return results;
     }
 
     function verifyAndCreateResponseDivision(numb1, numb2, numb3, op, stcksFlting, movesRemaining) {
-
+      let results = [];
+      if (stcksFlting === 0 && movesRemaining == 0 && numb1 / numb2 === numb3) {
+        results.push(createResponse(numb1, numb2, numb3, op));
+      }
+      if (stcksFlting === 1) {
+        if (numb1 * numb2 === numb3 && movesRemaining > 0) {
+          results.push(createResponse(numb1, numb2, numb3, MULTIPLICATION));
+        }
+      }
+      return results;
     }
 
     function addToConfiguration(conf) {
