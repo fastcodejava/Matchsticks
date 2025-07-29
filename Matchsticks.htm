@@ -28,9 +28,9 @@
     <!--option value="option3">Option 3</option-->
   </select>
 
-<!--  <button onclick="print(20, 30)">Submit</button>-->
+<!--  <button onclick="print(30, 40)">Submit</button>-->
   <button onclick="solve()">Submit</button>
-  <button onclick="copyText()">Copy</button>
+<!--  <button onclick="copyText()">Copy</button>-->
 
   <p id="output"></p>
 
@@ -47,7 +47,7 @@
 	const PLUS = "+";
 	const MINUS = "-";
 	const MULTIPLICATION = "x";
-	const DIVISION = "/";
+    const DIVISION = "/";
     var results = [];
     let conf = {
         "0": [
@@ -744,6 +744,126 @@
           "add": 0,
           "move": 2
         }
+      ],
+      "30": [
+        {
+          "destination": 20,
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": 50,
+          "add": 0,
+          "move": 2
+        }
+      ],
+      "31": [
+        {
+          "destination": 21,
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": 51,
+          "add": 0,
+          "move": 2
+        }
+      ],
+      "32": [
+        {
+          "destination": 22,
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": 52,
+          "add": 0,
+          "move": 2
+        }
+      ],
+      "33": [
+        {
+          "destination": 23,
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": 53,
+          "add": 0,
+          "move": 2
+        }
+      ],
+      "34": [
+        {
+          "destination": 24,
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": 54,
+          "add": 0,
+          "move": 2
+        }
+      ],
+      "35": [
+        {
+          "destination": 25,
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": 55,
+          "add": 0,
+          "move": 2
+        }
+      ],
+      "36": [
+        {
+          "destination": 26,
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": 56,
+          "add": 0,
+          "move": 2
+        }
+      ],
+      "37": [
+        {
+          "destination": 27,
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": 57,
+          "add": 0,
+          "move": 2
+        }
+      ],
+      "38": [
+        {
+          "destination": 28,
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": 58,
+          "add": 0,
+          "move": 2
+        }
+      ],
+      "39": [
+        {
+          "destination": 29,
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": 59,
+          "add": 0,
+          "move": 2
+        }
       ]
     };
 
@@ -754,8 +874,10 @@
       const dropdown = document.getElementById('dropdown').value;
       // document.getElementById('output').textContent = "";
       document.getElementById('output').innerHTML  = "";
-      conf = addToConfiguration(conf);
-	  //console.log(JSON.stringify(conf));
+      conf = addToConfiguration(conf, 10);
+      conf = addToConfiguration(conf, 20);
+      conf = addToConfiguration(conf, 30);
+	  console.log(JSON.stringify(conf));
 	  const arr = parseInput(text, "=");
 	  const operation = arr[0];
 	  result = arr[3];
@@ -997,16 +1119,16 @@
       return results;
     }
 
-    function addToConfiguration(conf) {
+    function addToConfiguration(conf, increment) {
 		Object.keys(conf).forEach(key => {
 			// console.log(`${key}: ${conf[key]}`);
 			console.log(key);
-			const key1 = 10 + parseInt(key);
+			const key1 = increment + parseInt(key);
 			// if (!conf.hasOwnProperty(key1)) {
 			// 	conf[key1] = [];
 			// }
           // console.log(conf[key1]);
-          if (conf.hasOwnProperty(key1) && conf[key1].length < conf[key].length) {
+          if (key < 10 && conf.hasOwnProperty(key1) && conf[key1].length < conf[key].length) {
 				//const arr = Array.from(conf[key]);
 				const arr = JSON.parse(JSON.stringify(conf[key]));
               // if (key === 6) console.log(arr);
@@ -1015,7 +1137,7 @@
                     // console.log(num);
                     // console.log(arr[i]);
                     const dest = num.destination;
-					arr[i].destination = dest < 10 ? 10 + parseInt(dest) : 100 + parseInt(dest);
+					arr[i].destination = dest < 10 ? increment + parseInt(dest) : 10*increment + parseInt(dest);
 				}
 				//const arr1 = JSON.parse(JSON.stringify(arr));
 					arr.push({
@@ -1058,7 +1180,7 @@
             obj[i] = [];
           const ob1 = JSON.parse(JSON.stringify(ob));
           const ii = x++;
-          ob1.destination = 30 + ii;
+          ob1.destination = 20 + ii;
           obj[i].push(ob1);
           const ob2 = JSON.parse(JSON.stringify(ob));
           ob2.destination = 50 + ii;
