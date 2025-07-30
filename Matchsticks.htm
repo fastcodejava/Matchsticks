@@ -28,7 +28,6 @@
     <!--option value="option3">Option 3</option-->
   </select>
 
-<!--  <button onclick="print(30, 40)">Submit</button>-->
   <button onclick="solve()">Submit</button>
 <!--  <button onclick="copyText()">Copy</button>-->
 
@@ -864,6 +863,126 @@
           "add": 0,
           "move": 2
         }
+      ],
+      "50": [
+        {
+          "destination": 30,
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": 20,
+          "add": 0,
+          "move": 2
+        }
+      ],
+      "51": [
+        {
+          "destination": 31,
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": 21,
+          "add": 0,
+          "move": 2
+        }
+      ],
+      "52": [
+        {
+          "destination": 32,
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": 22,
+          "add": 0,
+          "move": 2
+        }
+      ],
+      "53": [
+        {
+          "destination": 33,
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": 23,
+          "add": 0,
+          "move": 2
+        }
+      ],
+      "54": [
+        {
+          "destination": 34,
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": 24,
+          "add": 0,
+          "move": 2
+        }
+      ],
+      "55": [
+        {
+          "destination": 35,
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": 25,
+          "add": 0,
+          "move": 2
+        }
+      ],
+      "56": [
+        {
+          "destination": 36,
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": 26,
+          "add": 0,
+          "move": 2
+        }
+      ],
+      "57": [
+        {
+          "destination": 37,
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": 27,
+          "add": 0,
+          "move": 2
+        }
+      ],
+      "58": [
+        {
+          "destination": 38,
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": 28,
+          "add": 0,
+          "move": 2
+        }
+      ],
+      "59": [
+        {
+          "destination": 39,
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": 29,
+          "add": 0,
+          "move": 2
+        }
       ]
     };
 
@@ -877,6 +996,7 @@
       conf = addToConfiguration(conf, 10);
       conf = addToConfiguration(conf, 20);
       conf = addToConfiguration(conf, 30);
+      conf = addToConfiguration(conf, 50);
 	  console.log(JSON.stringify(conf));
 	  const arr = parseInput(text, "=");
 	  const operation = arr[0];
@@ -994,7 +1114,7 @@
         let results = [];
 		switch (op) {
 			case PLUS:
-			    results = verifyAndCreateResponsePlus(numb1, numb2, numb3, op, stcksFlting, movesRemaining);
+			    results = verifyAndCreateResponsePlus(numb1, numb2, numb3, stcksFlting, movesRemaining);
 				break;
 			case MINUS:
                 results = verifyAndCreateResponseMinus(numb1, numb2, numb3, op, stcksFlting, movesRemaining);
@@ -1010,8 +1130,9 @@
 		return results;
 	}
 
-    function verifyAndCreateResponsePlus(numb1, numb2, numb3, op, stcksFlting, movesRemaining) {
+    function verifyAndCreateResponsePlus(numb1, numb2, numb3, stcksFlting, movesRemaining) {
         let results = [];
+        const op = PLUS;
         if (stcksFlting === 0 && movesRemaining == 0 && numb1 + numb2 === numb3) {
             results.push(createResponse(numb1, numb2, numb3, op));
         }
@@ -1028,7 +1149,10 @@
         }
 		if (movesRemaining > 0 && stcksFlting === 0) {
 			if (numb1 - numb2 === -numb3) {
-				results.push(createResponse(numb1, numb2, -numb3, PLUS));
+				results.push(createResponse(numb1, numb2, MINUS + numb3, MINUS));
+				if (numb3 === 0) {
+                  results.push(createResponseWithSuperscript(numb1, numb2, numb3, MINUS));
+                }
 			}
 		}
         if (stcksFlting === -1 && movesRemaining > 0) {
