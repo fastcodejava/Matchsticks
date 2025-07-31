@@ -251,6 +251,11 @@
                 "move": 1
             },
             {
+                "destination": 4,
+                "add": -1,
+                "move": 1
+            },
+            {
                 "destination": 6,
                 "add": 1,
                 "move": 0
@@ -839,6 +844,126 @@
           "move": 2
         }
       ],
+      "40": [
+        {
+          "destination": 10,
+          "add": -2,
+          "move": 0
+        },
+        {
+          "destination": 70,
+          "add": -1,
+          "move": 1
+        }
+      ],
+      "41": [
+        {
+          "destination": 11,
+          "add": -2,
+          "move": 0
+        },
+        {
+          "destination": 71,
+          "add": -1,
+          "move": 1
+        }
+      ],
+      "42": [
+        {
+          "destination": 12,
+          "add": -2,
+          "move": 0
+        },
+        {
+          "destination": 72,
+          "add": -1,
+          "move": 1
+        }
+      ],
+      "43": [
+        {
+          "destination": 13,
+          "add": -2,
+          "move": 0
+        },
+        {
+          "destination": 73,
+          "add": -1,
+          "move": 1
+        }
+      ],
+      "44": [
+        {
+          "destination": 14,
+          "add": -2,
+          "move": 0
+        },
+        {
+          "destination": 74,
+          "add": -1,
+          "move": 1
+        }
+      ],
+      "45": [
+        {
+          "destination": 15,
+          "add": -2,
+          "move": 0
+        },
+        {
+          "destination": 75,
+          "add": -1,
+          "move": 1
+        }
+      ],
+      "46": [
+        {
+          "destination": 16,
+          "add": -2,
+          "move": 0
+        },
+        {
+          "destination": 76,
+          "add": -1,
+          "move": 1
+        }
+      ],
+      "47": [
+        {
+          "destination": 17,
+          "add": -2,
+          "move": 0
+        },
+        {
+          "destination": 77,
+          "add": -1,
+          "move": 1
+        }
+      ],
+      "48": [
+        {
+          "destination": 18,
+          "add": -2,
+          "move": 0
+        },
+        {
+          "destination": 78,
+          "add": -1,
+          "move": 1
+        }
+      ],
+      "49": [
+        {
+          "destination": 19,
+          "add": -2,
+          "move": 0
+        },
+        {
+          "destination": 79,
+          "add": -1,
+          "move": 1
+        }
+      ],
       "50": [
         {
           "destination": 30,
@@ -958,6 +1083,126 @@
           "add": 0,
           "move": 2
         }
+      ],
+      "70": [
+        {
+          "destination": 10,
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": 30,
+          "add": 2,
+          "move": 0
+        }
+      ],
+      "71": [
+        {
+          "destination": 11,
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": 31,
+          "add": 2,
+          "move": 0
+        }
+      ],
+      "72": [
+        {
+          "destination": 12,
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": 32,
+          "add": 2,
+          "move": 0
+        }
+      ],
+      "73": [
+        {
+          "destination": 13,
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": 33,
+          "add": 2,
+          "move": 0
+        }
+      ],
+      "74": [
+        {
+          "destination": 14,
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": 34,
+          "add": 2,
+          "move": 0
+        }
+      ],
+      "75": [
+        {
+          "destination": 15,
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": 35,
+          "add": 2,
+          "move": 0
+        }
+      ],
+      "76": [
+        {
+          "destination": 16,
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": 36,
+          "add": 2,
+          "move": 0
+        }
+      ],
+      "77": [
+        {
+          "destination": 17,
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": 37,
+          "add": 2,
+          "move": 0
+        }
+      ],
+      "78": [
+        {
+          "destination": 18,
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": 38,
+          "add": 2,
+          "move": 0
+        }
+      ],
+      "79": [
+        {
+          "destination": 19,
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": 39,
+          "add": 2,
+          "move": 0
+        }
       ]
     };
 
@@ -971,7 +1216,10 @@
       conf = addToConfiguration(conf, 10);
       conf = addToConfiguration(conf, 20);
       conf = addToConfiguration(conf, 30);
+      conf = addToConfiguration(conf, 40);
       conf = addToConfiguration(conf, 50);
+      // conf = addToConfiguration(conf, 60);
+      conf = addToConfiguration(conf, 70);
 	  //console.log(JSON.stringify(conf));
 	  const arr = parseInput(text, "=");
 	  const operation = arr[0];
@@ -1016,7 +1264,7 @@
 					}
 					if (sticksMoved3 <= sticksToMove && Math.abs(sticksFloating3) <= sticksToMove) {
 						//console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove);
-						//console.log(conf1[i].destination + " " + conf2[j].destination + " " + conf3[k].destination);
+						console.log(conf1[i].destination + " " + conf2[j].destination + " " + conf3[k].destination);
 						//resultStr = resultStr ? resultStr : verifyAndCreateResponse(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3);
                       // console.log(conf1[i]);
 						const reslt = verifyAndCreateResponse(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3, sticksToMove - sticksMoved3);
@@ -1101,7 +1349,7 @@
                 results = verifyAndCreateResponseMultiply(numb1, numb2, numb3, stcksFlting, movesRemaining);
                 break;
 			case DIVISION:
-                results = verifyAndCreateResponseDivision(numb1, numb2, numb3, op, stcksFlting, movesRemaining);
+                results = verifyAndCreateResponseDivision(numb1, numb2, numb3, stcksFlting, movesRemaining);
                 break;
 		}
 		return results;
@@ -1112,6 +1360,9 @@
         const op = PLUS;
         if (stcksFlting === 0 && movesRemaining == 0 && numb1 + numb2 === numb3) {
             results.push(createResponse(numb1, numb2, numb3, op));
+        }
+        if (stcksFlting === 0 && movesRemaining == 1 && numb1 - numb2 === numb3) {
+            results.push(createResponseWithSuperscript(numb1, numb2, numb3, MINUS));
         }
         if (stcksFlting === 1) {
             if (numb1 + numb2 === numb3) {
@@ -1162,8 +1413,11 @@
             if (-1*numb1 - numb2 === numb3) {
                 results.push(createResponse(-1*numb1, numb2, numb3, op));
             }
-            if (numb3 > 0 && numb1 - numb2 === -1*numb3) {
+            if (numb3 > 0 && numb1 - numb2 === -1*numb3 && movesRemaining === 0) {
                 results.push(createResponse(numb1, numb2, -1*numb3, op));
+            }
+            if (numb3 > 0 && numb1 === numb2 - numb3 && movesRemaining === 1) {
+                results.push(createResponseWithSuperscript1(numb1, numb2, numb3, op));
             }
         }
         if (stcksFlting === 2) {
@@ -1275,10 +1529,20 @@
 		return numb1 + " " + op + " " + numb2 + " = " + numb3;
 	}
 
+	function createResponse1(numb1, numb2, numb3, op) {
+		return numb1 + " = " + numb2 + op + " " + numb3;
+	}
+
 	function createResponseWithSuperscript (numb1, numb2, numb3, op) {
 		return [numb1 + SUPERSCRIPT1 + " " + op + " " + numb2 + " = " + numb3,
 		      numb1 + " " + op + " " + numb2 + SUPERSCRIPT1 + " = " + numb3,
 		      numb1 + " " + op + " " + numb2 + " = " + numb3 + SUPERSCRIPT1];
+	}
+
+	function createResponseWithSuperscript1(numb1, numb2, numb3, op) {
+		return [numb1 + SUPERSCRIPT1 + " = " + numb2 + op + " " + numb3,
+		      numb1 + " = " + numb2 + SUPERSCRIPT1 + op + " " + numb3,
+		      numb1 + " = " + numb2 + op + " " + numb3 + SUPERSCRIPT1];
 	}
 
     function print(low, high) {
