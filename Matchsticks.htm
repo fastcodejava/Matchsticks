@@ -496,8 +496,8 @@
             },
           {
             "destination": 2,
-            "add": 0,
-            "move": 2
+            "add": -2,
+            "move": 0
           }
         ],
         "13": [
@@ -1221,7 +1221,8 @@
       // conf = addToConfiguration(conf, 60);
       conf = addToConfiguration(conf, 70);
 	  //console.log(JSON.stringify(conf));
-	  const arr = parseInput(text, "=");
+      addToConfigurationFlipDigits(conf);
+      const arr = parseInput(text, "=");
 	  const operation = arr[0];
 	  result = arr[3];
 	  num1 = arr[1];
@@ -1484,6 +1485,25 @@
       }
       return results;
     }
+
+    function addToConfigurationFlipDigits(conf) {
+      const ob = {
+        "destination": 1,
+        "add": 0,
+        "move": 2
+      };
+      Object.keys(conf).forEach(key => {
+        if ((key.startsWith(("1")) || key.endsWith(("1"))) && key.length > 1) {
+          const key1 = key[1] + key[0];
+          if (key !== key1) {
+            const obj = JSON.parse(JSON.stringify(ob));
+            obj.destination = parseInt(key1);
+            conf[key].push(obj);
+          }
+        }
+      });
+    }
+
 
     function addToConfiguration(conf, increment) {
 		Object.keys(conf).forEach(key => {
