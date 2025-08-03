@@ -457,8 +457,8 @@
             },
             {
                 "destination": 0,
-                "add": 0,
-                "move": 2
+                "add": -2,
+                "move": 0
             }
         ],
         "11": [
@@ -1736,7 +1736,7 @@
             if (numb1 - numb2 === numb3 && movesRemaining === 0) {
                 results.push(createResponseWithSuperscript(numb1, numb2, numb3, op));
             }
-            if (-1*numb1 - numb2 === numb3) {
+            if (-numb1 - numb2 === numb3) {
                 results.push(createResponse(-1*numb1, numb2, numb3, op));
             }
             if (numb3 > 0 && numb1 - numb2 === -1*numb3 && movesRemaining === 0) {
@@ -1747,12 +1747,17 @@
             }
       }
         if (stcksFlting === 2) {
-            if (-1*numb1 + numb2 === numb3) {
-                results.push(createResponse(-1*numb1, numb2, numb3, PLUS));
+            if (-numb1 + numb2 === numb3) {
+                results.push(createResponse(MINUS + numb1, numb2, numb3, PLUS));
             }
             if (-numb1 - numb2 === -numb3) {
-                results.push(createResponse(-numb1, numb2, -numb3, op));
+                results.push(createResponse(MINUS + numb1, numb2, MINUS + numb3, op));
             }
+            if (numb1 + numb2 === -numb3) {
+              console.log(" -------------------");
+              results.push(createResponse(numb1, numb2, MINUS + numb3, PLUS));
+            }
+
             // if (numb3 < 10 && numb1 - numb2 === 10 + numb3) {
             //     console.log(numb1 + " "	 + numb2 + " " + numb3 + "  " + stcksFlting + " " + movesRemaining);
             //     results.push(createResponse(numb1, numb2, 10 + numb3, op));
@@ -1761,9 +1766,9 @@
             //     console.log(numb1 + " "	 + numb2 + " " + numb3 + "  " + stcksFlting + " " + movesRemaining);
             //     results.push(createResponse(numb1, 10 + numb2, numb3, op));
             // }
-            if (numb1 + numb2 === numb3) {
-                results.push(createResponseWithSuperscript(numb1, numb2, numb3, PLUS));
-            }
+          if (numb1 + numb2 === numb3) {
+            results.push(createResponseWithSuperscript(numb1, numb2, numb3, PLUS));
+          }
         }
         return results;
     }
