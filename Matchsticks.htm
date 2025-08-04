@@ -1741,6 +1741,12 @@
         if (stcksFlting === 0 && movesRemaining == 1 && numb1 - numb2 === numb3) {
             results.push(createResponseWithSuperscript(numb1, numb2, numb3, MINUS));
         }
+        if (stcksFlting === 0 && movesRemaining == 2 && numb1 * numb2 === numb3) {
+            results.push(createResponseWithSuperscript(numb1, numb2, numb3, MULTIPLICATION));
+        }
+        if (stcksFlting === -1 && movesRemaining == 1 && numb1 / numb2 === numb3) {
+            results.push(createResponseWithSuperscript(numb1, numb2, numb3, DIVISION));
+        }
 
         if (stcksFlting === 1 && movesRemaining == 0) {
             if (numb1 + numb2 === numb3) {
@@ -1832,9 +1838,22 @@
     function verifyAndCreateResponseMultiply(numb1, numb2, numb3, stcksFlting, movesRemaining) {
       let results = [];
       const op = MULTIPLICATION;
-      if (stcksFlting === 0 && movesRemaining == 0 && numb1 * numb2 === numb3) {
+      if (stcksFlting === 0 && movesRemaining === 0 && numb1 * numb2 === numb3) {
         results.push(createResponse(numb1, numb2, numb3, op));
       }
+
+      if (stcksFlting === 0 && movesRemaining === 2 && numb1 + numb2 === numb3) {
+        results.push(createResponse(numb1, numb2, numb3, PLUS));
+      }
+
+      if (stcksFlting === 0 && movesRemaining === 2 && numb1 - numb2 === -numb3) {
+        results.push(createResponse(numb1, numb2, MINUS + numb3, MINUS));
+      }
+
+      if (stcksFlting === 0 && movesRemaining === 2 && -numb1 - numb2 === numb3) {
+        results.push(createResponse(MINUS + numb1, numb2, numb3, MINUS));
+      }
+
       if (stcksFlting === 1 && movesRemaining == 1 && numb1 / numb2 === numb3) {
         results.push(createResponse(MINUS + numb1, MINUS + numb2, numb3, DIVISION));
         results.push(createResponse(numb1, MINUS + numb2, MINUS + numb3, DIVISION));
@@ -1870,9 +1889,19 @@
       if (stcksFlting === 0 && movesRemaining == 1 && numb1 - numb2 === numb3) {
         results.push(createResponse(numb1, numb2, numb3, MINUS));
       }
+
       if (stcksFlting === 1 && movesRemaining === 0 && numb1 * numb2 === numb3) {
           results.push(createResponse(numb1, numb2, numb3, MULTIPLICATION));
       }
+
+      if (stcksFlting === 0 && movesRemaining === 1 && numb1 - numb2 === numb3) {
+          results.push(createResponse(numb1, numb2, numb3, MINUS));
+      }
+
+      if (stcksFlting === 1 && movesRemaining === 1 && numb1 - numb2 === -numb3) {
+          results.push(createResponse(numb1, numb2, MINUS + numb3, MINUS));
+      }
+
       if (stcksFlting === 2) {
         if (numb1 / numb2 === numb3) {
           results.push(createResponse(MINUS + numb1, numb2, MINUS + numb3, op));
