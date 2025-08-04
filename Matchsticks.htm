@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -289,6 +290,11 @@
             },
             {
                 "destination": 3,
+                "add": -1,
+                "move": 1
+            },
+            {
+                "destination": 2,
                 "add": -1,
                 "move": 1
             },
@@ -1540,7 +1546,7 @@
       conf = addToConfiguration(conf, 50);
       conf = addToConfiguration(conf, 60);
       conf = addToConfiguration(conf, 70);
-	  //console.log(JSON.stringify(conf));
+	  console.log(JSON.stringify(conf["13"]));
       addToConfigurationFlipDigits(conf);
       const arr = parseInput(text, "=");
 	  const operation = arr[0];
