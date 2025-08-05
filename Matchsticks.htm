@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -504,12 +503,7 @@
                 "destination": 9,
                 "add": -1,
                 "move": 2
-            },
-          {
-            "destination": 2,
-            "add": -2,
-            "move": 0
-          }
+            }
         ],
         "13": [
             {
@@ -526,12 +520,7 @@
                 "destination": 6,
                 "add": -1,
                 "move": 2
-            },
-          {
-            "destination": 3,
-            "add": 0,
-            "move": 2
-          }
+            }
         ],
         "14": [
             {
@@ -543,12 +532,7 @@
                 "destination": 5,
                 "add": -1,
                 "move": 2
-            },
-          {
-            "destination": 4,
-            "add": 0,
-            "move": 2
-          }
+            }
         ],
         "15": [
             {
@@ -560,24 +544,14 @@
                 "destination": 9,
                 "add": -1,
                 "move": 1
-            },
-          {
-            "destination": 5,
-            "add": 0,
-            "move": 2
-          }
+            }
         ],
         "16": [
             {
                 "destination": 8,
                 "add": -1,
                 "move": 1
-            },
-          {
-            "destination": 6,
-            "add": 0,
-            "move": 2
-          }
+            }
         ],
         "17": [
             {
@@ -589,12 +563,7 @@
                 "destination": 4,
                 "add": -1,
                 "move": 1
-            },
-          {
-            "destination": 7,
-            "add": 0,
-            "move": 2
-          }
+            }
         ],
         "18": [
             {
@@ -611,8 +580,8 @@
             },
           {
             "destination": 9,
-            "add": 0,
-            "move": 2
+            "add": -2,
+            "move": 0
           }
         ],
       "20": [
@@ -1970,7 +1939,9 @@
       conf = addToConfiguration(conf, 80);
       conf = addToConfiguration(conf, 90);
       addToConfigurationFlipDigits(conf);
-      const arr = parseInput(text, "=");
+      addToConfigurationOne(conf);
+      addToConfigurationSeven(conf);
+	  const arr = parseInput(text, "=");
 	  const operation = arr[0];
 	  result = arr[3];
 	  num1 = arr[1];
@@ -1983,7 +1954,7 @@
       const conf1 = addIdentity(conf[num1], num1);
 	  const conf2 = addIdentity(conf[num2], num2);
 	  const conf3 = addIdentity(conf[arr[3]], arr[3]);
-
+	  
 
 //	  console.log(num1 + " " + JSON.stringify(conf1));
 //	  console.log(num2 + " " + JSON.stringify(conf2));
@@ -2167,6 +2138,9 @@
       if (stcksFlting === 0 && movesRemaining == 0 && numb1 - numb2 === numb3) {
             results.push(createResponse(numb1, numb2, numb3, op));
       }
+      if (stcksFlting === 1 && movesRemaining == 1 && numb1 * numb2 === numb3) {
+            results.push(createResponse(numb1, numb2, numb3, MULTIPLICATION));
+      }
       if (stcksFlting === 0 && movesRemaining == 1 && numb1 === numb2 - numb3) {
             results.push(createResponse1(numb1, numb2, numb3, op));
       }
@@ -2309,6 +2283,71 @@
       });
     }
 
+    function addToConfigurationOne(conf) {
+      const ob = {
+        "destination": 1,
+        "add": -2,
+        "move": 0
+      };
+      const ob2 = {
+        "destination": 1,
+        "add": 2,
+        "move": 0
+      };
+      const ob3 = {
+        "destination": 7,
+        "add": 1,
+        "move": 0
+      };
+      Object.keys(conf).forEach(key => {
+        if ((key.startsWith(("1")) || key.endsWith(("1"))) && key.length > 1) {
+          const key1 = key[1] + key[0];
+		  const k0 = parseInt(key[0]);
+		  const k1 = parseInt(key[1]);
+            const obj = JSON.parse(JSON.stringify(ob));
+            obj.destination = key.startsWith("1") ?  k1 : k0;
+			addItemToConf(conf[key], obj);
+            const obj2 = JSON.parse(JSON.stringify(ob2));
+            obj2.destination = key.startsWith("1") ? 40 + k1 : k0*10 + 4;
+			addItemToConf(conf[key], obj2);
+            const obj3 = JSON.parse(JSON.stringify(ob3));
+            obj3.destination = key.startsWith("1") ? 70 + k1 : k0*10 + 7;
+			addItemToConf(conf[key], obj3);
+          }
+      });
+    }
+
+    function addToConfigurationSeven(conf) {
+      const ob = {
+        "destination": 1,
+        "add": -1,
+        "move": 0
+      };
+      const ob2 = {
+        "destination": 1,
+        "add": 1,
+        "move": 1
+      };
+      Object.keys(conf).forEach(key => {
+        if ((key.startsWith(("7")) || key.endsWith(("7"))) && key.length > 1) {
+          const key1 = key[1] + key[0];
+          const k0 = parseInt(key[0]);
+          const k1 = parseInt(key[1]);
+          const obj = JSON.parse(JSON.stringify(ob));
+          obj.destination = key.startsWith("1") ? 10 + k1 : k0*10 + 1;
+          addItemToConf(conf[key], obj);
+          const obj2 = JSON.parse(JSON.stringify(ob2));
+          obj2.destination = key.startsWith("1") ? 40 + k1 : k0*10 + 4;
+          addItemToConf(conf[key], obj2);
+        }
+      });
+    }
+
+	function addItemToConf(arr, obj) {
+		const confItem = arr.find(it => it.destination === obj.destination);
+
+		if (!confItem) arr.push(obj);
+	}
 
     function addToConfiguration(conf, increment, debug) {
 		Object.keys(conf).forEach(key => {
