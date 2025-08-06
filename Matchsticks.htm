@@ -2208,6 +2208,12 @@
       if (stcksFlting === 0 && movesRemaining === 2 && -numb1 - numb2 === numb3) {
         results.push(createResponse(MINUS + numb1, numb2, numb3, MINUS));
       }
+      if (stcksFlting === -1 && movesRemaining == 2 && numb1 - numb2 === numb3) {
+        results.push(createResponse(numb1, numb2, numb3, MINUS));
+      }
+      if (stcksFlting === 0 && movesRemaining == 2 && numb1 - numb2 === numb3) {
+        results.push(createResponseWithSuperscript(numb1, numb2, numb3, MINUS));
+      }
 
       if (stcksFlting === 1 && movesRemaining == 1 && numb1 / numb2 === numb3) {
         results.push(createResponse(MINUS + numb1, MINUS + numb2, numb3, DIVISION));
