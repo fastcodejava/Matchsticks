@@ -1921,14 +1921,7 @@
       ]
     };
 
-	
-    function solve() {
-      results = [];
-      const text = document.getElementById('textbox').value;
-      const dropdown = document.getElementById('dropdown').value;
-      // document.getElementById('output').textContent = "";
-      document.getElementById('output').innerHTML  = "";
-      console.log(JSON.stringify(conf["81"]));
+    window.onload = function () {
       conf = addToConfiguration(conf, 10);
       conf = addToConfiguration(conf, 20);
       conf = addToConfiguration(conf, 30);
@@ -1941,25 +1934,34 @@
       addToConfigurationFlipDigits(conf);
       addToConfigurationOne(conf);
       addToConfigurationSeven(conf);
+      addCompositMapping(conf);
+    };
+
+    function solve() {
+      results = [];
+      const text = document.getElementById('textbox').value;
+      const dropdown = document.getElementById('dropdown').value;
+      // document.getElementById('output').textContent = "";
+      document.getElementById('output').innerHTML  = "";
+      // console.log(JSON.stringify(conf["84"]));
 	  const arr = parseInput(text, "=");
 	  const operation = arr[0];
 	  result = arr[3];
 	  num1 = arr[1];
 	  num2 = arr[2];
 	  console.log(num1 + " " + num2 + " " + result);
+      matchMoves(-1, 1);
 	  const sticksToMove = parseInt(dropdown);
 	  var sticksMoved = 0, sticksFloating = 0;
-      // addCompositMapping(conf);
-      // console.log(JSON.stringify(conf["81"]));
-      const conf1 = addIdentity(conf[num1], num1);
-	  const conf2 = addIdentity(conf[num2], num2);
-	  const conf3 = addIdentity(conf[arr[3]], arr[3]);
-	  
+      //console.log(JSON.stringify(conf["84"]));
+      let conf1 = addIdentity(conf[num1], num1);
+      let conf2 = addIdentity(conf[num2], num2);
+      let conf3 = addIdentity(conf[arr[3]], arr[3]);
 
 //	  console.log(num1 + " " + JSON.stringify(conf1));
 //	  console.log(num2 + " " + JSON.stringify(conf2));
 //	  console.log(arr[3] + " " + JSON.stringify(conf3));
-// 	  console.log(JSON.stringify(conf["81"]));
+// 	  console.log(JSON.stringify(conf["65"]));
 		for (let i = 0; i < conf1.length; i++) {
 			var sticksMoved1 = conf1[i].move;
 			var sticksFloating1 = -1 * conf1[i].add;
@@ -1988,7 +1990,7 @@
 					}
 					if (sticksMoved3 <= sticksToMove && Math.abs(sticksFloating3) <= sticksToMove) {
 						//console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove);
-						console.log(conf1[i].destination + " " + conf2[j].destination + " " + conf3[k].destination);
+						// console.log(conf1[i].destination + " " + conf2[j].destination + " " + conf3[k].destination);
 						//resultStr = resultStr ? resultStr : verifyAndCreateResponse(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3);
                       // console.log(conf1[i]);
 						const reslt = verifyAndCreateResponse(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3, sticksToMove - sticksMoved3);
@@ -2432,10 +2434,10 @@
                 // console.log(conf[key[1]]);
               }
               let move = conf[key[0]][i].move + conf[key[1]][j].move;
-              const destination = parseInt("" + conf[key[0]][i].destination + conf[key[1]][j].destination);
-              if ((conf[key[0]][i].add === -1 && conf[key[1]][j].add === 1) || (conf[key[0]][i].add === 1 && conf[key[1]][j].add === -1)) {
-                move++;
-              }
+              // const destination = parseInt("" + conf[key[0]][i].destination + conf[key[1]][j].destination);
+              const destination = parseInt(conf[key[0]][i].destination + conf[key[1]][j].destination);
+
+              const mv =  matchMoves(conf[key[0]][i].add, conf[key[1]][j].add);
 
               const confItem = conf[key].find(it => it.destination === destination);
 
@@ -2443,7 +2445,9 @@
                 conf[key].push({
                   destination: destination,
                   add: conf[key[0]][i].add + conf[key[1]][j].add,
-                  move: move
+                  move: move + mv.move
+                  // 1: conf[key[0]][i].destination,
+                  // 2: conf[key[1]][j].destination
                 });
               }
             }
@@ -2452,6 +2456,37 @@
       });
       // return conf;
     }
+
+    function matchMoves(num1, num2) {
+      const arr1 = fillArray(num1);
+      const arr2 = fillArray(num2);
+      let obj = {add: 0, move: 0};
+      for (let i = 0; i < arr1.length && i < arr2.length; i++) {
+          if (arr1[i] + arr2[i] === 0) {
+            obj.move++;
+            arr1[i] = arr2[i] = 0;
+          } else {
+            obj.add += arr1[i] + arr2[i];
+            arr1[i] = arr2[i] = 0;
+          }
+      }
+      for (let i = 0; i < arr1.length; i++) {
+        obj.add += arr1[i];
+      }
+      for (let i = 0; i < arr2.length; i++) {
+        obj.add += arr2[i];
+      }
+      return obj;
+    }
+
+    function fillArray(num) {
+      const arr = [];
+      for (let i = 0; i < Math.abs(num); i++) {
+        arr.push(num > 0 ? 1 : -1);
+      }
+      return arr;
+    }
+
 
     function print(low, high) {
         let obj = {};
