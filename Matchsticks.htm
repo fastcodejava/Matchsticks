@@ -2378,9 +2378,13 @@
 						// console.log(conf1[i].destination + " " + conf2[j].destination + " " + conf3[k].destination);
 						//resultStr = resultStr ? resultStr : verifyAndCreateResponse(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3);
                       // console.log(conf1[i]);
-						const reslt = verifyAndCreateResponse(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3, sticksToMove - sticksMoved3);
+						let reslt = verifyAndCreateResponse(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3, sticksToMove - sticksMoved3);
+                      // console.log(reslt);
+                      reslt = reslt.filter((value, indx, self) => {
+                        return self.indexOf(value) === indx;
+                      });
 
-                        if (reslt.length > 0) {
+                      if (reslt.length > 0) {
                             results = results.concat(reslt.filter(it => !results.includes(it)));
                         }
 						// console.log(results);
