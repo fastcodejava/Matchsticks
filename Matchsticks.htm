@@ -115,6 +115,11 @@
         ],
         "2": [
             {
+                "destination": 2,
+                "add": 0,
+                "move": 0
+            },
+            {
                 "destination": 5,
                 "add": 0,
                 "move": 2
@@ -2333,7 +2338,7 @@
       matchMoves(-1, 1);
 	  const sticksToMove = parseInt(dropdown);
 	  var sticksMoved = 0, sticksFloating = 0;
-      //console.log(JSON.stringify(conf["84"]));
+      // console.log(JSON.stringify(conf["32"]));
       let conf1 = addIdentity(conf[num1], num1);
       let conf2 = addIdentity(conf[num2], num2);
       let conf3 = addIdentity(conf[arr[3]], arr[3]);
@@ -2374,7 +2379,7 @@
 						//resultStr = resultStr ? resultStr : verifyAndCreateResponse(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3);
                       // console.log(conf1[i]);
 						const reslt = verifyAndCreateResponse(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3, sticksToMove - sticksMoved3);
-                        if (reslt.length > 0) {
+                        if (reslt.length > 0 && !results.includes(reslt)) {
                             results = results.concat(reslt);
                         }
 						// if (Array.isArray(reslt)) {
@@ -2449,7 +2454,8 @@
 				break;
 			case MINUS:
                 results = verifyAndCreateResponseMinus(numb1, numb2, numb3, stcksFlting, movesRemaining);
-                break;
+               console.log(numb1 + " "	 + numb2 + " " + numb3 + "  " + stcksFlting + " " + movesRemaining + " " + results);
+              break;
 			// case "*":
 			case MULTIPLICATION:
                 results = verifyAndCreateResponseMultiply(numb1, numb2, numb3, stcksFlting, movesRemaining);
@@ -2476,7 +2482,7 @@
         if (stcksFlting === 0 && movesRemaining === 2 && numb1 * numb2 === numb3) {
             results.push(createResponse(numb1, numb2, numb3, MULTIPLICATION));
         }
-        if (stcksFlting === -1 && movesRemaining === 1 && numb1 / numb2 === numb3) {
+        if (stcksFlting === -1 && movesRemaining === 2 && numb1 / numb2 === numb3) {
             results.push(createResponse(numb1, numb2, numb3, DIVISION));
         }
 
@@ -2502,8 +2508,11 @@
         if (stcksFlting === -1 && movesRemaining === 1 && numb1 - numb2 === numb3) {
                 results.push(createResponse(numb1, numb2, numb3, MINUS));
         }
-        if (stcksFlting === -1 && movesRemaining === 2 && numb1 - numb2 === numb3) {
+        if (stcksFlting === -1 && movesRemaining === 2 && numb1 === numb2 - numb3) {
                 results.push(createResponse1(numb1, numb2, numb3, MINUS));
+        }
+        if (stcksFlting === 0 && movesRemaining === 2 && numb1 === numb2 + numb3) {
+                results.push(createResponse1(numb1, numb2, numb3, op));
         }
         if (stcksFlting === 2 && numb1 + numb2 === numb3) { // TODO
             results.push(createResponse(numb1, numb2, "+" + numb3, "+"));
@@ -2533,11 +2542,11 @@
             if (numb1 - numb2 === numb3 && movesRemaining === 0) {
                 results.push(createResponseWithSuperscript(numb1, numb2, numb3, op));
             }
-            if (-numb1 - numb2 === numb3) {
-                results.push(createResponse(-1*numb1, numb2, numb3, op));
+            if (-numb1 - numb2 === numb3 && movesRemaining === 0) {
+                results.push(createResponse(MINUS + numb1, numb2, numb3, op));
             }
-            if (numb3 > 0 && numb1 - numb2 === -1*numb3 && movesRemaining === 0) {
-                results.push(createResponse(numb1, numb2, -1*numb3, op));
+            if (numb3 >= 0 && numb1 - numb2 === -numb3 && movesRemaining === 0) {
+                results.push(createResponse(numb1, numb2, MINUS + numb3, op));
             }
             if (numb3 > 0 && numb1 === numb2 - numb3 && movesRemaining === 1) {
                 results.push(createResponseWithSuperscript1(numb1, numb2, numb3, op));
@@ -2551,7 +2560,7 @@
                 results.push(createResponse(MINUS + numb1, numb2, MINUS + numb3, op));
             }
             if (numb1 + numb2 === -numb3) {
-              console.log(" -------------------");
+              // console.log(" -------------------");
               results.push(createResponse(numb1, numb2, MINUS + numb3, PLUS));
             }
 
@@ -2814,14 +2823,14 @@
           const k2 = parseInt(key[1]);
           for (let i = 0; i < conf[key[0]].length; i++) {
             for (let j = 0; j < conf[key[1]].length; j++) {
-              if (key === "81") {
-                // console.log(key[0] + " " + key[1] + " " + conf[key[0]].destination + " " + conf[key[1]].destination);
+              if (key === "32") {
+                // console.log(key[0] + " " + key[1] + " " + conf[key[0]][i].destination + " " + conf[key[1]][j].destination);
                 // console.log(conf[key[0]]);
                 // console.log(conf[key[1]]);
               }
               let move = conf[key[0]][i].move + conf[key[1]][j].move;
-              // const destination = parseInt("" + conf[key[0]][i].destination + conf[key[1]][j].destination);
-              const destination = parseInt(conf[key[0]][i].destination + conf[key[1]][j].destination);
+              const destination = parseInt("" + conf[key[0]][i].destination + conf[key[1]][j].destination);
+              // const destination = parseInt(conf[key[0]][i].destination + conf[key[1]][j].destination);
 
               const mv =  matchMoves(conf[key[0]][i].add, conf[key[1]][j].add);
 
