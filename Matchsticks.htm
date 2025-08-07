@@ -2381,22 +2381,11 @@
 						const reslt = verifyAndCreateResponse(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3, sticksToMove - sticksMoved3);
 
                         if (reslt.length > 0) {
-                            //results = results.concat(reslt);
-                            results = results.concat(reslt.filter(it => !results.includes(it.trim())));
+                            results = results.concat(reslt.filter(it => !results.includes(it)));
                         }
-						// if (Array.isArray(reslt)) {
-                        //   results = results.concat(reslt);
-                        // } else if (reslt) {
-                        //   results.push(reslt);
-                        // }
 						// console.log(results);
 					}
 				}
-				//sticksMoved = conf1[i].move != null ? conf1[i].move : 0;
-				//sticksFloating = conf1[i].add != null  ? -1 * conf1[i].add : 0;
-				//if (conf1[i].add != null && conf1[i].add < 0) {
-					//sticksMoved = conf1[i].add;
-				//}
 			}
 			}
 		}
