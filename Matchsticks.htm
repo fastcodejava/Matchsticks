@@ -2329,7 +2329,7 @@
       const dropdown = document.getElementById('dropdown').value;
       // document.getElementById('output').textContent = "";
       document.getElementById('output').innerHTML  = "";
-      // console.log(JSON.stringify(conf["84"]));
+      console.log(JSON.stringify(conf["77"]));
 	  const arr = parseInput(text, "=");
 	  const operation = arr[0];
 	  result = arr[3];
@@ -2458,7 +2458,7 @@
       }
 
 	function verifyAndCreateResponse(numb1, numb2, numb3, op, stcksFlting, movesRemaining) {
-		console.log(numb1 + " "	 + numb2 + " " + numb3 + "  " + stcksFlting + " " + movesRemaining);
+		// console.log(numb1 + " "	 + numb2 + " " + numb3 + "  " + stcksFlting + " " + movesRemaining);
         let results = [];
 		switch (op) {
 			case PLUS:
@@ -2482,6 +2482,9 @@
     function verifyAndCreateResponsePlus(numb1, numb2, numb3, stcksFlting, movesRemaining) {
         let results = [];
         const op = PLUS;
+        if (numb1 === 11 && numb2 === 6 && numb3 === 17) {
+          console.log(numb1 + " " + numb2 + " " + numb3 + " " + stcksFlting);
+        }
         if (stcksFlting === 0 && movesRemaining === 0 && numb1 + numb2 === numb3) {
             results.push(createResponse(numb1, numb2, numb3, op));
         }
@@ -2527,7 +2530,8 @@
                 results.push(createResponse1(numb1, numb2, numb3, op));
         }
         if (stcksFlting === 2 && numb1 + numb2 === numb3) { // TODO
-            results.push(createResponse(numb1, numb2, "+" + numb3, "+"));
+            console.log(numb1 + " " + numb2 + " " + numb3);
+            results.push(createResponse(numb1, numb2, PLUS + numb3, PLUS));
         }
         if (stcksFlting === 2 && -numb1 + numb2 === -numb3) { // TODO
             results.push(createResponse(MINUS + numb1, numb2, MINUS + numb3, PLUS));
@@ -2843,28 +2847,36 @@
         if (k > 10) {
           const k1 = parseInt(key[0]);
           const k2 = parseInt(key[1]);
-          for (let i = 0; i < conf[key[0]].length; i++) {
+          if (k2 === 1) {
+            addCompositMappingOne(conf, key, conf[key[0]]);
+          } if (k1 === 1) {
+            addCompositMappingOne(conf, key, conf[key[1]]);
+          }
+
+            for (let i = 0; i < conf[key[0]].length; i++) {
             for (let j = 0; j < conf[key[1]].length; j++) {
               if (key === "32") {
-                // console.log(key[0] + " " + key[1] + " " + conf[key[0]][i].destination + " " + conf[key[1]][j].destination);
+                // console.log(key[0] + " " + key[1] + " " + firstConf.destination + " " + conf[key[1]][j].destination);
                 // console.log(conf[key[0]]);
                 // console.log(conf[key[1]]);
               }
-              let move = conf[key[0]][i].move + conf[key[1]][j].move;
-              const destination = parseInt("" + conf[key[0]][i].destination + conf[key[1]][j].destination);
-              // const destination = parseInt(conf[key[0]][i].destination + conf[key[1]][j].destination);
+              const firstConf = conf[key[0]][i];
+              const secondConf = conf[key[1]][j];
+              let move = firstConf.move + secondConf.move;
+              const destination = parseInt("" + firstConf.destination + secondConf.destination);
+              // const destination = parseInt(firstConf.destination + secondConf.destination);
 
-              const mv =  matchMoves(conf[key[0]][i].add, conf[key[1]][j].add);
+              const mv =  matchMoves(firstConf.add, secondConf.add);
 
               const confItem = conf[key].find(it => it.destination === destination);
 
               if (!confItem) {
                 conf[key].push({
                   destination: destination,
-                  add: conf[key[0]][i].add + conf[key[1]][j].add,
+                  add: firstConf.add + secondConf.add,
                   move: move + mv.move
-                  // 1: conf[key[0]][i].destination,
-                  // 2: conf[key[1]][j].destination
+                  // 1: firstConf.destination,
+                  // 2: secondConf.destination
                 });
               }
             }
@@ -2873,6 +2885,29 @@
       });
       // return conf;
     }
+
+    // This handles numbers that start with or ends with 1 e.g 51/15 and converts to single digits e.g 6
+    function addCompositMappingOne(conf, key, confItem) {
+      for (let i = 0; i < confItem.length; i++) {
+        const destination = parseInt("" + confItem[i].destination);
+        let obj = null;
+        if (confItem[i].add === 1) {
+          obj = {destination: destination};
+          obj.add = -1;
+          obj.move = confItem[i].move + 1;
+        } if (confItem[i].add === 2) {
+          obj = {destination: destination};
+          obj.add = 0;
+          obj.move = confItem[i].move + 2;
+        }
+        if (obj) {
+          const confItem = conf[key].find(it => it.destination === obj.destination);
+          if (!confItem) conf[key].push(obj);
+        }
+        obj = null;
+      }
+    }
+
 
     function matchMoves(num1, num2) {
       const arr1 = fillArray(num1);
