@@ -462,6 +462,11 @@
                 "destination": 14,
                 "add": 0,
                 "move": 2
+            },
+            {
+                "destination": 19,
+                "add": 2,
+                "move": 0
             }
         ],
         "10": [
@@ -2307,6 +2312,7 @@
     };
 
     window.onload = function () {
+      addIdentityAll(conf);
       conf = addToConfiguration(conf, 10);
       conf = addToConfiguration(conf, 20);
       conf = addToConfiguration(conf, 30);
@@ -2329,7 +2335,7 @@
       const dropdown = document.getElementById('dropdown').value;
       // document.getElementById('output').textContent = "";
       document.getElementById('output').innerHTML  = "";
-      console.log(JSON.stringify(conf["77"]));
+      // console.log(JSON.stringify(conf["9"]));
 	  const arr = parseInput(text, "=");
 	  const operation = arr[0];
 	  result = arr[3];
@@ -2383,13 +2389,13 @@
 						//resultStr = resultStr ? resultStr : verifyAndCreateResponse(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3);
                       // console.log(conf1[i]);
 						let reslt = verifyAndCreateResponse(getValueWithSign(conf1[i].destination, num1), getValueWithSign(conf2[j].destination, num2), getValueWithSign(conf3[k].destination, arr[3]), operation, sticksFloating3, sticksToMove - sticksMoved3);
-                      // console.log(reslt);
-                      reslt = reslt.filter((value, indx, self) => {
-                        return self.indexOf(value) === indx;
-                      });
-
+                      console.log(reslt);
+                      reslt = reslt.filter((value, indx, self) => self.indexOf(value) === indx);
+                      console.log(reslt);
+                      reslt = reslt.filter((value, indx, self) => results.indexOf(value) < 0);
                       if (reslt.length > 0) {
-                            results = results.concat(reslt.filter(it => !results.includes(it)));
+                            results = results.concat(reslt);
+                            // results = results.concat(reslt.filter(it => !results.includes(it)));
                         }
 						// console.log(results);
 					}
@@ -2482,14 +2488,15 @@
     function verifyAndCreateResponsePlus(numb1, numb2, numb3, stcksFlting, movesRemaining) {
         let results = [];
         const op = PLUS;
-        if (numb1 === 11 && numb2 === 6 && numb3 === 17) {
-          console.log(numb1 + " " + numb2 + " " + numb3 + " " + stcksFlting);
-        }
         if (stcksFlting === 0 && movesRemaining === 0 && numb1 + numb2 === numb3) {
             results.push(createResponse(numb1, numb2, numb3, op));
         }
         if (stcksFlting === 0 && movesRemaining === 1 && numb1 - numb2 === -numb3) {
             results.push(createResponse(numb1, numb2, MINUS + numb3, MINUS));
+        }
+        if (stcksFlting === 1 && movesRemaining === 1 && numb1 - numb2 === numb3) {
+            results.push(createResponse(numb1, numb2, PLUS + numb3, MINUS));
+            results.push(createResponse(PLUS + numb1, numb2, numb3, MINUS));
         }
         if (stcksFlting === 0 && movesRemaining === 1 && numb1 - numb2 === numb3) {
             results.push(createResponseWithSuperscript(numb1, numb2, numb3, MINUS));
@@ -2503,7 +2510,7 @@
 
         if (stcksFlting === 1 && movesRemaining == 0) {
             if (numb1 + numb2 === numb3) {
-                results.push(createResponseWithSuperscript(numb1, numb2, numb3, op));
+                results = results.concat(createResponseWithSuperscript(numb1, numb2, numb3, op));
             }
             if (-numb1 + numb2 === numb3) {
                 results.push(createResponse(MINUS + numb1, numb2, numb3, op));
@@ -2553,6 +2560,14 @@
             results.push(createResponse1(numb1, numb2, numb3, op));
       }
 
+      if (stcksFlting === 0 && movesRemaining === 1 && numb1 / numb2 === numb3) {
+            results.push(createResponse(numb1, numb2, numb3, DIVISION));
+      }
+
+      if (stcksFlting === 1 && movesRemaining === 1 && numb1 / numb2 === numb3) {
+            results.push(createResponseWithSuperscript(numb1, numb2, numb3, DIVISION));
+      }
+
       if (numb3 < 0 && stcksFlting === 0 && movesRemaining === 1 && numb1 + numb2 === -numb3) {
             results.push(createResponse(numb1, numb2, -numb3, PLUS));
       }
@@ -2575,6 +2590,9 @@
             }
       }
         if (stcksFlting === 2) {
+            if (numb1 - numb2 === numb3 && movesRemaining === 0) {
+                results.push(createResponse(numb1, numb2, PLUS + numb3, op));
+            }
             if (-numb1 + numb2 === numb3) {
                 results.push(createResponse(MINUS + numb1, numb2, numb3, PLUS));
             }
@@ -2844,6 +2862,9 @@
     function addCompositMapping(conf) {
       Object.keys(conf).forEach(key => {
         const k = parseInt(key);
+        if (k < 10) {
+          addCompositMappingAddOne(conf, key, conf[key[0]]);
+        }
         if (k > 10) {
           const k1 = parseInt(key[0]);
           const k2 = parseInt(key[1]);
@@ -2890,22 +2911,24 @@
     function addCompositMappingOne(conf, key, confItem) {
       for (let i = 0; i < confItem.length; i++) {
         const destination = parseInt("" + confItem[i].destination);
-        let obj = null;
         if (confItem[i].add === 1) {
-          obj = {destination: destination};
-          obj.add = -1;
-          obj.move = confItem[i].move + 1;
+          addToConfItems(conf[key], destination, {add: -1, move: confItem[i].move + 1});
         } if (confItem[i].add === 2) {
-          obj = {destination: destination};
-          obj.add = 0;
-          obj.move = confItem[i].move + 2;
+          addToConfItems(conf[key], destination, {add: 0, move: confItem[i].move + 2});
         }
-        if (obj) {
-          const confItem = conf[key].find(it => it.destination === obj.destination);
-          if (!confItem) conf[key].push(obj);
-        }
-        obj = null;
       }
+    }
+
+    // This handles single digits numbers and pads with 1 e.g 5 to double digits e.g 51/15
+    function addCompositMappingAddOne(conf, key, confItem) {
+      addToConfItems(conf[key], 10*key + 1, {move: 0, add: 2});
+      addToConfItems(conf[key], 10 + key, {move: 0, add: 2});
+    }
+
+    function addToConfItems(confItems, destination, obj) {
+      const confItem = confItems.find(it => it.destination === destination);
+      obj.destination = destination;
+      if (!confItem) confItems.push(obj);
     }
 
 
