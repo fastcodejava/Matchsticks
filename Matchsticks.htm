@@ -2533,9 +2533,9 @@
         {
           stcksFlting: 2,
           movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
+          cond: (numb1, numb2, numb3) => numb1 * numb2 === numb3,
           fn: (numb1, numb2, numb3) => [createResponse(MINUS + numb1, numb2, MINUS + numb3, MULTIPLICATION), createResponse(MINUS + numb1, MINUS + numb2, numb3, MULTIPLICATION), createResponse(numb1, MINUS + numb2, MINUS + numb3, MULTIPLICATION)]
-        },
+        }
       ],
       "/": [
         {
