@@ -28,14 +28,12 @@
     <!--option value="option3">Option 3</option-->
   </select>
 
-  <button onclick="solve()">Submit</button>
+  <button onclick="solvePuzzle()">Submit</button>
   <button onclick="copyText()">Copy</button>
 
   <p id="output"></p>
 
   <script>
-    var num1, num2, result;
-	
 	let identity = [{
 			"destination": null,
 			"add": null,
@@ -2590,41 +2588,45 @@
 	  //console.log(JSON.stringify(conf["76"]));
     };
 
-    function solve() {
-      results = [];
+    function solvePuzzle() {
       const text = document.getElementById('textbox').value;
       const dropdown = document.getElementById('dropdown').value;
       // document.getElementById('output').textContent = "";
       document.getElementById('output').innerHTML  = "";
       //console.log(JSON.stringify(conf["6"]));
-	  const arr = parseInput(text, "=");
-	  const operation = arr[0];
-	  result = arr[3];
-	  num1 = arr[1];
-	  num2 = arr[2];
-	  console.log(num1 + " " + num2 + " " + result);
-      matchMoves(-1, 1);
-	  const sticksToMove = parseInt(dropdown);
-	  var sticksMoved = 0, sticksFloating = 0;
+      const arr = parseInput(text, "=");
+      const operation = arr[0];
+      const result = arr[3];
+      const num1 = arr[1];
+      const num2 = arr[2];
+      console.log(num1 + " " + num2 + " " + result);
+      // matchMoves(-1, 1);
+      const sticksToMove = parseInt(dropdown);
+      results = solve(num1, num2, result, operation, sticksToMove, 0, 0);
+      document.getElementById('output').innerHTML = results.join("<br \>");
+    }
+
+    function solve(num1, num2, num3, operation, sticksToMove, sticksMoved, sticksFloating) {
+      let results = [];
+	  // var sticksMoved = 0, sticksFloating = 0;
       //console.log(JSON.stringify(conf["76"]));
-      // let conf1 = addIdentity(conf[Math.abs(num1)], Math.abs(num1));
-      // let conf2 = addIdentity(conf[Math.abs(num2)], Math.abs(num2));
-      // let conf3 = addIdentity(conf[Math.abs(arr[3])], Math.abs(arr[3]));
       let conf1 = conf[Math.abs(num1)];
       let conf2 = conf[Math.abs(num2)];
-      let conf3 = conf[Math.abs(arr[3])];
+      let conf3 = conf[Math.abs(num3)];
 
-//	  console.log(num1 + " " + JSON.stringify(conf1));
-//	  console.log(num2 + " " + JSON.stringify(conf2));
-//	  console.log(arr[3] + " " + JSON.stringify(conf3));
+	  console.log(num1 + " " + JSON.stringify(conf1));
+	  console.log(num2 + " " + JSON.stringify(conf2));
+	  console.log(num3  + " " + JSON.stringify(conf3));
 // 	  console.log(JSON.stringify(conf["65"]));
 		for (let i = 0; i < conf1.length; i++) {
-			var sticksMoved1 = conf1[i].move;
-			var sticksFloating1 = -1 * conf1[i].add;
+			let sticksMoved1 = sticksMoved + conf1[i].move;
+			let sticksFloating1 = sticksFloating + -1 * conf1[i].add;
 			if (conf1[i].add < 0) {
 				sticksMoved1 += -1 * conf1[i].add;
-			}		
-		if (Math.abs(sticksFloating1) <= sticksToMove && sticksMoved1 <= sticksToMove) {
+			}
+          console.log(conf1[i].move + " " + conf1[i].add);
+          console.log(sticksFloating1 + " " + sticksMoved1 + " " + sticksToMove);
+          if (Math.abs(sticksFloating1) <= sticksToMove && sticksMoved1 <= sticksToMove) {
 			// console.log("This is loop iteration #" + i);
 					
 			for (let j = 0; j < conf2.length; j++) { //
@@ -2634,10 +2636,11 @@
 				if (conf2[j].add < 0) {
 					sticksMoved2 += -1 * conf2[j].add;
 				}
-				if (sticksMoved2 <= sticksToMove && Math.abs(sticksFloating2) <= sticksToMove) {	
+              console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove);
+              if (sticksMoved2 <= sticksToMove && Math.abs(sticksFloating2) <= sticksToMove) {
 				// console.log(sticksFloating + " " + sticksMoved);
 				for (let k = 0; k < conf3.length; k++) {
-					// console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove + " " + conf2[j].add);
+					console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove + " " + conf2[j].add);
 					// console.log(conf3);
 					var sticksMoved3 = sticksMoved2 + conf3[k].move;
 					var sticksFloating3 = sticksFloating2 + -1 * conf3[k].add;
@@ -2645,11 +2648,11 @@
 						sticksMoved3 += -1 * conf3[k].add;
 					}
 					if (sticksMoved3 <= sticksToMove && Math.abs(sticksFloating3) <= sticksToMove) {
-						//console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove);
+						// console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove);
 						// console.log(conf1[i].destination + " " + conf2[j].destination + " " + conf3[k].destination);
 						//resultStr = resultStr ? resultStr : verifyAndCreateResponse(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3);
                       // console.log(conf1[i]);
-						let reslt = verifyAndCreateResponse(getValueWithSign(conf1[i].destination, num1), getValueWithSign(conf2[j].destination, num2), getValueWithSign(conf3[k].destination, arr[3]), operation, sticksFloating3, sticksToMove - sticksMoved3);
+						let reslt = verifyAndCreateResponse(getValueWithSign(conf1[i].destination, num1), getValueWithSign(conf2[j].destination, num2), getValueWithSign(conf3[k].destination, num3), operation, sticksFloating3, sticksToMove - sticksMoved3);
                       // console.log(reslt);
                       reslt = reslt.filter((value, indx, self) => self.indexOf(value) === indx);
                       // console.log(reslt);
@@ -2665,12 +2668,7 @@
 			}
 		}
 		}
-
-	  
-      const output = `You entered: "${text}" and selected: "${dropdown}"`;
-      //document.getElementById('output').textContent = num1 + ' ' + operation + ' ' + num2 + ' = ' + result + ' ' + JSON.stringify(conf[num1]);
-      // document.getElementById('output').textContent = results.join("< br\>");
-      document.getElementById('output').innerHTML = results.join("<br \>");
+		return results;
     }
 	
 	function parseInput(str, delim) {
