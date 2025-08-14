@@ -2282,7 +2282,7 @@
           stcksFlting: 1,
           movesRemaining: 1,
           cond: (numb1, numb2, numb3) => numb1 - numb2 === -numb3,
-          fn: (numb1, numb2, numb3) => [createResponse(numb1, numb2, PLUS + numb3, MINUS), createResponse(PLUS + numb1, numb2, numb3, MINUS)]
+          fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, MINUS + numb3, MINUS)
         },
         {
           stcksFlting: 0,
@@ -2603,6 +2603,25 @@
       // matchMoves(-1, 1);
       const sticksToMove = parseInt(dropdown);
       results = solve(num1, num2, result, operation, sticksToMove, 0, 0);
+      if (num1 < 0) {
+        // const reslts = results.concat(solve(-num1, num2, result, operation, sticksToMove, 1, 1, {num1: true}));
+        const reslts = results.concat(solve(-num1, num2, result, operation, sticksToMove, 1, 1));
+        results = results.concat(reslts.filter(value => {
+          return !(results.includes(value) || value.trim().startsWith("" + num1));
+        }));
+      }
+      if (result < 0) {
+        const reslts = results.concat(solve(num1, num2, -result, operation, sticksToMove, 1, 1));
+        results = results.concat(reslts.filter(value => {
+          return !(results.includes(value) || value.trim().endsWith("" + result));
+        }));
+      }
+      if (num1 < 0 && result < 0) {
+        const reslts = results.concat(solve(-num1, num2, -result, operation, sticksToMove, 2, 2));
+        results = results.concat(reslts.filter(value => {
+          return !(results.includes(value) || value.trim().startsWith("" + num1) || value.trim().endsWith("" + result));
+        }));
+      }
       document.getElementById('output').innerHTML = results.join("<br \>");
     }
 
