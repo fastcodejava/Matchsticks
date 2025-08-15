@@ -2605,7 +2605,11 @@
       output.innerHTML  = "Solving Puzzle";
       //console.log(JSON.stringify(conf["6"]));
       const arr = parseInput(text, "=");
-      const operation = arr[0];
+      if (!arr || arr.length < 4 ) {
+        output.innerHTML = "Bad equation provided";
+        return;
+      }
+      const operation = arr && arr.length > 0 ? arr[0] : "Unknown operation";
       const result = arr[3];
       const num1 = arr[1];
       const num2 = arr[2];
@@ -2652,8 +2656,8 @@
 			if (conf1[i].add < 0) {
 				sticksMoved1 += -1 * conf1[i].add;
 			}
-          console.log(conf1[i].move + " " + conf1[i].add);
-          console.log(sticksFloating1 + " " + sticksMoved1 + " " + sticksToMove);
+          // console.log(conf1[i].move + " " + conf1[i].add);
+          // console.log(sticksFloating1 + " " + sticksMoved1 + " " + sticksToMove);
           if (Math.abs(sticksFloating1) <= sticksToMove && sticksMoved1 <= sticksToMove) {
 			// console.log("This is loop iteration #" + i);
 					
@@ -2664,11 +2668,11 @@
 				if (conf2[j].add < 0) {
 					sticksMoved2 += -1 * conf2[j].add;
 				}
-              console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove);
+              // console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove);
               if (sticksMoved2 <= sticksToMove && Math.abs(sticksFloating2) <= sticksToMove) {
 				// console.log(sticksFloating + " " + sticksMoved);
 				for (let k = 0; k < conf3.length; k++) {
-					console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove + " " + conf2[j].add);
+					// console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove + " " + conf2[j].add);
 					// console.log(conf3);
 					var sticksMoved3 = sticksMoved2 + conf3[k].move;
 					var sticksFloating3 = sticksFloating2 + -1 * conf3[k].add;
