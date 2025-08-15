@@ -2573,7 +2573,7 @@
           stcksFlting: 2,
           movesRemaining: 0,
           cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
-          fn: (numb1, numb2, numb3) => [createResponse(MINUS + numb1, numb2, MINUS + numb3, DIVISION), createResponse(MINUS + numb1, MINUS + numb2, numb3, DIVISION), createResponse(numb1, MINUS + numb2, MINUS + numb3, DIVISION)]
+          fn: (numb1, numb2, numb3) => [createResponse(numb1, numb2, PLUS + numb3, DIVISION), createResponse(MINUS + numb1, numb2, MINUS + numb3, DIVISION), createResponse(MINUS + numb1, MINUS + numb2, numb3, DIVISION), createResponse(numb1, MINUS + numb2, MINUS + numb3, DIVISION)]
         },
       ]
     };
