@@ -45,7 +45,6 @@
 	const MINUS = "-";
 	const MULTIPLICATION = "x";
     const DIVISION = "/";
-    var results = [];
     let conf = {
         "0": [
             {
@@ -2542,7 +2541,7 @@
           stcksFlting: 2,
           movesRemaining: 0,
           cond: (numb1, numb2, numb3) => numb1 * numb2 === numb3,
-          fn: (numb1, numb2, numb3) => [createResponse(MINUS + numb1, numb2, MINUS + numb3, MULTIPLICATION), createResponse(MINUS + numb1, MINUS + numb2, numb3, MULTIPLICATION), createResponse(numb1, MINUS + numb2, MINUS + numb3, MULTIPLICATION)]
+          fn: (numb1, numb2, numb3) => [createResponse(numb1, numb2, PLUS + numb3, MULTIPLICATION), createResponse(MINUS + numb1, numb2, MINUS + numb3, MULTIPLICATION), createResponse(MINUS + numb1, MINUS + numb2, numb3, MULTIPLICATION), createResponse(numb1, MINUS + numb2, MINUS + numb3, MULTIPLICATION)]
         }
       ],
       "/": [
@@ -2599,6 +2598,7 @@
     };
 
     function solvePuzzle() {
+      var results = [];
       const text = document.getElementById('textbox').value;
       const dropdown = document.getElementById('dropdown').value;
       const output = document.getElementById('output');
