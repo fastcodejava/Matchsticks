@@ -112,9 +112,9 @@
         ],
         "2": [
             {
-                "destination": 2,
-                "add": 0,
-                "move": 0
+              "destination": 0,
+              "add": 1,
+              "move": 1
             },
             {
                 "destination": 5,
@@ -153,7 +153,12 @@
             }
         ],
         "3": [
-            {
+          {
+            "destination": 0,
+            "add": 1,
+            "move": 1
+          },
+          {
                 "destination": 5,
                 "add": 0,
                 "move": 1
@@ -2552,6 +2557,12 @@
           fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, DIVISION)
         },
         {
+          stcksFlting: 1,
+          movesRemaining: 0,
+          cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
+          fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, numb3, DIVISION)
+        },
+        {
           stcksFlting: 0,
           movesRemaining: 1,
           cond: (numb1, numb2, numb3) => numb1 - numb2 === numb3,
@@ -2562,6 +2573,12 @@
           movesRemaining: 0,
           cond: (numb1, numb2, numb3) => numb1 * numb2 === numb3,
           fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, MULTIPLICATION)
+        },
+        {
+          stcksFlting: 1,
+          movesRemaining: 1,
+          cond: (numb1, numb2, numb3) => numb1 + numb2 === numb3,
+          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, PLUS)
         },
         {
           stcksFlting: 0,
@@ -2603,7 +2620,7 @@
       const dropdown = document.getElementById('dropdown').value;
       const output = document.getElementById('output');
       output.innerHTML  = "Solving Puzzle";
-      //console.log(JSON.stringify(conf["6"]));
+      // console.log(JSON.stringify(conf["99"]));
       const arr = parseInput(text, "=");
       if (!arr || arr.length < 4 ) {
         output.innerHTML = "Bad equation provided";
@@ -2690,7 +2707,9 @@
                       // console.log(reslt);
                       reslt = reslt.filter((value, indx, self) => results.indexOf(value) < 0);
                       if (reslt.length > 0) {
-                            results = results.concat(reslt);
+                        console.log(num1 + " " + num2 + " " + num3);
+                        console.log(conf1[i].destination + " " + conf2[j].destination + " " + conf3[k].destination);
+                        results = results.concat(reslt);
                             // results = results.concat(reslt.filter(it => !results.includes(it)));
                         }
 						// console.log(results);
@@ -2933,11 +2952,11 @@
 
             for (let i = 0; i < conf[key[0]].length; i++) {
             for (let j = 0; j < conf[key[1]].length; j++) {
-              if (key === "32") {
+              // if (key === "32") {
                 // console.log(key[0] + " " + key[1] + " " + firstConf.destination + " " + conf[key[1]][j].destination);
                 // console.log(conf[key[0]]);
                 // console.log(conf[key[1]]);
-              }
+              // }
               const firstConf = conf[key[0]][i];
               const secondConf = conf[key[1]][j];
               let move = firstConf.move + secondConf.move;
