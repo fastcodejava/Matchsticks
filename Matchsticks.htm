@@ -46,2232 +46,2332 @@
 	const MULTIPLICATION = "x";
     const DIVISION = "/";
     let conf = {
-        "0": [
-            {
-                "destination": 3,
-                "add": -1,
-                "move": 1
-            },
-            {
-                "destination": 5,
-                "add": -1,
-                "move": 1
-            },
-            {
-                "destination": 2,
-                "add": -1,
-                "move": 1
-            },
-            {
-                "destination": 8,
-                "add": 1,
-                "move": 0
-            },
-            {
-                "destination": 9,
-                "add": 0,
-                "move": 1
-            },
-            {
-                "destination": 6,
-                "add": 0,
-                "move": 1
-            },
-            {
-                "destination": 10,
-                "add": 2,
-                "move": 0
-            },
-            {
-                "destination": 11,
-                "add": -2,
-                "move": 0
-            }
-        ],
-        "1": [
-            {
-                "destination": 3,
-                "add": 3,
-                "move": 0
-            },
-            {
-                "destination": 7,
-                "add": 1,
-                "move": 0
-            },
-            {
-                "destination": 4,
-                "add": 2,
-                "move": 0
-            },
-            {
-                "destination": 11,
-                "add": 2,
-                "move": 0
-            }
-        ],
-        "2": [
-            {
-              "destination": 0,
-              "add": 1,
-              "move": 1
-            },
-            {
-                "destination": 5,
-                "add": 0,
-                "move": 2
-            },
-            {
-                "destination": 3,
-                "add": 0,
-                "move": 1
-            },
-            {
-                "destination": 6,
-                "add": 1,
-                "move": 1
-            },
-            {
-                "destination": 0,
-                "add": 1,
-                "move": 1
-            },
-            {
-                "destination": 8,
-                "add": 2,
-                "move": 0
-            },
-            {
-                "destination": 9,
-                "add": 1,
-                "move": 1
-            },
-            {
-                "destination": 12,
-                "add": 2,
-                "move": 0
-            }
-        ],
-        "3": [
-          {
-            "destination": 0,
-            "add": 1,
-            "move": 1
-          },
-          {
-                "destination": 5,
-                "add": 0,
-                "move": 1
-            },
-            {
-                "destination": 0,
-                "add": 1,
-                "move": 1
-            },
-            {
-                "destination": 2,
-                "add": 0,
-                "move": 1
-            },
-            {
-                "destination": 4,
-                "add": -1,
-                "move": 1
-            },
-            {
-                "destination": 6,
-                "add": 1,
-                "move": 1
-            },
-            {
-                "destination": 7,
-                "add": -2,
-                "move": 0
-            },
-            {
-                "destination": 8,
-                "add": 2,
-                "move": 0
-            },
-            {
-                "destination": 9,
-                "add": 1,
-                "move": 0
-            },
-            {
-                "destination": 13,
-                "add": 2,
-                "move": 0
-            }
-        ],
-        "4": [
-            {
-                "destination": 11,
-                "add": 0,
-                "move": 1
-            },
-            {
-                "destination": 1,
-                "add": -2,
-                "move": 0
-            },
-            {
-                "destination": 3,
-                "add": 1,
-                "move": 1
-            },
-            {
-                "destination": 5,
-                "add": 1,
-                "move": 1
-            },
-            {
-                "destination": 7,
-                "add": -1,
-                "move": 1
-            },
-            {
-                "destination": 9,
-                "add": 2,
-                "move": 0
-            },
-            {
-                "destination": 14,
-                "add": 2,
-                "move": 0
-            }
-        ],
-        "5": [
-            {
-                "destination": 0,
-                "add": 1,
-                "move": 1
-            },
-            {
-                "destination": 2,
-                "add": 0,
-                "move": 2
-            },
-            {
-                "destination": 3,
-                "add": 0,
-                "move": 1
-            },
-            {
-                "destination": 4,
-                "add": -1,
-                "move": 1
-            },
-            {
-                "destination": 6,
-                "add": 1,
-                "move": 0
-            },
-            {
-                "destination": 7,
-                "add": -2,
-                "move": 1
-            },
-            {
-                "destination": 8,
-                "add": 2,
-                "move": 0
-            },
-            {
-                "destination": 9,
-                "add": 1,
-                "move": 0
-            },
-            {
-                "destination": 15,
-                "add": 2,
-                "move": 0
-            }
-        ],
-        "6": [
-            {
-                "destination": 0,
-                "add": 0,
-                "move": 1
-            },
-            {
-                "destination": 3,
-                "add": -1,
-                "move": 1
-            },
-            {
-                "destination": 2,
-                "add": -1,
-                "move": 1
-            },
-            {
-                "destination": 5,
-                "add": -1,
-                "move": 0
-            },
-            {
-                "destination": 8,
-                "add": 1,
-                "move": 0
-            },
-            {
-                "destination": 9,
-                "add": 0,
-                "move": 1
-            },
-            {
-                "destination": 15,
-                "add": 1,
-                "move": 1
-            },
-            {
-                "destination": 16,
-                "add": 2,
-                "move": 0
-            }
-        ],
-        "7": [
-            {
-                "destination": 1,
-                "add": -1,
-                "move": 0
-            },
-            {
-                "destination": 3,
-                "add": 2,
-                "move": 0
-            },
-            {
-                "destination": 4,
-                "add": 1,
-                "move": 1
-            },
-            {
-                "destination": 11,
-                "add": 1,
-                "move": 1
-            },
-            {
-                "destination": 17,
-                "add": 2,
-                "move": 0
-            }
-        ],
-        "8": [
-            {
-                "destination": 0,
-                "add": -1,
-                "move": 0
-            },
-            {
-                "destination": 5,
-                "add": -2,
-                "move": 0
-            },
-            {
-                "destination": 2,
-                "add": -2,
-                "move": 0
-            },
-            {
-                "destination": 3,
-                "add": -2,
-                "move": 0
-            },
-            {
-                "destination": 6,
-                "add": -1,
-                "move": 0
-            },
-            {
-                "destination": 9,
-                "add": -1,
-                "move": 0
-            },
-            {
-                "destination": 10,
-                "add": 1,
-                "move": 1
-            },
-            {
-                "destination": 12,
-                "add": 0,
-                "move": 2
-            },
-            {
-                "destination": 13,
-                "add": 0,
-                "move": 2
-            },
-            {
-                "destination": 15,
-                "add": 0,
-                "move": 2
-            },
-            {
-                "destination": 16,
-                "add": 1,
-                "move": 1
-            },
-            {
-                "destination": 18,
-                "add": 2,
-                "move": 0
-            },
-            {
-                "destination": 19,
-                "add": 1,
-                "move": 1
-            }
-        ],
-        "9": [
-            {
-                "destination": 0,
-                "add": 0,
-                "move": 1
-            },
-            {
-                "destination": 3,
-                "add": -1,
-                "move": 0
-            },
-            {
-                "destination": 2,
-                "add": -1,
-                "move": 1
-            },
-            {
-                "destination": 4,
-                "add": -2,
-                "move": 0
-            },
-            {
-                "destination": 5,
-                "add": -1,
-                "move": 0
-            },
-            {
-                "destination": 6,
-                "add": 0,
-                "move": 1
-            },
-            {
-                "destination": 8,
-                "add": 1,
-                "move": 0
-            },
-            {
-                "destination": 13,
-                "add": 1,
-                "move": 1
-            },
-            {
-                "destination": 15,
-                "add": 1,
-                "move": 1
-            },
-            {
-                "destination": 14,
-                "add": 0,
-                "move": 2
-            },
-            {
-                "destination": 19,
-                "add": 2,
-                "move": 0
-            }
-        ],
-        "10": [
-            {
-                "destination": 0,
-                "add": -2,
-                "move": 0
-            },
-            {
-                "destination": 8,
-                "add": -1,
-                "move": 1
-            },
-            {
-                "destination": 0,
-                "add": -2,
-                "move": 0
-            }
-        ],
-        "11": [
-            {
-                "destination": 4,
-                "add": 0,
-                "move": 1
-            },
-            {
-                "destination": 7,
-                "add": -1,
-                "move": 1
-            },
-            {
-                "destination": 0,
-                "add": 2,
-                "move": 0
-            },
-          {
-            "destination": 1,
-            "add": -2,
-            "move": 0
-          }
-        ],
-        "12": [
-            {
-                "destination": 8,
-                "add": 0,
-                "move": 2
-            },
-            {
-                "destination": 6,
-                "add": -1,
-                "move": 2
-            },
-            {
-                "destination": 9,
-                "add": -1,
-                "move": 2
-            }
-        ],
-        "13": [
-            {
-                "destination": 9,
-                "add": -1,
-                "move": 1
-            },
-            {
-                "destination": 8,
-                "add": 0,
-                "move": 2
-            },
-            {
-                "destination": 6,
-                "add": -1,
-                "move": 2
-            }
-        ],
-        "14": [
-            {
-                "destination": 9,
-                "add": 0,
-                "move": 2
-            },
-            {
-                "destination": 5,
-                "add": -1,
-                "move": 2
-            }
-        ],
-        "15": [
-            {
-                "destination": 6,
-                "add": -1,
-                "move": 1
-            },
-            {
-                "destination": 9,
-                "add": -1,
-                "move": 1
-            }
-        ],
-        "16": [
-            {
-                "destination": 8,
-                "add": -1,
-                "move": 1
-            }
-        ],
-        "17": [
-            {
-                "destination": 11,
-                "add": -1,
-                "move": 2
-            },
-            {
-                "destination": 4,
-                "add": -1,
-                "move": 1
-            }
-        ],
-        "18": [
-            {
-                "destination": 8,
-                "add": -2,
-                "move": 0
-            }
-        ],
-        "19": [
-            {
-                "destination": 8,
-                "add": -1,
-                "move": 1
-            },
-          {
-            "destination": 9,
-            "add": -2,
-            "move": 0
-          }
-        ],
-      "20": [
+      "0": [
         {
-          "destination": 30,
+          "destination": "3",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "5",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "2",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "8",
+          "add": 1,
+          "move": 0
+        },
+        {
+          "destination": "9",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 50,
+          "destination": "6",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "10",
+          "add": 2,
+          "move": 0
+        },
+        {
+          "destination": "11",
+          "add": -2,
+          "move": 0
+        }
+      ],
+      "1": [
+        {
+          "destination": "3",
+          "add": 3,
+          "move": 0
+        },
+        {
+          "destination": "7",
+          "add": 1,
+          "move": 0
+        },
+        {
+          "destination": "4",
+          "add": 2,
+          "move": 0
+        },
+        {
+          "destination": "11",
+          "add": 2,
+          "move": 0
+        }
+      ],
+      "2": [
+        {
+          "destination": "0",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "5",
+          "add": 0,
+          "move": 2
+        },
+        {
+          "destination": "3",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "6",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "0",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "8",
+          "add": 2,
+          "move": 0
+        },
+        {
+          "destination": "9",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "12",
+          "add": 2,
+          "move": 0
+        }
+      ],
+      "3": [
+        {
+          "destination": "0",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "5",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "0",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "2",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "4",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "6",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "7",
+          "add": -2,
+          "move": 0
+        },
+        {
+          "destination": "8",
+          "add": 2,
+          "move": 0
+        },
+        {
+          "destination": "9",
+          "add": 1,
+          "move": 0
+        },
+        {
+          "destination": "13",
+          "add": 2,
+          "move": 0
+        }
+      ],
+      "4": [
+        {
+          "destination": "11",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "1",
+          "add": -2,
+          "move": 0
+        },
+        {
+          "destination": "3",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "5",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "7",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "9",
+          "add": 2,
+          "move": 0
+        },
+        {
+          "destination": "14",
+          "add": 2,
+          "move": 0
+        }
+      ],
+      "5": [
+        {
+          "destination": "0",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "2",
+          "add": 0,
+          "move": 2
+        },
+        {
+          "destination": "3",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "4",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "6",
+          "add": 1,
+          "move": 0
+        },
+        {
+          "destination": "7",
+          "add": -2,
+          "move": 1
+        },
+        {
+          "destination": "8",
+          "add": 2,
+          "move": 0
+        },
+        {
+          "destination": "9",
+          "add": 1,
+          "move": 0
+        },
+        {
+          "destination": "15",
+          "add": 2,
+          "move": 0
+        }
+      ],
+      "6": [
+        {
+          "destination": "0",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "3",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "2",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "5",
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": "8",
+          "add": 1,
+          "move": 0
+        },
+        {
+          "destination": "9",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "15",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "16",
+          "add": 2,
+          "move": 0
+        }
+      ],
+      "7": [
+        {
+          "destination": "1",
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": "3",
+          "add": 2,
+          "move": 0
+        },
+        {
+          "destination": "4",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "11",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "17",
+          "add": 2,
+          "move": 0
+        }
+      ],
+      "8": [
+        {
+          "destination": "0",
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": "5",
+          "add": -2,
+          "move": 0
+        },
+        {
+          "destination": "2",
+          "add": -2,
+          "move": 0
+        },
+        {
+          "destination": "3",
+          "add": -2,
+          "move": 0
+        },
+        {
+          "destination": "6",
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": "9",
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": "10",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "12",
+          "add": 0,
+          "move": 2
+        },
+        {
+          "destination": "13",
+          "add": 0,
+          "move": 2
+        },
+        {
+          "destination": "15",
+          "add": 0,
+          "move": 2
+        },
+        {
+          "destination": "16",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "18",
+          "add": 2,
+          "move": 0
+        },
+        {
+          "destination": "19",
+          "add": 1,
+          "move": 1
+        }
+      ],
+      "9": [
+        {
+          "destination": "0",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "3",
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": "2",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "4",
+          "add": -2,
+          "move": 0
+        },
+        {
+          "destination": "5",
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": "6",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "8",
+          "add": 1,
+          "move": 0
+        },
+        {
+          "destination": "13",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "15",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "14",
+          "add": 0,
+          "move": 2
+        },
+        {
+          "destination": "19",
+          "add": 2,
+          "move": 0
+        }
+      ],
+      "10": [
+        {
+          "destination": "0",
+          "add": -2,
+          "move": 0
+        },
+        {
+          "destination": "8",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "0",
+          "add": -2,
+          "move": 0
+        }
+      ],
+      "11": [
+        {
+          "destination": "4",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "7",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "0",
+          "add": 2,
+          "move": 0
+        },
+        {
+          "destination": "1",
+          "add": -2,
+          "move": 0
+        }
+      ],
+      "12": [
+        {
+          "destination": "8",
+          "add": 0,
+          "move": 2
+        },
+        {
+          "destination": "6",
+          "add": -1,
+          "move": 2
+        },
+        {
+          "destination": "9",
+          "add": -1,
+          "move": 2
+        }
+      ],
+      "13": [
+        {
+          "destination": "9",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "8",
+          "add": 0,
+          "move": 2
+        },
+        {
+          "destination": "6",
+          "add": -1,
+          "move": 2
+        }
+      ],
+      "14": [
+        {
+          "destination": "9",
+          "add": 0,
+          "move": 2
+        },
+        {
+          "destination": "5",
+          "add": -1,
+          "move": 2
+        }
+      ],
+      "15": [
+        {
+          "destination": "6",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "9",
+          "add": -1,
+          "move": 1
+        }
+      ],
+      "16": [
+        {
+          "destination": "8",
+          "add": -1,
+          "move": 1
+        }
+      ],
+      "17": [
+        {
+          "destination": "11",
+          "add": -1,
+          "move": 2
+        },
+        {
+          "destination": "4",
+          "add": -1,
+          "move": 1
+        }
+      ],
+      "18": [
+        {
+          "destination": "8",
+          "add": -2,
+          "move": 0
+        }
+      ],
+      "19": [
+        {
+          "destination": "8",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "9",
+          "add": -2,
+          "move": 0
+        }
+      ],
+      "20": [
+        {
+          "destination": "30",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "50",
           "add": 0,
           "move": 2
         }
       ],
       "21": [
         {
-          "destination": 31,
+          "destination": "31",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 51,
+          "destination": "51",
           "add": 0,
           "move": 2
         }
       ],
       "22": [
         {
-          "destination": 32,
+          "destination": "32",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 52,
+          "destination": "52",
           "add": 0,
           "move": 2
         }
       ],
       "23": [
         {
-          "destination": 33,
+          "destination": "33",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 53,
+          "destination": "53",
           "add": 0,
           "move": 2
         }
       ],
       "24": [
         {
-          "destination": 34,
+          "destination": "34",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 54,
+          "destination": "54",
           "add": 0,
           "move": 2
         }
       ],
       "25": [
         {
-          "destination": 35,
+          "destination": "35",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 55,
+          "destination": "55",
           "add": 0,
           "move": 2
         }
       ],
       "26": [
         {
-          "destination": 36,
+          "destination": "36",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 56,
+          "destination": "56",
           "add": 0,
           "move": 2
         }
       ],
       "27": [
         {
-          "destination": 37,
+          "destination": "37",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 57,
+          "destination": "57",
           "add": 0,
           "move": 2
         }
       ],
       "28": [
         {
-          "destination": 38,
+          "destination": "38",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 58,
+          "destination": "58",
           "add": 0,
           "move": 2
         }
       ],
       "29": [
         {
-          "destination": 39,
+          "destination": "39",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 59,
+          "destination": "59",
           "add": 0,
           "move": 2
         }
       ],
       "30": [
         {
-          "destination": 20,
+          "destination": "20",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 50,
+          "destination": "50",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 80,
+          "destination": "80",
           "add": 0,
           "move": 2
         }
       ],
       "31": [
         {
-          "destination": 21,
+          "destination": "21",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 51,
+          "destination": "51",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 81,
+          "destination": "81",
           "add": 0,
           "move": 2
         }
       ],
       "32": [
         {
-          "destination": 22,
+          "destination": "22",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 52,
+          "destination": "52",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 82,
+          "destination": "82",
           "add": 0,
           "move": 2
         }
       ],
       "33": [
         {
-          "destination": 23,
+          "destination": "23",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 53,
+          "destination": "53",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 83,
+          "destination": "83",
           "add": 0,
           "move": 2
         }
       ],
       "34": [
         {
-          "destination": 24,
+          "destination": "24",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 54,
+          "destination": "54",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 84,
+          "destination": "84",
           "add": 0,
           "move": 2
         }
       ],
       "35": [
         {
-          "destination": 25,
+          "destination": "25",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 55,
+          "destination": "55",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 85,
+          "destination": "85",
           "add": 0,
           "move": 2
         }
       ],
       "36": [
         {
-          "destination": 26,
+          "destination": "26",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 56,
+          "destination": "56",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 86,
+          "destination": "86",
           "add": 0,
           "move": 2
         }
       ],
       "37": [
         {
-          "destination": 27,
+          "destination": "27",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 57,
+          "destination": "57",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 87,
+          "destination": "87",
           "add": 0,
           "move": 2
         }
       ],
       "38": [
         {
-          "destination": 28,
+          "destination": "28",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 58,
+          "destination": "58",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 88,
+          "destination": "88",
           "add": 0,
           "move": 2
         }
       ],
       "39": [
         {
-          "destination": 29,
+          "destination": "29",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 59,
+          "destination": "59",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 89,
+          "destination": "89",
           "add": 0,
           "move": 2
         }
       ],
       "40": [
         {
-          "destination": 10,
+          "destination": "10",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 70,
+          "destination": "70",
           "add": -1,
           "move": 1
         }
       ],
       "41": [
         {
-          "destination": 11,
+          "destination": "11",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 71,
+          "destination": "71",
           "add": -1,
           "move": 1
         }
       ],
       "42": [
         {
-          "destination": 12,
+          "destination": "12",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 72,
+          "destination": "72",
           "add": -1,
           "move": 1
         }
       ],
       "43": [
         {
-          "destination": 13,
+          "destination": "13",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 73,
+          "destination": "73",
           "add": -1,
           "move": 1
         }
       ],
       "44": [
         {
-          "destination": 14,
+          "destination": "14",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 74,
+          "destination": "74",
           "add": -1,
           "move": 1
         }
       ],
       "45": [
         {
-          "destination": 15,
+          "destination": "15",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 75,
+          "destination": "75",
           "add": -1,
           "move": 1
         }
       ],
       "46": [
         {
-          "destination": 16,
+          "destination": "16",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 76,
+          "destination": "76",
           "add": -1,
           "move": 1
         }
       ],
       "47": [
         {
-          "destination": 17,
+          "destination": "17",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 77,
+          "destination": "77",
           "add": -1,
           "move": 1
         }
       ],
       "48": [
         {
-          "destination": 18,
+          "destination": "18",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 78,
+          "destination": "78",
           "add": -1,
           "move": 1
         }
       ],
       "49": [
         {
-          "destination": 19,
+          "destination": "19",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 79,
+          "destination": "79",
           "add": -1,
           "move": 1
         }
       ],
       "50": [
         {
-          "destination": 30,
+          "destination": "00",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "30",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 20,
+          "destination": "40",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "20",
           "add": 0,
           "move": 2
         }
       ],
       "51": [
         {
-          "destination": 31,
+          "destination": "01",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "31",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 21,
+          "destination": "41",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "21",
           "add": 0,
           "move": 2
         }
       ],
       "52": [
         {
-          "destination": 32,
+          "destination": "02",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "32",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 22,
+          "destination": "42",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "22",
           "add": 0,
           "move": 2
         }
       ],
       "53": [
         {
-          "destination": 33,
+          "destination": "03",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "43",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "33",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 23,
+          "destination": "23",
           "add": 0,
           "move": 2
         }
       ],
       "54": [
         {
-          "destination": 34,
+          "destination": "04",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "44",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "34",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 24,
+          "destination": "24",
           "add": 0,
           "move": 2
         }
       ],
       "55": [
         {
-          "destination": 35,
+          "destination": "05",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "35",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 25,
+          "destination": "45",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "25",
           "add": 0,
           "move": 2
         }
       ],
       "56": [
         {
-          "destination": 36,
+          "destination": "05",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "46",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "36",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 26,
+          "destination": "26",
           "add": 0,
           "move": 2
         }
       ],
       "57": [
         {
-          "destination": 37,
+          "destination": "07",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "47",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "37",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 27,
+          "destination": "27",
           "add": 0,
           "move": 2
         }
       ],
       "58": [
         {
-          "destination": 38,
+          "destination": "08",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "48",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "38",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 28,
+          "destination": "28",
           "add": 0,
           "move": 2
         }
       ],
       "59": [
         {
-          "destination": 39,
+          "destination": "09",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "39",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 29,
+          "destination": "49",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "29",
           "add": 0,
           "move": 2
         }
       ],
       "60": [
-      {
-        "destination": 50,
-        "add": -1,
-        "move": 0
-      },
-      {
-        "destination": 30,
-        "add": -1,
-        "move": 1
-      },
-      {
-        "destination": 20,
-        "add": -1,
-        "move": 1
-      },
-      {
-        "destination": 80,
-        "add": 1,
-        "move": 0
-      },
-      {
-        "destination": 90,
-        "add": 0,
-        "move": 1
-      }
-    ],
-            "61": [
-      {
-        "destination": 1,
-        "add": 0,
-        "move": 1
-      },
-      {
-        "destination": 51,
-        "add": -1,
-        "move": 0
-      },
-      {
-        "destination": 21,
-        "add": -1,
-        "move": 1
-      },
-      {
-        "destination": 31,
-        "add": -1,
-        "move": 1
-      },
-      {
-        "destination": 81,
-        "add": 1,
-        "move": 0
-      },
-      {
-        "destination": 91,
-        "add": 0,
-        "move": 1
-      }
-    ],
-            "62": [
-      {
-        "destination": 02,
-        "add": 0,
-        "move": 1
-      },
-      {
-        "destination": 52,
-        "add": -1,
-        "move": 0
-      },
-      {
-        "destination": 22,
-        "add": -1,
-        "move": 1
-      },
-      {
-        "destination": 32,
-        "add": -1,
-        "move": 1
-      },
-      {
-        "destination": 82,
-        "add": 1,
-        "move": 0
-      },
-      {
-        "destination": 92,
-        "add": 0,
-        "move": 1
-      }
-    ],
-            "63": [
-      {
-        "destination": 03,
-        "add": 0,
-        "move": 1
-      },
-      {
-        "destination": 23,
-        "add": -1,
-        "move": 1
-      },
-      {
-        "destination": 53,
-        "add": -1,
-        "move": 0
-      },
-      {
-        "destination": 33,
-        "add": -1,
-        "move": 1
-      },
-      {
-        "destination": 83,
-        "add": 1,
-        "move": 0
-      },
-      {
-        "destination": 93,
-        "add": 0,
-        "move": 1
-      }
-    ],
-            "64": [
-      {
-        "destination": 04,
-        "add": 0,
-        "move": 1
-      },
-      {
-        "destination": 54,
-        "add": -1,
-        "move": 0
-      },
-      {
-        "destination": 24,
-        "add": -1,
-        "move": 1
-      },
-      {
-        "destination": 34,
-        "add": -1,
-        "move": 1
-      },
-      {
-        "destination": 84,
-        "add": 1,
-        "move": 0
-      },
-      {
-        "destination": 94,
-        "add": 0,
-        "move": 1
-      }
-    ],
-            "65": [
-      {
-        "destination": 05,
-        "add": 0,
-        "move": 1
-      },
-      {
-        "destination": 55,
-        "add": -1,
-        "move": 0
-      },
-      {
-        "destination": 25,
-        "add": -1,
-        "move": 1
-      },
-      {
-        "destination": 35,
-        "add": -1,
-        "move": 1
-      },
-      {
-        "destination": 85,
-        "add": 1,
-        "move": 0
-      },
-      {
-        "destination": 95,
-        "add": 0,
-        "move": 1
-      }
-    ],
-            "66": [
-      {
-        "destination": 06,
-        "add": 0,
-        "move": 1
-      },
-      {
-        "destination": 56,
-        "add": -1,
-        "move": 0
-      },
-      {
-        "destination": 26,
-        "add": -1,
-        "move": 1
-      },
-      {
-        "destination": 36,
-        "add": -1,
-        "move": 1
-      },
-      {
-        "destination": 86,
-        "add": 1,
-        "move": 0
-      },
-      {
-        "destination": 96,
-        "add": 0,
-        "move": 1
-      }
-    ],
-            "67": [
-      {
-        "destination": 07,
-        "add": 0,
-        "move": 1
-      },
-      {
-        "destination": 57,
-        "add": -1,
-        "move": 0
-      },
-      {
-        "destination": 27,
-        "add": -1,
-        "move": 1
-      },
-      {
-        "destination": 37,
-        "add": -1,
-        "move": 1
-      },
-      {
-        "destination": 87,
-        "add": 1,
-        "move": 0
-      },
-      {
-        "destination": 97,
-        "add": 0,
-        "move": 1
-      }
-    ],
-            "68": [
-      {
-        "destination": 08,
-        "add": 0,
-        "move": 1
-      },
-      {
-        "destination": 58,
-        "add": -1,
-        "move": 0
-      },
-      {
-        "destination": 28,
-        "add": -1,
-        "move": 1
-      },
-      {
-        "destination": 38,
-        "add": -1,
-        "move": 1
-      },
-      {
-        "destination": 88,
-        "add": 1,
-        "move": 0
-      },
-      {
-        "destination": 98,
-        "add": 0,
-        "move": 1
-      }
-    ],
-    "69": [
-      {
-        "destination": 09,
-        "add": 0,
-        "move": 1
-      },
-      {
-        "destination": 59,
-        "add": -1,
-        "move": 0
-      },
-      {
-        "destination": 29,
-        "add": -1,
-        "move": 1
-      },
-      {
-        "destination": 39,
-        "add": -1,
-        "move": 1
-      },
-      {
-        "destination": 89,
-        "add": 1,
-        "move": 0
-      },
-      {
-        "destination": 99,
-        "add": 0,
-        "move": 1
-      }
-    ],
-            "70": [
         {
-          "destination": 10,
+          "destination": "00",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "50",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 30,
+          "destination": "30",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "20",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "80",
+          "add": 1,
+          "move": 0
+        },
+        {
+          "destination": "90",
+          "add": 0,
+          "move": 1
+        }
+      ],
+      "61": [
+        {
+          "destination": "01",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "51",
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": "21",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "31",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "81",
+          "add": 1,
+          "move": 0
+        },
+        {
+          "destination": "91",
+          "add": 0,
+          "move": 1
+        }
+      ],
+      "62": [
+        {
+          "destination": "02",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "52",
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": "22",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "32",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "82",
+          "add": 1,
+          "move": 0
+        },
+        {
+          "destination": "92",
+          "add": 0,
+          "move": 1
+        }
+      ],
+      "63": [
+        {
+          "destination": "03",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "23",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "53",
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": "33",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "83",
+          "add": 1,
+          "move": 0
+        },
+        {
+          "destination": "93",
+          "add": 0,
+          "move": 1
+        }
+      ],
+      "64": [
+        {
+          "destination": "04",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "54",
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": "24",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "34",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "84",
+          "add": 1,
+          "move": 0
+        },
+        {
+          "destination": "94",
+          "add": 0,
+          "move": 1
+        }
+      ],
+      "65": [
+        {
+          "destination": "05",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "55",
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": "25",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "35",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "85",
+          "add": 1,
+          "move": 0
+        },
+        {
+          "destination": "95",
+          "add": 0,
+          "move": 1
+        }
+      ],
+      "66": [
+        {
+          "destination": "06",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "56",
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": "26",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "36",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "86",
+          "add": 1,
+          "move": 0
+        },
+        {
+          "destination": "96",
+          "add": 0,
+          "move": 1
+        }
+      ],
+      "67": [
+        {
+          "destination": "07",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "57",
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": "27",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "37",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "87",
+          "add": 1,
+          "move": 0
+        },
+        {
+          "destination": "97",
+          "add": 0,
+          "move": 1
+        }
+      ],
+      "68": [
+        {
+          "destination": "08",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "58",
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": "28",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "38",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "88",
+          "add": 1,
+          "move": 0
+        },
+        {
+          "destination": "98",
+          "add": 0,
+          "move": 1
+        }
+      ],
+      "69": [
+        {
+          "destination": "09",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "59",
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": "29",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "39",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "89",
+          "add": 1,
+          "move": 0
+        },
+        {
+          "destination": "99",
+          "add": 0,
+          "move": 1
+        }
+      ],
+      "70": [
+        {
+          "destination": "10",
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": "30",
           "add": 2,
           "move": 0
         }
       ],
       "71": [
         {
-          "destination": 11,
+          "destination": "11",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 31,
+          "destination": "31",
           "add": 2,
           "move": 0
         }
       ],
       "72": [
         {
-          "destination": 12,
+          "destination": "12",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 32,
+          "destination": "32",
           "add": 2,
           "move": 0
         }
       ],
       "73": [
         {
-          "destination": 13,
+          "destination": "13",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 33,
+          "destination": "33",
           "add": 2,
           "move": 0
         }
       ],
       "74": [
         {
-          "destination": 14,
+          "destination": "14",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 34,
+          "destination": "34",
           "add": 2,
           "move": 0
         }
       ],
       "75": [
         {
-          "destination": 15,
+          "destination": "15",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 35,
+          "destination": "35",
           "add": 2,
           "move": 0
         }
       ],
       "76": [
         {
-          "destination": 16,
+          "destination": "16",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 36,
+          "destination": "36",
           "add": 2,
           "move": 0
         }
       ],
       "77": [
         {
-          "destination": 17,
+          "destination": "17",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 37,
+          "destination": "37",
           "add": 2,
           "move": 0
         }
       ],
       "78": [
         {
-          "destination": 18,
+          "destination": "18",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 38,
+          "destination": "38",
           "add": 2,
           "move": 0
         }
       ],
       "79": [
         {
-          "destination": 19,
+          "destination": "19",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 39,
+          "destination": "39",
           "add": 2,
           "move": 0
         }
       ],
       "80": [
         {
-          "destination": 0,
-          "add": 0,
-          "move": 1
-        },
-        {
-          "destination": 30,
+          "destination": "00",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 20,
-          "add": -1,
-          "move": 1
-        },
-        {
-          "destination": 40,
+          "destination": "30",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 50,
+          "destination": "20",
+          "add": -2,
+          "move": 0
+        },
+        {
+          "destination": "50",
+          "add": -2,
+          "move": 0
+        },
+        {
+          "destination": "60",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 60,
-          "add": 0,
-          "move": 1
-        },
-        {
-          "destination": 90,
+          "destination": "90",
           "add": -1,
           "move": 0
         }
       ],
       "81": [
         {
-          "destination": 01,
+          "destination": "01",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 31,
+          "destination": "31",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 21,
+          "destination": "21",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 51,
+          "destination": "51",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 61,
+          "destination": "61",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 91,
+          "destination": "91",
           "add": -1,
           "move": 0
         }
       ],
       "82": [
         {
-          "destination": 2,
-          "add": 0,
-          "move": 1
-        },
-        {
-          "destination": 32,
-          "add": -2,
-          "move": 0
-        },
-        {
-          "destination": 22,
-          "add": -2,
-          "move": 1
-        },
-        {
-          "destination": 52,
-          "add": -2,
-          "move": 0
-        },
-        {
-          "destination": 62,
+          "destination": "02",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 92,
+          "destination": "32",
+          "add": -2,
+          "move": 0
+        },
+        {
+          "destination": "22",
+          "add": -2,
+          "move": 1
+        },
+        {
+          "destination": "52",
+          "add": -2,
+          "move": 0
+        },
+        {
+          "destination": "62",
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": "92",
           "add": -1,
           "move": 0
         }
       ],
       "83": [
         {
-          "destination": 03,
+          "destination": "03",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 33,
+          "destination": "33",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 23,
+          "destination": "23",
           "add": -2,
           "move": 1
         },
         {
-          "destination": 53,
+          "destination": "53",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 63,
+          "destination": "63",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 93,
+          "destination": "93",
           "add": -1,
           "move": 0
         }
       ],
       "84": [
         {
-          "destination": 04,
+          "destination": "04",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 34,
+          "destination": "34",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 24,
+          "destination": "24",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 54,
+          "destination": "54",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 64,
+          "destination": "64",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 94,
+          "destination": "94",
           "add": -1,
           "move": 0
         }
       ],
       "85": [
         {
-          "destination": 05,
+          "destination": "05",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 35,
+          "destination": "35",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 25,
+          "destination": "25",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 55,
+          "destination": "55",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 65,
+          "destination": "65",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 95,
+          "destination": "95",
           "add": -1,
           "move": 0
         }
       ],
       "86": [
         {
-          "destination": 06,
+          "destination": "06",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 36,
+          "destination": "36",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 26,
+          "destination": "26",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 56,
+          "destination": "56",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 66,
+          "destination": "66",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 96,
+          "destination": "96",
           "add": -1,
           "move": 0
         }
       ],
       "87": [
         {
-          "destination": 07,
+          "destination": "07",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 37,
+          "destination": "37",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 27,
+          "destination": "27",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 57,
+          "destination": "57",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 67,
+          "destination": "67",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 97,
+          "destination": "97",
           "add": -1,
           "move": 0
         }
       ],
       "88": [
         {
-          "destination": 08,
+          "destination": "08",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 38,
+          "destination": "38",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 28,
+          "destination": "28",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 58,
+          "destination": "58",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 68,
+          "destination": "68",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 98,
+          "destination": "98",
           "add": -1,
           "move": 0
         }
       ],
       "89": [
         {
-          "destination": 09,
+          "destination": "09",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 39,
+          "destination": "39",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 29,
+          "destination": "29",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 59,
+          "destination": "59",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 69,
+          "destination": "69",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 99,
+          "destination": "99",
           "add": -1,
           "move": 0
         }
       ],
       "90": [
         {
-          "destination": 00,
+          "destination": "00",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 30,
+          "destination": "30",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 20,
+          "destination": "20",
           "add": -1,
           "move": 1
         },
         {
-          "destination": 40,
+          "destination": "40",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 50,
+          "destination": "50",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 60,
+          "destination": "60",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 80,
+          "destination": "80",
           "add": 1,
           "move": 0
         }
       ],
       "91": [
         {
-          "destination": 01,
+          "destination": "01",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 31,
+          "destination": "31",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 21,
+          "destination": "21",
           "add": -1,
           "move": 1
         },
         {
-          "destination": 41,
+          "destination": "41",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 51,
+          "destination": "51",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 61,
+          "destination": "61",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 81,
+          "destination": "81",
           "add": 1,
           "move": 0
         }
       ],
       "92": [
         {
-          "destination": 02,
+          "destination": "02",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 32,
+          "destination": "32",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 22,
+          "destination": "22",
           "add": -1,
           "move": 1
         },
         {
-          "destination": 42,
+          "destination": "42",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 52,
+          "destination": "52",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 62,
+          "destination": "62",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 82,
+          "destination": "82",
           "add": 1,
           "move": 0
         }
       ],
       "93": [
         {
-          "destination": 03,
+          "destination": "03",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 33,
+          "destination": "33",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 23,
+          "destination": "23",
           "add": -1,
           "move": 1
         },
         {
-          "destination": 43,
+          "destination": "43",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 53,
+          "destination": "53",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 63,
+          "destination": "63",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 83,
+          "destination": "83",
           "add": 1,
           "move": 0
         }
       ],
       "94": [
         {
-          "destination": 04,
+          "destination": "04",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 34,
+          "destination": "34",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 24,
+          "destination": "24",
           "add": -1,
           "move": 1
         },
         {
-          "destination": 44,
+          "destination": "44",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 54,
+          "destination": "54",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 64,
+          "destination": "64",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 84,
+          "destination": "84",
           "add": 1,
           "move": 0
         }
       ],
       "95": [
         {
-          "destination": 05,
+          "destination": "05",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 35,
+          "destination": "35",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 25,
+          "destination": "25",
           "add": -1,
           "move": 1
         },
         {
-          "destination": 45,
+          "destination": "45",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 55,
+          "destination": "55",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 65,
+          "destination": "65",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 85,
+          "destination": "85",
           "add": 1,
           "move": 0
         }
       ],
       "96": [
         {
-          "destination": 06,
+          "destination": "06",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 36,
+          "destination": "36",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 26,
+          "destination": "26",
           "add": -1,
           "move": 1
         },
         {
-          "destination": 46,
+          "destination": "46",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 56,
+          "destination": "56",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 66,
+          "destination": "66",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 86,
+          "destination": "86",
           "add": 1,
           "move": 0
         }
       ],
       "97": [
         {
-          "destination": 07,
+          "destination": "07",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 37,
+          "destination": "37",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 27,
+          "destination": "27",
           "add": -1,
           "move": 1
         },
         {
-          "destination": 47,
+          "destination": "47",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 57,
+          "destination": "57",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 67,
+          "destination": "67",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 87,
+          "destination": "87",
           "add": 1,
           "move": 0
         }
       ],
       "98": [
         {
-          "destination": 08,
+          "destination": "08",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 38,
+          "destination": "38",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 28,
+          "destination": "28",
           "add": -1,
           "move": 1
         },
         {
-          "destination": 48,
+          "destination": "48",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 58,
+          "destination": "58",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 68,
+          "destination": "68",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 88,
+          "destination": "88",
           "add": 1,
           "move": 0
         }
       ],
       "99": [
         {
-          "destination": 09,
+          "destination": "09",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 39,
+          "destination": "39",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 29,
+          "destination": "29",
           "add": -1,
           "move": 1
         },
         {
-          "destination": 49,
+          "destination": "49",
           "add": -2,
           "move": 0
         },
         {
-          "destination": 59,
+          "destination": "59",
           "add": -1,
           "move": 0
         },
         {
-          "destination": 69,
+          "destination": "69",
           "add": 0,
           "move": 1
         },
         {
-          "destination": 89,
+          "destination": "89",
           "add": 1,
           "move": 0
         }
@@ -2597,21 +2697,21 @@
 
     window.onload = function () {
       addIdentityAll(conf);
-      conf = addToConfiguration(conf, 10);
-      conf = addToConfiguration(conf, 20);
-      conf = addToConfiguration(conf, 30);
-      conf = addToConfiguration(conf, 40);
-      conf = addToConfiguration(conf, 50);
-      conf = addToConfiguration(conf, 60);
-      conf = addToConfiguration(conf, 70);
-      conf = addToConfiguration(conf, 80);
-      conf = addToConfiguration(conf, 90);
+      conf = addToConfiguration(conf, 1);
+      conf = addToConfiguration(conf, 2);
+      conf = addToConfiguration(conf, 3);
+      conf = addToConfiguration(conf, 4);
+      conf = addToConfiguration(conf, 5);
+      conf = addToConfiguration(conf, 6);
+      conf = addToConfiguration(conf, 7);
+      conf = addToConfiguration(conf, 8);
+      conf = addToConfiguration(conf, 9);
       addIdentityAll(conf);
       addToConfigurationFlipDigits(conf);
       addToConfigurationOne(conf);
       addToConfigurationSeven(conf);
       addCompositMapping(conf);
-	  //console.log(JSON.stringify(conf["76"]));
+	  // console.log(JSON.stringify(conf["11"]));
     };
 
     function solvePuzzle() {
@@ -2652,7 +2752,7 @@
           return !(results.includes(value) || value.trim().startsWith("" + num1) || value.trim().endsWith("" + result));
         }));
       }
-      output.innerHTML = results.length > 0 ? results.join("<br \>") : "No Solutions";
+      output.innerHTML = results.length > 0 ? "Found " + results.length + " Solutions:<br \><br \>" + results.join("<br \>") : "No Solutions";
     }
 
     function solve(num1, num2, num3, operation, sticksToMove, sticksMoved, sticksFloating) {
@@ -2707,8 +2807,8 @@
                       // console.log(reslt);
                       reslt = reslt.filter((value, indx, self) => results.indexOf(value) < 0);
                       if (reslt.length > 0) {
-                        console.log(num1 + " " + num2 + " " + num3);
-                        console.log(conf1[i].destination + " " + conf2[j].destination + " " + conf3[k].destination);
+                        // console.log(num1 + " " + num2 + " " + num3);
+                        // console.log(conf1[i].destination + " " + conf2[j].destination + " " + conf3[k].destination);
                         results = results.concat(reslt);
                             // results = results.concat(reslt.filter(it => !results.includes(it)));
                         }
@@ -2768,7 +2868,7 @@
 		};
         Object.keys(conf).forEach(key => {
             const obj = JSON.parse(JSON.stringify(ob));
-            obj.destination = parseInt(key);
+            obj.destination = key;
             conf[key].push(obj);
         });
       }
@@ -2789,7 +2889,8 @@
           const key1 = key[1] + key[0];
           if (key !== key1) {
             const obj = JSON.parse(JSON.stringify(ob));
-            obj.destination = parseInt(key1);
+            // obj.destination = parseInt(key1);
+            obj.destination = key1;
             conf[key].push(obj);
           }
         }
@@ -2815,16 +2916,18 @@
       Object.keys(conf).forEach(key => {
         if ((key.startsWith(("1")) || key.endsWith(("1"))) && key.length > 1) {
           const key1 = key[1] + key[0];
-		  const k0 = parseInt(key[0]);
-		  const k1 = parseInt(key[1]);
+		  // const k0 = parseInt(key[0]);
+		  // const k1 = parseInt(key[1]);
+		  const k0 = key[0];
+		  const k1 = key[1];
             const obj = JSON.parse(JSON.stringify(ob));
             obj.destination = key.startsWith("1") ?  k1 : k0;
 			addItemToConf(conf[key], obj);
             const obj2 = JSON.parse(JSON.stringify(ob2));
-            obj2.destination = key.startsWith("1") ? 40 + k1 : k0*10 + 4;
+            obj2.destination = key.startsWith("1") ? "4" + k1 : k0 + 4;
 			addItemToConf(conf[key], obj2);
             const obj3 = JSON.parse(JSON.stringify(ob3));
-            obj3.destination = key.startsWith("1") ? 70 + k1 : k0*10 + 7;
+            obj3.destination = key.startsWith("1") ? "7" + k1 : k0 + 7;
 			addItemToConf(conf[key], obj3);
           }
       });
@@ -2848,13 +2951,15 @@
       Object.keys(conf).forEach(key => {
         if ((key.startsWith(("7")) || key.endsWith(("7"))) && key.length > 1) {
           const key1 = key[1] + key[0];
-          const k0 = parseInt(key[0]);
-          const k1 = parseInt(key[1]);
+          // const k0 = parseInt(key[0]);
+          // const k1 = parseInt(key[1]);
+          const k0 = key[0];
+          const k1 = key[1];
           const obj = JSON.parse(JSON.stringify(ob));
-          obj.destination = key.startsWith("7") ? 10 + parseInt(k1) : parseInt(k0)*10 + 1;
+          obj.destination = key.startsWith("7") ? "1" + k1 : k0 + 1;
           addItemToConf(conf[key], obj);
           const obj2 = JSON.parse(JSON.stringify(ob2));
-          obj2.destination = key.startsWith("7") ? 40 + parseInt(k1) : parseInt(k0)*10 + 4;
+          obj2.destination = key.startsWith("7") ? "4" + k1 : k0 + "4";
           addItemToConf(conf[key], obj2);
         }
       });
@@ -2870,23 +2975,24 @@
 		Object.keys(conf).forEach(key => {
 			// console.log(`${key}: ${conf[key]}`);
 			//console.log(key);
-			const key1 = increment + parseInt(key);
+			// const key1 = increment + parseInt(key);
+			const key1 = increment + key;
 			// if (!conf.hasOwnProperty(key1)) {
 			// 	conf[key1] = [];
 			// }
           // console.log(conf[key1]);
           if (key < 10 && conf.hasOwnProperty(key1)) {
 				//const arr = Array.from(conf[key]);
-				const arr = JSON.parse(JSON.stringify(conf[key]));
+				const arr = JSON.parse(JSON.stringify(conf[key])); // TODO
               // if (key === 6) console.log(arr);
 				for (let i = 0; i < conf[key].length; i++) {
 					const confItem = conf[key][i];
                     // console.log(num);
                     // console.log(arr[i]);
-                    const dest = parseInt(confItem.destination);
-					arr[i].destination = dest < 10 ? increment + dest : 10*increment + dest;
+                    // const dest = parseInt(confItem.destination);
+					arr[i].destination = "" + increment + confItem.destination;
 					if (debug) {
-                      console.log(key + " " + key1 + " " + dest + " " + arr[i].destination);
+                        console.log(key + " " + key1 + " " + arr[i].destination);
                     }
 				}
 				//const arr1 = JSON.parse(JSON.stringify(arr));
@@ -2960,8 +3066,8 @@
               const firstConf = conf[key[0]][i];
               const secondConf = conf[key[1]][j];
               let move = firstConf.move + secondConf.move;
-              const destination = parseInt("" + firstConf.destination + secondConf.destination);
-              // const destination = parseInt(firstConf.destination + secondConf.destination);
+              // const destination = parseInt("" + firstConf.destination + secondConf.destination);
+              const destination = firstConf.destination + secondConf.destination;
 
               const mv =  matchMoves(firstConf.add, secondConf.add);
 
@@ -2986,7 +3092,8 @@
     // This handles numbers that start with or ends with 1 e.g 51/15 and converts to single digits e.g 6
     function addCompositMappingOne(conf, key, confItem) {
       for (let i = 0; i < confItem.length; i++) {
-        const destination = parseInt("" + confItem[i].destination);
+        // const destination = parseInt("" + confItem[i].destination);
+        const destination = confItem[i].destination;
         if (confItem[i].add === 1) {
           addToConfItems(conf[key], destination, {add: -1, move: confItem[i].move + 1});
         } if (confItem[i].add === 2) {
@@ -2997,15 +3104,20 @@
 
     // This handles single digits numbers and pads with 1 e.g 5 to double digits e.g 51/15
     function addCompositMappingAddOne(conf, key, confItem) {
-      addToConfItems(conf[key], 10 * parseInt(key) + 1, {move: 0, add: 2});
-      addToConfItems(conf[key], 10 + parseInt(key), {move: 0, add: 2});
+      // addToConfItems(conf[key], 10 * parseInt(key) + 1, {move: 0, add: 2});
+      // addToConfItems(conf[key], 10 + parseInt(key), {move: 0, add: 2});
+      addToConfItems(conf[key], key + 1, {move: 0, add: 2});   // 3 -> 31
+      addToConfItems(conf[key], "1" + key, {move: 0, add: 2});  // 3 -> 13
     }
 
     function performOperation(oper, numb1, numb2, numb3, stcksFlting, movesRemaining) {
       let results = [];
       calcConf[oper].forEach(item => {
+            let num1 = parseInt(numb1);
+            let num2 = parseInt(numb2);
+            let num3 = parseInt(numb3);
             if (item.stcksFlting === stcksFlting && item.movesRemaining === movesRemaining
-              && item.cond.apply(null, [numb1, numb2, numb3])) {
+              && item.cond.apply(null, [num1, num2, num3])) {
               const result = item.fn.apply(null, [numb1, numb2, numb3]);
               // console.log(item.cond.apply(null, [numb1, numb2, numb3]));
               // console.log(result);
