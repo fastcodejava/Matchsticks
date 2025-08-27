@@ -2697,21 +2697,16 @@
 
     window.onload = function () {
       addIdentityAll(conf);
-      conf = addToConfiguration(conf, 1);
-      conf = addToConfiguration(conf, 2);
-      conf = addToConfiguration(conf, 3);
-      conf = addToConfiguration(conf, 4);
-      conf = addToConfiguration(conf, 5);
-      conf = addToConfiguration(conf, 6);
-      conf = addToConfiguration(conf, 7);
-      conf = addToConfiguration(conf, 8);
-      conf = addToConfiguration(conf, 9);
+      for (let i = 1; i < 100; i++) {
+        conf = addToConfiguration(conf, i);
+      }
+
       addIdentityAll(conf);
       addToConfigurationFlipDigits(conf);
       addToConfigurationOne(conf);
       addToConfigurationSeven(conf);
       addCompositMapping(conf);
-	  // console.log(JSON.stringify(conf["11"]));
+	  // console.log(JSON.stringify(conf["112"]));
     };
 
     function solvePuzzle() {
@@ -2767,7 +2762,7 @@
 	  // console.log(num2 + " " + JSON.stringify(conf2));
 	  // console.log(num3  + " " + JSON.stringify(conf3));
 // 	  console.log(JSON.stringify(conf["65"]));
-		for (let i = 0; i < conf1.length; i++) {
+		for (let i = 0; conf1 && i < conf1.length; i++) {
 			let sticksMoved1 = sticksMoved + conf1[i].move;
 			let sticksFloating1 = sticksFloating + -1 * conf1[i].add;
 			if (conf1[i].add < 0) {
@@ -2778,7 +2773,7 @@
           if (Math.abs(sticksFloating1) <= sticksToMove && sticksMoved1 <= sticksToMove) {
 			// console.log("This is loop iteration #" + i);
 					
-			for (let j = 0; j < conf2.length; j++) { //
+			for (let j = 0; conf2 && j < conf2.length; j++) { //
 				var sticksMoved2 = sticksMoved1 + conf2[j].move;
 				var sticksFloating2 = -1 * conf2[j].add + sticksFloating1;
 
@@ -2788,7 +2783,7 @@
               // console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove);
               if (sticksMoved2 <= sticksToMove && Math.abs(sticksFloating2) <= sticksToMove) {
 				// console.log(sticksFloating + " " + sticksMoved);
-				for (let k = 0; k < conf3.length; k++) {
+				for (let k = 0; conf3 && k < conf3.length; k++) {
 					// console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove + " " + conf2[j].add);
 					// console.log(conf3);
 					var sticksMoved3 = sticksMoved2 + conf3[k].move;
@@ -2981,9 +2976,9 @@
 			// 	conf[key1] = [];
 			// }
           // console.log(conf[key1]);
-          if (key < 10 && conf.hasOwnProperty(key1)) {
+          if (parseInt(key) < 10) {
 				//const arr = Array.from(conf[key]);
-				const arr = JSON.parse(JSON.stringify(conf[key])); // TODO
+				const arr = JSON.parse(JSON.stringify(conf[key]));
               // if (key === 6) console.log(arr);
 				for (let i = 0; i < conf[key].length; i++) {
 					const confItem = conf[key][i];
@@ -3009,7 +3004,7 @@
 //						move: 0
 //					});					
 //				}
-				conf[key1] = conf[key1].concat(arr);
+				conf[key1] = conf.hasOwnProperty(key1) ? conf[key1].concat(arr) : arr;
 			}
 		});
 		return conf;
