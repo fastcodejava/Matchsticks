@@ -18,7 +18,7 @@
 </head>
 <body>
   <h2>Matchsticks Puzzle Solver</h2>
-  <label for="textbox">Enter a wrong matchsticks equation:</label>
+  <label for="textbox">Enter a number:</label>
   <input type="text" id="textbox" placeholder="Type something..." />
 
   <label for="dropdown">Matchsticks to move :</label>
@@ -28,6 +28,16 @@
     <option value="2">3</option>
     <option value="2">4</option>
   </select>
+  <!-- Basic HTML code for radio buttons -->
+  Find:
+    <label>
+      <input type="radio" name="type" value="max">
+      Max
+    </label>
+    <label>
+      <input type="radio" name="type" value="min">
+      Min
+    </label>
 
   <button onclick="solvePuzzle()">Submit</button>
   <button onclick="copyText()">Copy</button>
@@ -2397,15 +2407,16 @@
         const text = document.getElementById('textbox').value;
         const dropdown = document.getElementById('dropdown').value;
         const output = document.getElementById('output');
-        output.innerHTML  = "Solving Puzzle";
+        const type = document.querySelector('input[name="type"]:checked').value;
+      output.innerHTML  = "Solving Puzzle";
         // console.log(JSON.stringify(conf["99"]));
         const arr = parseInput(text);
         const sticksToMove = parseInt(dropdown);
-        const results = solve(arr, sticksToMove);
+        const results = solve(arr, type, sticksToMove);
         output.innerHTML = results;
     }
 
-    function solve(arr, sticksToMove) {
+    function solve(arr, type, sticksToMove) {
         // var sticksMoved = 0, sticksFloating = 0;
         //console.log(JSON.stringify(conf["76"]));
         const num1 = arr[0];
@@ -2415,8 +2426,8 @@
         let conf2 = conf[num2];
         let conf3 = conf[num3];
 
-// 	  console.log(JSON.stringify(conf["65"]));
-        let max = 0;
+	  // console.log("Type " + type);
+        let value = 0;
         for (let i = 0; conf1 && i < conf1.length; i++) {
             let sticksMoved1 = conf1[i].move;
             let sticksFloating1 = -1 * conf1[i].add;
@@ -2436,32 +2447,65 @@
                         sticksMoved2 += -1 * conf2[j].add;
                     }
                     if (sticksMoved2 <= sticksToMove && Math.abs(sticksFloating2) <= sticksToMove) {
-                        for (let k = 0; conf3 && k < conf3.length; k++) {
+                        for (let k = 0; conf3 && arr.length === 3 && k < conf3.length; k++) {
                             var sticksMoved3 = sticksMoved2 + conf3[k].move;
                             var sticksFloating3 = sticksFloating2 + -1 * conf3[k].add;
                             if (conf3[k].add < 0) {
                                 sticksMoved3 += -1 * conf3[k].add;
                             }
                             if (sticksMoved3 <= sticksToMove && Math.abs(sticksFloating3) <= sticksToMove) {
-                                // console.log(conf1[i]);
-                                const out = [conf1[i].destination, conf2[j].destination, conf3[k].destination];
-                                if (sticksFloating3 === 2) {
-                                    // out.push("1");
+                              // console.log(conf1[i]);
+                              const out = [conf1[i].destination, conf2[j].destination, conf3[k].destination];
+                              if (sticksFloating3 === 2) {
+                                // out.push("1");
+                              }
+                              // console.log(evaluate(out));
+                              if (sticksFloating3 === 0 && sticksMoved3 === sticksToMove && type === "max" && evaluate(out) > value) {
+                                console.log(out);
+                                console.log(evaluate(out));
+                                value = evaluate(out);
+                                // console.log(value);
+                              }
+                              if (type === "min") {
+                                if (sticksFloating3 === 0 && sticksMoved3 === sticksToMove && evaluate(out) < value) {
+                                  console.log(out);
+                                  console.log(evaluate(out));
+                                  value = evaluate(out);
+                                  // console.log(value);
+                                } else if (sticksFloating3 === 1 && sticksMoved3 === sticksToMove && -evaluate(out) < value) {
+                                  console.log(out);
+                                  console.log(evaluate(out));
+                                  value = -evaluate(out);
+                                  // console.log(value);
                                 }
-                                // console.log(evaluate(out));
-                                if (sticksFloating3 === 0 && sticksMoved3 === sticksToMove && evaluate(out) > max) {
-                                    // console.log(out);
-                                    // console.log(evaluate(out));
-                                    max = evaluate(out);
-                                    // console.log(max);
-                                }
+                              }
                             }
                         }
                     }
+                    const out = arr.length === 2 ? [conf1[i].destination, conf2[j].destination] : [];
+                    if (sticksFloating2 === 1 && arr.length === 2 && sticksMoved2 === sticksToMove && type === "max" && evaluate(out) > value) {
+                        // console.log(out);
+                        // console.log(evaluate(out));
+                        value = evaluate(out);
+                        // console.log(value);
+                    }
+                  if (type === "min" && arr.length === 2) {
+                    if (sticksFloating2 === 0 && sticksMoved2 === sticksToMove && evaluate(out) < value) {
+                      // console.log(out);
+                      // console.log(evaluate(out));
+                      value = evaluate(out);
+                      // console.log(value);
+                    } else if (sticksFloating2 === 1 && sticksMoved2 === sticksToMove && -evaluate(out) < value) {
+                      // console.log(out);
+                      // console.log(evaluate(out));
+                      value = -evaluate(out);
+                      // console.log(value);
+                    }
+                  }
                 }
             }
         }
-        return max;
+        return value;
     }
 
     function evaluate(arr) {
