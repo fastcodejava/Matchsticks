@@ -2476,7 +2476,46 @@
 	  // console.log("Type " + type);
       // console.log(conf4);
       let value = parseInt(input);
-        for (let i = 0; conf1 && i < conf1.length; i++) {
+
+      function computeMinMax(sticksFloating, sticksMoved, sticksToMove, out, value, allowNegative, maxDigits) {
+          if (sticksFloating === 0 && sticksMoved === sticksToMove && type === "max") {
+            if (maxDigits) {
+              if (countDigits(out) === maxDigits && evaluate(out) > value) {
+                value = evaluate(out);
+              }
+            } else if (evaluate(out) > value) {
+              value = evaluate(out);
+              // console.log(value);
+            }
+        }
+        if (sticksFloating === 2 && sticksMoved === sticksToMove && type === "max") {
+          const out1 = out.concat(["1"]);
+          // console.log(out);
+          //console.log(evaluate(out));
+          if (maxDigits) {
+            if (countDigits(out1) === maxDigits && evaluate(out1) > value) {
+              value = evaluate(out1);
+            }
+          } else if (evaluate(out1) > value) {
+            value = evaluate(out1);
+            // console.log(value);
+          }
+        }
+        if (type === "min") {
+          console.log(out);
+          console.log(evaluate(out));
+          if (sticksFloating === 0 && sticksMoved === sticksToMove && evaluate(out) < value) {
+            value = evaluate(out);
+            // console.log(value);
+          } else if (allowNegative && sticksFloating === 1 && sticksMoved === sticksToMove && -evaluate(out) < value) {
+            value = -evaluate(out);
+            // console.log(value);
+          }
+        }
+        return value;
+      }
+
+      for (let i = 0; conf1 && i < conf1.length; i++) {
             let sticksMoved1 = conf1[i].move;
             let sticksFloating1 = -1 * conf1[i].add;
             if (conf1[i].add < 0) {
@@ -2513,118 +2552,27 @@
                                 //console.log(conf4[l]);
                                 const out = [conf1[i].destination, conf2[j].destination, conf3[k].destination, conf4[l].destination];
                                 //console.log(evaluate(out));
-                                if (sticksFloating4 === 0 && sticksMoved4 === sticksToMove && type === "max" && evaluate(out) > value) {
-                                  //console.log(evaluate(out));
-                                  value = evaluate(out);
-                                  // console.log(value);
-                                }
-                                if (sticksFloating4 === 2 && sticksMoved4 === sticksToMove && type === "max") {
-                                  const out = [conf1[i].destination, conf2[j].destination, conf3[k].destination, conf4[l].destination, "1"];
-                                  // console.log(out);
-								  //console.log(evaluate(out));
-                                  if (evaluate(out) > value)
-									value = evaluate(out);
-                                  // console.log(value);
-                                }
-                                if (type === "min") {
-                                  console.log(out);
-                                  console.log(evaluate(out));
-                                  if (sticksFloating4 === 0 && sticksMoved4 === sticksToMove && evaluate(out) < value) {
-                                    value = evaluate(out);
-                                    // console.log(value);
-                                  } else if (sticksFloating4 === 1 && sticksMoved4 === sticksToMove && -evaluate(out) < value) {
-                                    value = -evaluate(out);
-                                    // console.log(value);
-                                  }
-                                }
-                              // }
+                            value = computeMinMax(sticksFloating4, sticksMoved4, sticksToMove, out, value, true);
+                            // }
                             }
                             if (arr.length === 3 && sticksMoved3 <= sticksToMove && Math.abs(sticksFloating3) <= sticksToMove) {
                               // console.log(conf1[i]);
                               const out = [conf1[i].destination, conf2[j].destination, conf3[k].destination];
-                              if (sticksFloating3 === 2) {
-                                // out.push("1");
-                              }
-                              if (sticksFloating3 === 2 && arr.length === 3 && sticksMoved3 === sticksToMove && type === "max") {
-                                const out = [conf1[i].destination, conf2[j].destination, conf3[k].destination, "1"];
-                                // console.log(out);
-                                // console.log(evaluate(out));
-                                if (evaluate(out) > value)
-                                  value = evaluate(out);
-                                // console.log(value);
-                              }
-                              // console.log(evaluate(out));
-                              if (arr.length === 3 && sticksFloating3 === 0 && sticksMoved3 === sticksToMove && type === "max" && evaluate(out) > value) {
-                                console.log(out);
-                                console.log(evaluate(out));
-                                value = evaluate(out);
-                                // console.log(value);
-                              }
-                              if (type === "min") {
-                                console.log(out);
-                                console.log(evaluate(out));
-                                if (sticksFloating3 === 0 && sticksMoved3 === sticksToMove && evaluate(out) < value) {
-                                  value = evaluate(out);
-                                  // console.log(value);
-                                } else if (sticksFloating3 === 1 && sticksMoved3 === sticksToMove && -evaluate(out) < value) {
-                                  value = -evaluate(out);
-                                  // console.log(value);
-                                }
-                              }
+                              value = computeMinMax(sticksFloating3, sticksMoved3, sticksToMove, out, value, true);
                             }
                         }
                     }
-                    const out = arr.length === 2 ? [conf1[i].destination, conf2[j].destination] : [];
-                    if (sticksFloating2 === 0 && arr.length === 2 && sticksMoved2 === sticksToMove && type === "max" && evaluate(out) > value) {
-                        // console.log(out);
-                        console.log(evaluate(out));
-                        value = evaluate(out);
-                        // console.log(value);
-                    }
-                    if (sticksFloating2 === 2 && arr.length === 2 && sticksMoved2 === sticksToMove && type === "max") {
-                      const out = [conf1[i].destination, conf2[j].destination, "1"];
-                      // console.log(out);
-                      //   console.log(evaluate(out));
-                      if (evaluate(out) > value)
-                        value = evaluate(out);
-                        // console.log(value);
-                    }
-                  if (type === "min" && arr.length === 2) {
-                    if (sticksFloating2 === 0 && sticksMoved2 === sticksToMove && evaluate(out) < value) {
-                      // console.log(out);
-                      // console.log(evaluate(out));
-                      value = evaluate(out);
-                      // console.log(value);
-                    } else if (sticksFloating2 === 1 && sticksMoved2 === sticksToMove && -evaluate(out) < value) {
-                      // console.log(out);
-                      // console.log(evaluate(out));
-                       value = -evaluate(out);
-                      // console.log(value);
+                    if (arr.length === 2) {
+                      const out = arr.length === 2 ? [conf1[i].destination, conf2[j].destination] : [];
+                      value = computeMinMax(sticksFloating2, sticksMoved2, sticksToMove, out, value, true);
                     }
                   }
                 }
+              const out = arr.length === 1 ? [conf1[i].destination] : [];
+              if (arr.length === 1) {
+                value = computeMinMax(sticksFloating1, sticksMoved1, sticksToMove, out, value, true);
+              }
             }
-          const out = arr.length === 1 ? [conf1[i].destination] : [];
-          if (sticksFloating1 === 0 && arr.length === 1 && sticksMoved1 === sticksToMove && type === "max" && evaluate(out) > value) {
-            // console.log(out);
-            // console.log(evaluate(out));
-            value = evaluate(out);
-            // console.log(value);
-          }
-          if (type === "min" && arr.length === 1) {
-            if (sticksFloating1 === 0 && sticksMoved1 === sticksToMove && evaluate(out) < value) {
-              // console.log(out);
-              // console.log(evaluate(out));
-              value = evaluate(out);
-              // console.log(value);
-            } else if (sticksFloating1 === 1 && sticksMoved1 === sticksToMove && -evaluate(out) < value) {
-              // console.log(out);
-              // console.log(evaluate(out));
-              value = -evaluate(out);
-              // console.log(value);
-            }
-          }
-        }
         return value;
     }
 
