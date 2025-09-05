@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<br lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,20 +14,46 @@
       margin: 10px 0;
       display: block;
     }
+  label {
+    display: inline-block;
+    margin-right: 15px;
+  }
+	.radio-group label,
+	.radio-group input[type="radio"] {
+		display: inline-block;
+		margin-right: 10px; /* optional spacing */  
+	}
   </style>
 </head>
-<body>
+
   <h2>Matchsticks Puzzle Solver</h2>
-  <label for="textbox">Enter a wrong matchsticks equation:</label>
+  <label for="textbox">Enter a number:</label>
   <input type="text" id="textbox" placeholder="Type something..." />
 
   <label for="dropdown">Matchsticks to move :</label>
   <select id="dropdown">
     <option value="1">1</option>
     <option value="2">2</option>
-    <!--option value="option3">Option 3</option-->
+    <option value="3">3</option>
+    <option value="4">4</option>
   </select>
-
+  <!-- Basic HTML code for radio buttons -->
+   
+  <div class="radio-group">
+	Find: <input type="radio" id="type1" name="type" value="max"> <label for="type1">Max</label>
+	<input type="radio" id="type2" name="type" value="min"> <label for="type2">Min</label>
+  </div>
+  <br />
+    <!--
+    <label>
+      <input type="radio" name="type" value="max">
+      Max
+    </label>
+    <label>
+      <input type="radio" name="type" value="min">
+      Min
+    </label>
+    -->
   <button onclick="solvePuzzle()">Submit</button>
   <button onclick="copyText()">Copy</button>
 
@@ -40,11 +66,6 @@
 			"move": null
 		}];
 
-	const SUPERSCRIPT1 = "<sup>1</sup>";
-	const PLUS = "+";
-	const MINUS = "-";
-	const MULTIPLICATION = "x";
-    const DIVISION = "/";
     let conf = {
       "0": [
         {
@@ -137,6 +158,11 @@
           "move": 1
         },
         {
+          "destination": "7",
+          "add": -2,
+          "move": 1
+        },
+        {
           "destination": "8",
           "add": 2,
           "move": 0
@@ -157,6 +183,11 @@
           "destination": "0",
           "add": 1,
           "move": 1
+        },
+        {
+          "destination": "1",
+          "add": -3,
+          "move": 0
         },
         {
           "destination": "5",
@@ -242,6 +273,11 @@
         }
       ],
       "5": [
+        {
+          "destination": "5",
+          "add": 0,
+          "move": 0
+        },
         {
           "destination": "0",
           "add": 1,
@@ -409,7 +445,17 @@
           "move": 2
         },
         {
+          "destination": "51",
+          "add": 0,
+          "move": 2
+        },
+        {
           "destination": "16",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "61",
           "add": 1,
           "move": 1
         },
@@ -419,7 +465,17 @@
           "move": 0
         },
         {
+          "destination": "81",
+          "add": 2,
+          "move": 0
+        },
+        {
           "destination": "19",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "91",
           "add": 1,
           "move": 1
         }
@@ -2378,323 +2434,6 @@
       ]
     };
 
-    const calcConf = {
-      "+": [
-        {
-          stcksFlting: 0,
-          movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => numb1 + numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, PLUS)
-        },
-        {
-          stcksFlting: 0,
-          movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb1 - numb2 === -numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, MINUS + numb3, MINUS)
-        },
-        {
-          stcksFlting: 1,
-          movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb1 - numb2 === -numb3,
-          fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, MINUS + numb3, MINUS)
-        },
-        {
-          stcksFlting: 0,
-          movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb1 - numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, numb3, MINUS)
-        },
-        {
-          stcksFlting: 0,
-          movesRemaining: 2,
-          cond: (numb1, numb2, numb3) => numb1 * numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, MULTIPLICATION)
-        },
-        {
-          stcksFlting: -1,
-          movesRemaining: 2,
-          cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, DIVISION)
-        },
-        {
-          stcksFlting: 1,
-          movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => numb1 + numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, numb3, PLUS)
-        },
-        {
-          stcksFlting: 1,
-          movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => -numb1 + numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponse(MINUS + numb1, numb2, numb3, PLUS)
-        },
-        {
-          stcksFlting: 1,
-          movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => numb1 + numb2 === -numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, MINUS + numb3, PLUS)
-        },
-        {
-          stcksFlting: 0,
-          movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb1 - numb2 === -numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, MINUS + numb3, MINUS)
-        },
-        {
-          stcksFlting: 1,
-          movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => -numb1 - numb2 === -numb3,
-          fn: (numb1, numb2, numb3) => createResponse(MINUS + numb1, numb2, MINUS + numb3, MINUS)
-        },
-        {
-          stcksFlting: 0,
-          movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb3 === 0 && numb1 - numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, numb3, MINUS)
-        },
-        {
-          stcksFlting: -1,
-          movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb1 - numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, MINUS)
-        },
-        {
-          stcksFlting: -1,
-          movesRemaining: 2,
-          cond: (numb1, numb2, numb3) => numb1 === numb2 - numb3,
-          fn: (numb1, numb2, numb3) => createResponse1(numb1, numb2, numb3, MINUS)
-        },
-        {
-          stcksFlting: 0,
-          movesRemaining: 2,
-          cond: (numb1, numb2, numb3) => numb1 === numb2 + numb3,
-          fn: (numb1, numb2, numb3) => createResponse1(numb1, numb2, numb3, PLUS)
-        },
-        {
-          stcksFlting: 2,
-          movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => numb1 + numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, PLUS + numb3, PLUS)
-        },
-        {
-          stcksFlting: 2,
-          movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => -numb1 + numb2 === -numb3,
-          fn: (numb1, numb2, numb3) => createResponse(MINUS + numb1, numb2, MINUS + numb3, PLUS)
-        }
-      ],
-      "-": [
-        {
-          stcksFlting: 0,
-          movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => numb1 - numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, MINUS)
-        },
-        {
-          stcksFlting: 1,
-          movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb1 * numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, MULTIPLICATION)
-        },
-        {
-          stcksFlting: 0,
-          movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb1 === numb2 - numb3,
-          fn: (numb1, numb2, numb3) => createResponse1(numb1, numb2, numb3, MINUS)
-        },
-        {
-          stcksFlting: 0,
-          movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, DIVISION)
-        },
-        {
-          stcksFlting: 1,
-          movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, numb3, DIVISION)
-        },
-        {
-          stcksFlting: 0,
-          movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb3 < 0 && numb1 + numb2 === -numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, -numb3, PLUS)
-        },
-        {
-          stcksFlting: 1,
-          movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => numb1 + numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, PLUS)
-        },
-        {
-          stcksFlting: 1,
-          movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => numb1 - numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, numb3, MINUS)
-        },
-        {
-          stcksFlting: 1,
-          movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => -numb1 - numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponse(MINUS + numb1, numb2, numb3, MINUS)
-        },
-        {
-          stcksFlting: 1,
-          movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => numb3 >= 0 && numb1 - numb2 === -numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, MINUS + numb3, MINUS)
-        },
-        {
-          stcksFlting: 1,
-          movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb3 >= 0 && numb1 === numb2 - numb3,
-          fn: (numb1, numb2, numb3) => createResponseWithSuperscript1(numb1, numb2,  numb3, MINUS)
-        },
-        {
-          stcksFlting: 2,
-          movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => numb1 - numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2,  PLUS + numb3, MINUS)
-        },
-        {
-          stcksFlting: 2,
-          movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => -numb1 + numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponse(MINUS + numb1, numb2,  numb3, PLUS)
-        },
-        {
-          stcksFlting: 2,
-          movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => -numb1 - numb2 === -numb3,
-          fn: (numb1, numb2, numb3) => createResponse(MINUS + numb1, numb2,  MINUS + numb3, MINUS)
-        },
-        {
-          stcksFlting: 2,
-          movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => numb1 + numb2 === -numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, MINUS + numb3, PLUS)
-        },
-        {
-          stcksFlting: 2,
-          movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => numb1 + numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, numb3, PLUS)
-        }
-      ],
-      "x": [
-        {
-          stcksFlting: 0,
-          movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => numb1 * numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, MULTIPLICATION)
-        },
-        {
-          stcksFlting: 0,
-          movesRemaining: 2,
-          cond: (numb1, numb2, numb3) => numb1 + numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, PLUS)
-        },
-        {
-          stcksFlting: 0,
-          movesRemaining: 2,
-          cond: (numb1, numb2, numb3) => numb1 - numb2 === -numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, MINUS + numb3, MINUS)
-        },
-        {
-          stcksFlting: 0,
-          movesRemaining: 2,
-          cond: (numb1, numb2, numb3) => -numb1 - numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponse(MINUS + numb1, numb2, numb3, MINUS)
-        },
-        {
-          stcksFlting: -1,
-          movesRemaining: 2,
-          cond: (numb1, numb2, numb3) => -numb1 - numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, MINUS)
-        },
-        {
-          stcksFlting: 0,
-          movesRemaining: 2,
-          cond: (numb1, numb2, numb3) => numb1 - numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, numb3, MINUS)
-        },
-        {
-          stcksFlting: 1,
-          movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
-          fn: (numb1, numb2, numb3) => [createResponse(MINUS + numb1, MINUS + numb2, numb3, DIVISION), createResponse(numb1, MINUS + numb2, MINUS + numb3, DIVISION), createResponse(MINUS + numb1, numb2, MINUS + numb3, DIVISION)]
-        },
-        {
-          stcksFlting: -1,
-          movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, DIVISION)
-        },
-        {
-          stcksFlting: 1,
-          movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => numb1 * numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, numb3, MULTIPLICATION)
-        },
-        {
-          stcksFlting: 1,
-          movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
-          fn: (numb1, numb2, numb3) => [createResponse(MINUS + numb1, MINUS + numb2, numb3, DIVISION), createResponse(numb1, MINUS + numb2, MINUS + numb3, DIVISION), createResponse(MINUS + numb1, numb2, MINUS + numb3, DIVISION)]
-        },
-        {
-          stcksFlting: 2,
-          movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => numb1 * numb2 === numb3,
-          fn: (numb1, numb2, numb3) => [createResponse(numb1, numb2, PLUS + numb3, MULTIPLICATION), createResponse(MINUS + numb1, numb2, MINUS + numb3, MULTIPLICATION), createResponse(MINUS + numb1, MINUS + numb2, numb3, MULTIPLICATION), createResponse(numb1, MINUS + numb2, MINUS + numb3, MULTIPLICATION)]
-        }
-      ],
-      "/": [
-        {
-          stcksFlting: 0,
-          movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, DIVISION)
-        },
-        {
-          stcksFlting: 1,
-          movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, numb3, DIVISION)
-        },
-        {
-          stcksFlting: 0,
-          movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb1 - numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, MINUS)
-        },
-        {
-          stcksFlting: 1,
-          movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => numb1 * numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, MULTIPLICATION)
-        },
-        {
-          stcksFlting: 1,
-          movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb1 + numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, PLUS)
-        },
-        {
-          stcksFlting: 0,
-          movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb1 - numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, MINUS)
-        },
-        {
-          stcksFlting: 2,
-          movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
-          fn: (numb1, numb2, numb3) => [createResponse(numb1, numb2, PLUS + numb3, DIVISION), createResponse(MINUS + numb1, numb2, MINUS + numb3, DIVISION), createResponse(MINUS + numb1, MINUS + numb2, numb3, DIVISION), createResponse(numb1, MINUS + numb2, MINUS + numb3, DIVISION)]
-        },
-      ]
-    };
-
     window.onload = function () {
       addIdentityAll(conf);
       for (let i = 1; i < 100; i++) {
@@ -2706,146 +2445,156 @@
       addToConfigurationOne(conf);
       addToConfigurationSeven(conf);
       addCompositMapping(conf);
-	  // console.log(JSON.stringify(conf["112"]));
+	  // console.log(JSON.stringify(conf["18"]));
     };
 
     function solvePuzzle() {
-      var results = [];
-      const text = document.getElementById('textbox').value;
-      const dropdown = document.getElementById('dropdown').value;
-      const output = document.getElementById('output');
+        const input = document.getElementById('textbox').value;
+        const dropdown = document.getElementById('dropdown').value;
+        const output = document.getElementById('output');
+        const type = document.querySelector('input[name="type"]:checked').value;
       output.innerHTML  = "Solving Puzzle";
-      // console.log(JSON.stringify(conf["99"]));
-      const arr = parseInput(text, "=");
-      if (!arr || arr.length < 4 ) {
-        output.innerHTML = "Bad equation provided";
-        return;
-      }
-      const operation = arr && arr.length > 0 ? arr[0] : "Unknown operation";
-      const result = arr[3];
-      const num1 = arr[1];
-      const num2 = arr[2];
-      console.log(num1 + " " + num2 + " " + result);
-      const sticksToMove = parseInt(dropdown);
-      results = solve(num1, num2, result, operation, sticksToMove, 0, 0);
-      if (num1 < 0) {
-        // const reslts = results.concat(solve(-num1, num2, result, operation, sticksToMove, 1, 1, {num1: true}));
-        const reslts = results.concat(solve(-num1, num2, result, operation, sticksToMove, 1, 1));
-        results = results.concat(reslts.filter(value => {
-          return !(results.includes(value) || value.trim().startsWith("" + num1));
-        }));
-      }
-      if (result < 0) {
-        const reslts = results.concat(solve(num1, num2, -result, operation, sticksToMove, 1, 1));
-        results = results.concat(reslts.filter(value => {
-          return !(results.includes(value) || value.trim().endsWith("" + result));
-        }));
-      }
-      if (num1 < 0 && result < 0) {
-        const reslts = results.concat(solve(-num1, num2, -result, operation, sticksToMove, 2, 2));
-        results = results.concat(reslts.filter(value => {
-          return !(results.includes(value) || value.trim().startsWith("" + num1) || value.trim().endsWith("" + result));
-        }));
-      }
-      output.innerHTML = results.length > 0 ? "Found " + results.length + " Solutions:<br \><br \>" + results.join("<br \>") : "No Solutions";
+        // console.log(JSON.stringify(conf["99"]));
+        const sticksToMove = parseInt(dropdown);
+        const results = solve(input, type, sticksToMove);
+        output.innerHTML = results;
     }
 
-    function solve(num1, num2, num3, operation, sticksToMove, sticksMoved, sticksFloating) {
-      let results = [];
-	  // var sticksMoved = 0, sticksFloating = 0;
-      //console.log(JSON.stringify(conf["76"]));
-      let conf1 = conf[Math.abs(num1)];
-      let conf2 = conf[Math.abs(num2)];
-      let conf3 = conf[Math.abs(num3)];
+    function solve(input, type, sticksToMove) {
+        // var sticksMoved = 0, sticksFloating = 0;
+        //console.log(JSON.stringify(conf["76"]));
+		const arr = parseInput(input);
+        const num1 = arr[0];
+        const num2 = arr[1];
+        const num3 = arr[2];
+        const num4 = arr[3];
+        let conf1 = conf[num1];
+        let conf2 = conf[num2];
+        let conf3 = conf[num3];
+        let conf4 = conf[num4];
 
-	  // console.log(num1 + " " + JSON.stringify(conf1));
-	  // console.log(num2 + " " + JSON.stringify(conf2));
-	  // console.log(num3  + " " + JSON.stringify(conf3));
-// 	  console.log(JSON.stringify(conf["65"]));
-		for (let i = 0; conf1 && i < conf1.length; i++) {
-			let sticksMoved1 = sticksMoved + conf1[i].move;
-			let sticksFloating1 = sticksFloating + -1 * conf1[i].add;
-			if (conf1[i].add < 0) {
-				sticksMoved1 += -1 * conf1[i].add;
-			}
-          // console.log(conf1[i].move + " " + conf1[i].add);
-          // console.log(sticksFloating1 + " " + sticksMoved1 + " " + sticksToMove);
-          if (Math.abs(sticksFloating1) <= sticksToMove && sticksMoved1 <= sticksToMove) {
-			// console.log("This is loop iteration #" + i);
-					
-			for (let j = 0; conf2 && j < conf2.length; j++) { //
-				var sticksMoved2 = sticksMoved1 + conf2[j].move;
-				var sticksFloating2 = -1 * conf2[j].add + sticksFloating1;
+	  // console.log("Type " + type);
+      // console.log(conf4);
+      let value = parseInt(input);
 
-				if (conf2[j].add < 0) {
-					sticksMoved2 += -1 * conf2[j].add;
-				}
-              // console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove);
-              if (sticksMoved2 <= sticksToMove && Math.abs(sticksFloating2) <= sticksToMove) {
-				// console.log(sticksFloating + " " + sticksMoved);
-				for (let k = 0; conf3 && k < conf3.length; k++) {
-					// console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove + " " + conf2[j].add);
-					// console.log(conf3);
-					var sticksMoved3 = sticksMoved2 + conf3[k].move;
-					var sticksFloating3 = sticksFloating2 + -1 * conf3[k].add;
-					if (conf3[k].add < 0) {
-						sticksMoved3 += -1 * conf3[k].add;
-					}
-					if (sticksMoved3 <= sticksToMove && Math.abs(sticksFloating3) <= sticksToMove) {
-						// console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove);
-						// console.log(conf1[i].destination + " " + conf2[j].destination + " " + conf3[k].destination);
-						//resultStr = resultStr ? resultStr : verifyAndCreateResponse(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3);
-                      // console.log(conf1[i]);
-						let reslt = verifyAndCreateResponse(getValueWithSign(conf1[i].destination, num1), getValueWithSign(conf2[j].destination, num2), getValueWithSign(conf3[k].destination, num3), operation, sticksFloating3, sticksToMove - sticksMoved3);
-                      // console.log(reslt);
-                      reslt = reslt.filter((value, indx, self) => self.indexOf(value) === indx);
-                      // console.log(reslt);
-                      reslt = reslt.filter((value, indx, self) => results.indexOf(value) < 0);
-                      if (reslt.length > 0) {
-                        // console.log(num1 + " " + num2 + " " + num3);
-                        // console.log(conf1[i].destination + " " + conf2[j].destination + " " + conf3[k].destination);
-                        results = results.concat(reslt);
-                            // results = results.concat(reslt.filter(it => !results.includes(it)));
+      function computeMinMax(sticksFloating, sticksMoved, sticksToMove, out, value, allowNegative, maxDigits) {
+          if (sticksFloating === 0 && sticksMoved === sticksToMove && type === "max") {
+            if (maxDigits) {
+              if (countDigits(out) === maxDigits && evaluate(out) > value) {
+                value = evaluate(out);
+              }
+            } else if (evaluate(out) > value) {
+              value = evaluate(out);
+              // console.log(value);
+            }
+        }
+        if (sticksFloating === 2 && sticksMoved === sticksToMove && type === "max") {
+          const out1 = out.concat(["1"]);
+          // console.log(out);
+          //console.log(evaluate(out));
+          if (maxDigits) {
+            if (countDigits(out1) === maxDigits && evaluate(out1) > value) {
+              value = evaluate(out1);
+            }
+          } else if (evaluate(out1) > value) {
+            value = evaluate(out1);
+            // console.log(value);
+          }
+        }
+        if (type === "min") {
+          console.log(out);
+          console.log(evaluate(out));
+          if (sticksFloating === 0 && sticksMoved === sticksToMove && evaluate(out) < value) {
+            value = evaluate(out);
+            // console.log(value);
+          } else if (allowNegative && sticksFloating === 1 && sticksMoved === sticksToMove && -evaluate(out) < value) {
+            value = -evaluate(out);
+            // console.log(value);
+          }
+        }
+        return value;
+      }
+
+      for (let i = 0; conf1 && i < conf1.length; i++) {
+            let sticksMoved1 = conf1[i].move;
+            let sticksFloating1 = -1 * conf1[i].add;
+            if (conf1[i].add < 0) {
+                sticksMoved1 += -1 * conf1[i].add;
+            }
+            // console.log(conf1[i].move + " " + conf1[i].add);
+            // console.log(sticksFloating1 + " " + sticksMoved1 + " " + sticksToMove);
+            if (Math.abs(sticksFloating1) <= sticksToMove && sticksMoved1 <= sticksToMove) {
+                // console.log("This is loop iteration #" + i);
+
+                for (let j = 0; conf2 && j < conf2.length; j++) { //
+                    var sticksMoved2 = sticksMoved1 + conf2[j].move;
+                    var sticksFloating2 = -1 * conf2[j].add + sticksFloating1;
+
+                    if (conf2[j].add < 0) {
+                        sticksMoved2 += -1 * conf2[j].add;
+                    }
+                    if (sticksMoved2 <= sticksToMove && Math.abs(sticksFloating2) <= sticksToMove) {
+						//console.log(conf3);
+                        for (let k = 0; conf3 && k < conf3.length; k++) {
+                            let sticksMoved3 = sticksMoved2 + conf3[k].move;
+                            let sticksFloating3 = sticksFloating2 + -1 * conf3[k].add;
+                            if (conf3[k].add < 0) {
+                                sticksMoved3 += -1 * conf3[k].add;
+                            }
+
+                          for (let l = 0; conf4 && l < conf4.length; l++) {
+                              let sticksMoved4 = sticksMoved3 + conf4[l].move;
+                              let sticksFloating4 = sticksFloating3 + -1 * conf4[l].add;
+                              if (conf4[l].add < 0) {
+                                sticksMoved4 += -1 * conf4[l].add;
+                              }
+                              // if (sticksMoved4 <= sticksToMove && Math.abs(sticksFloating4) <= sticksToMove) {
+                                //console.log(conf4[l]);
+                                const out = [conf1[i].destination, conf2[j].destination, conf3[k].destination, conf4[l].destination];
+                                //console.log(evaluate(out));
+                            value = computeMinMax(sticksFloating4, sticksMoved4, sticksToMove, out, value, true);
+                            // }
+                            }
+                            if (arr.length === 3 && sticksMoved3 <= sticksToMove && Math.abs(sticksFloating3) <= sticksToMove) {
+                              // console.log(conf1[i]);
+                              const out = [conf1[i].destination, conf2[j].destination, conf3[k].destination];
+                              value = computeMinMax(sticksFloating3, sticksMoved3, sticksToMove, out, value, true);
+                            }
                         }
-						// console.log(results);
-					}
-				}
-			}
-			}
-		}
-		}
-		return results;
+                    }
+                    if (arr.length === 2) {
+                      const out = arr.length === 2 ? [conf1[i].destination, conf2[j].destination] : [];
+                      value = computeMinMax(sticksFloating2, sticksMoved2, sticksToMove, out, value, true);
+                    }
+                  }
+                }
+              const out = arr.length === 1 ? [conf1[i].destination] : [];
+              if (arr.length === 1) {
+                value = computeMinMax(sticksFloating1, sticksMoved1, sticksToMove, out, value, true);
+              }
+            }
+        return value;
     }
-	
-	function parseInput(str, delim) {
-		// 1 + 5 = 8
-		const i = str.indexOf(delim);
-        const num3 = parseInt(str.substring(i+1).trim());
-		const s = str.substring(0, i).trim();
-        let arr = breakInput(s, num3, PLUS);
-        if (arr) return arr;
-        arr = breakInput(s, num3, MINUS);
-        if (arr) return arr;
-        arr = breakInput(s, num3, MULTIPLICATION);
-        if (arr) return arr;
-        arr = breakInput(s, num3, DIVISION);
-        if (arr) return arr;
 
-		return arr;
+    function evaluate(arr) {
+      return parseInt(arr.join(""));
+    }
+
+    
+	function countDigits(arr) {
+		let digitCount = 0;
+		for (const str of arr) {
+			for (const char of str)
+				digitCount++;
+		}
+		return digitCount;
 	}
 
-    function breakInput(str, num3, sign) {
-      const arr = [];
-      const j = str.indexOf(sign);
-      if (j > 0) {
-        arr[0] = sign;
-        arr[1] = parseInt(str.substring(0, j).trim());
-        arr[2] = parseInt(str.substring(j+1).trim());
-        arr[3] = num3;
-        return arr;
-      }
-      return null;
-    }
+	function parseInput(str) {
+		// 1 + 5 = 8
+		// return [...str].map(i => parseInt(i));
+		return [...str];
+	}
 
     function addIdentity(arr, num) {
 		const ar = [{
@@ -2868,11 +2617,6 @@
         });
       }
 
-	function verifyAndCreateResponse(numb1, numb2, numb3, op, stcksFlting, movesRemaining) {
-		// console.log(numb1 + " "	 + numb2 + " " + numb3 + "  " + stcksFlting + " " + movesRemaining);
-        return performOperation(op, numb1, numb2, numb3, stcksFlting, movesRemaining);
-	}
-
     function addToConfigurationFlipDigits(conf) {
       const ob = {
         "destination": 1,
@@ -2880,13 +2624,17 @@
         "move": 2
       };
       Object.keys(conf).forEach(key => {
-        if ((key.startsWith(("1")) || key.endsWith(("1"))) && key.length > 1) {
-          const key1 = key[1] + key[0];
-          if (key !== key1) {
+        if ((key.startsWith(("1")) || key.endsWith(("1")))) {
+          let key1;
+          if (key.length === 2) {
+            key1 = key[1] + key[0];
+          } else if (key.length === 3) {
+            key1 = key[2] + key[1] + key[0];
+          }
+          if (key1 && key !== key1) {
             const obj = JSON.parse(JSON.stringify(ob));
-            // obj.destination = parseInt(key1);
             obj.destination = key1;
-            conf[key].push(obj);
+            addItemToConf(conf[key], ob);
           }
         }
       });
@@ -2909,10 +2657,8 @@
         "move": 0
       };
       Object.keys(conf).forEach(key => {
-        if ((key.startsWith(("1")) || key.endsWith(("1"))) && key.length > 1) {
+        if ((key.startsWith(("1")) || key.endsWith(("1"))) && key.length === 2) {
           const key1 = key[1] + key[0];
-		  // const k0 = parseInt(key[0]);
-		  // const k1 = parseInt(key[1]);
 		  const k0 = key[0];
 		  const k1 = key[1];
             const obj = JSON.parse(JSON.stringify(ob));
@@ -2944,10 +2690,8 @@
         "move": 1
       };
       Object.keys(conf).forEach(key => {
-        if ((key.startsWith(("7")) || key.endsWith(("7"))) && key.length > 1) {
+        if ((key.startsWith(("7")) || key.endsWith(("7"))) && key.length === 2) {
           const key1 = key[1] + key[0];
-          // const k0 = parseInt(key[0]);
-          // const k1 = parseInt(key[1]);
           const k0 = key[0];
           const k1 = key[1];
           const obj = JSON.parse(JSON.stringify(ob));
@@ -3042,7 +2786,7 @@
         if (k < 10) {
           addCompositMappingAddOne(conf, key, conf[key[0]]);
         }
-        if (k > 10) {
+        if (k > 10 && k < 100) {
           const k1 = parseInt(key[0]);
           const k2 = parseInt(key[1]);
           if (k2 === 1) {
@@ -3161,31 +2905,6 @@
         arr.push(num > 0 ? 1 : -1);
       }
       return arr;
-    }
-
-
-    function print(low, high) {
-        let obj = {};
-        let ob = {
-            "destination": 1,
-            "add": 0,
-            "move": 1
-        }
-        let x = 0;
-        for (let i = low; i < high; i++) {
-            obj[i] = [];
-          const ob1 = JSON.parse(JSON.stringify(ob));
-          const ii = x++;
-          ob1.destination = 20 + ii;
-          obj[i].push(ob1);
-          const ob2 = JSON.parse(JSON.stringify(ob));
-          ob2.destination = 50 + ii;
-          ob2.move = 2;
-          obj[i].push(ob2);
-        }
-        console.log(JSON.stringify(obj, null, 2));
-        // console.log(JSON.stringify(conf, null, 2));
-        return obj;
     }
 
     function copyText() {
