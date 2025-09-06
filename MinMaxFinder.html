@@ -2554,8 +2554,8 @@
                                 //console.log(conf4[l]);
                                 const out = [conf1[i].destination, conf2[j].destination, conf3[k].destination, conf4[l].destination];
                                 //console.log(out);
-                            value = computeMinMax(sticksFloating4, sticksMoved4, sticksToMove, out, value, false, 5, 10000, 99999);
-                            // value = computeMinMax(sticksFloating4, sticksMoved4, sticksToMove, out, value, true);
+                            //value = computeMinMax(sticksFloating4, sticksMoved4, sticksToMove, out, value, false, 5, 10000, 99999);
+                            value = computeMinMax(sticksFloating4, sticksMoved4, sticksToMove, out, value, true);
                             // }
                             }
                             if (arr.length === 3 && sticksMoved3 <= sticksToMove && Math.abs(sticksFloating3) <= sticksToMove) {
