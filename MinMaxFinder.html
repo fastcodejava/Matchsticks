@@ -2502,16 +2502,36 @@
           }
         }
         if (type === "min") {
-          console.log(out);
-          console.log(evaluate(out));
-          if (sticksFloating === 0 && sticksMoved === sticksToMove && evaluate(out) < value) {
-            value = evaluate(out);
-            // console.log(value);
+          // console.log(out);
+          // console.log(evaluate(out));
+          if (sticksFloating === 0 && sticksMoved === sticksToMove) {
+            if (maxDigits) {
+              // console.log(out);
+              // if (countDigits(out) === maxDigits && out[0] !== "0" && evaluate(out) < value) {
+              if (countDigits(out) === maxDigits && evaluate(out) < value) {
+                value = evaluate(out);
+              }
+            } else if (evaluate(out) < value) {
+              value = evaluate(out);
+              // console.log(value);
+            }
           } else if (allowNegative && sticksFloating === 1 && sticksMoved === sticksToMove && -evaluate(out) < value) {
             value = -evaluate(out);
             // console.log(value);
           }
-        }
+          if (sticksFloating === 2 && sticksMoved === sticksToMove) {
+            const out1 = ["1"].concat(out);
+            if (maxDigits) {
+              console.log(out1);
+              if (countDigits(out1) === maxDigits && evaluate(out1) < value) {
+                value = evaluate(out1);
+              }
+            } else if (evaluate(out1) < value) {
+              value = evaluate(out1);
+              // console.log(value);
+            }
+          }
+          }
         return value;
       }
 
