@@ -133,6 +133,11 @@
       ],
       "2": [
         {
+          "destination": "2",
+          "add": 0,
+          "move": 0
+        },
+        {
           "destination": "0",
           "add": 1,
           "move": 1
@@ -2475,7 +2480,8 @@
 
 	  // console.log("Type " + type);
       // console.log(conf4);
-      let value = parseInt(input);
+      //let value = parseInt(input);
+      let value = getInitialValue(input, type);
 
       function computeMinMax(sticksFloating, sticksMoved, sticksToMove, out, value, allowNegative, maxDigits, minValue, maxValue) {
           if (sticksFloating === 0 && sticksMoved === sticksToMove && type === "max" && isValid(type, out, value, minValue, maxValue)) {
@@ -2488,7 +2494,7 @@
           //console.log(evaluate(out));
         }
         if (type === "min") {
-          // console.log(out);
+          //console.log(out);
           // console.log(evaluate(out));
           // type, out, value, allowNegative, maxDigits, minValue, maxValue
           if (sticksFloating === 0 && sticksMoved === sticksToMove && isValid(type, out, value, minValue, maxValue)) {
@@ -2500,10 +2506,11 @@
           if (sticksFloating === 2 && sticksMoved === sticksToMove) {
             const out1 = ["1"].concat(out);
             value = isValid(type, out1, value, minValue, maxValue) ? evaluate(out1): value;
+			// console.log(value);
           }
           if (sticksFloating === 0 &&  sticksToMove - sticksMoved === 2) {
             const out1 = flipOne(out);
-            console.log(out1);
+            // console.log(out1);
             value = isValid(type, out1, value, minValue, maxValue) ? evaluate(out1): value;
           }
           }
@@ -2546,14 +2553,15 @@
                               // if (sticksMoved4 <= sticksToMove && Math.abs(sticksFloating4) <= sticksToMove) {
                                 //console.log(conf4[l]);
                                 const out = [conf1[i].destination, conf2[j].destination, conf3[k].destination, conf4[l].destination];
-                                //console.log(evaluate(out));
-                            value = computeMinMax(sticksFloating4, sticksMoved4, sticksToMove, out, value, true);
+                                //console.log(out);
+                            value = computeMinMax(sticksFloating4, sticksMoved4, sticksToMove, out, value, false, 5, 10000, 99999);
+                            // value = computeMinMax(sticksFloating4, sticksMoved4, sticksToMove, out, value, true);
                             // }
                             }
                             if (arr.length === 3 && sticksMoved3 <= sticksToMove && Math.abs(sticksFloating3) <= sticksToMove) {
                               // console.log(conf1[i]);
                               const out = [conf1[i].destination, conf2[j].destination, conf3[k].destination];
-                              // value = computeMinMax(sticksFloating3, sticksMoved3, sticksToMove, out, value, false, 3, 100, 999);
+                              //value = computeMinMax(sticksFloating3, sticksMoved3, sticksToMove, out, value, false, 5, 10000, 99999);
                               value = computeMinMax(sticksFloating3, sticksMoved3, sticksToMove, out, value);
                             }
                         }
@@ -2611,6 +2619,18 @@
 		// return [...str].map(i => parseInt(i));
 		return [...str];
 	}
+
+	function getInitialValue(str, type) {
+      const arr = parseInput(str);
+      for (let i = 0; i < arr.length; i++) {
+        arr[i] = type === "min" ? "9" : "1";
+      }
+      if (type === "min") {
+        arr.push("9");
+      }
+
+      return parseInt(arr.join(""));
+    }
 
     function addIdentity(arr, num) {
 		const ar = [{
