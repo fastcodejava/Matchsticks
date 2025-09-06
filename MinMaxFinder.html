@@ -2477,59 +2477,34 @@
       // console.log(conf4);
       let value = parseInt(input);
 
-      function computeMinMax(sticksFloating, sticksMoved, sticksToMove, out, value, allowNegative, maxDigits) {
-          if (sticksFloating === 0 && sticksMoved === sticksToMove && type === "max") {
-            if (maxDigits) {
-              if (countDigits(out) === maxDigits && evaluate(out) > value) {
-                value = evaluate(out);
-              }
-            } else if (evaluate(out) > value) {
-              value = evaluate(out);
-              // console.log(value);
-            }
+      function computeMinMax(sticksFloating, sticksMoved, sticksToMove, out, value, allowNegative, maxDigits, minValue, maxValue) {
+          if (sticksFloating === 0 && sticksMoved === sticksToMove && type === "max" && isValid(type, out, value, minValue, maxValue)) {
+            value = evaluate(out);
         }
         if (sticksFloating === 2 && sticksMoved === sticksToMove && type === "max") {
           const out1 = out.concat(["1"]);
+          value = isValid(type, out1, value, minValue, maxValue) ? evaluate(out1) : value;
           // console.log(out);
           //console.log(evaluate(out));
-          if (maxDigits) {
-            if (countDigits(out1) === maxDigits && evaluate(out1) > value) {
-              value = evaluate(out1);
-            }
-          } else if (evaluate(out1) > value) {
-            value = evaluate(out1);
-            // console.log(value);
-          }
         }
         if (type === "min") {
           // console.log(out);
           // console.log(evaluate(out));
-          if (sticksFloating === 0 && sticksMoved === sticksToMove) {
-            if (maxDigits) {
-              // console.log(out);
-              // if (countDigits(out) === maxDigits && out[0] !== "0" && evaluate(out) < value) {
-              if (countDigits(out) === maxDigits && evaluate(out) < value) {
-                value = evaluate(out);
-              }
-            } else if (evaluate(out) < value) {
-              value = evaluate(out);
-              // console.log(value);
-            }
+          // type, out, value, allowNegative, maxDigits, minValue, maxValue
+          if (sticksFloating === 0 && sticksMoved === sticksToMove && isValid(type, out, value, minValue, maxValue)) {
+            value = evaluate(out);
           } else if (allowNegative && sticksFloating === 1 && sticksMoved === sticksToMove && -evaluate(out) < value) {
             value = -evaluate(out);
             // console.log(value);
           }
           if (sticksFloating === 2 && sticksMoved === sticksToMove) {
             const out1 = ["1"].concat(out);
-            if (maxDigits) {
-              console.log(out1);
-              if (countDigits(out1) === maxDigits && evaluate(out1) < value) {
-                value = evaluate(out1);
-              }
-            } else if (evaluate(out1) < value) {
-              value = evaluate(out1);
-              // console.log(value);
-            }
+            value = isValid(type, out1, value, minValue, maxValue) ? evaluate(out1): value;
+          }
+          if (sticksFloating === 0 &&  sticksToMove - sticksMoved === 2) {
+            const out1 = flipOne(out);
+            console.log(out1);
+            value = isValid(type, out1, value, minValue, maxValue) ? evaluate(out1): value;
           }
           }
         return value;
@@ -2578,7 +2553,8 @@
                             if (arr.length === 3 && sticksMoved3 <= sticksToMove && Math.abs(sticksFloating3) <= sticksToMove) {
                               // console.log(conf1[i]);
                               const out = [conf1[i].destination, conf2[j].destination, conf3[k].destination];
-                              value = computeMinMax(sticksFloating3, sticksMoved3, sticksToMove, out, value, true);
+                              // value = computeMinMax(sticksFloating3, sticksMoved3, sticksToMove, out, value, false, 3, 100, 999);
+                              value = computeMinMax(sticksFloating3, sticksMoved3, sticksToMove, out, value);
                             }
                         }
                     }
@@ -2596,6 +2572,16 @@
         return value;
     }
 
+    function isValid(type, out, value, minValue, maxValue) {
+      const valueToEvaluate = evaluate(out);
+      if (type === "min") {
+        return minValue && maxValue ?  valueToEvaluate >= minValue && valueToEvaluate <= maxValue && valueToEvaluate < value : valueToEvaluate < value;
+      }
+      if (type === "max") {
+        return minValue && maxValue ?  valueToEvaluate >= minValue && valueToEvaluate <= maxValue && valueToEvaluate > value : valueToEvaluate > value;
+      }
+    }
+
     function evaluate(arr) {
       return parseInt(arr.join(""));
     }
@@ -2608,6 +2594,16 @@
 				digitCount++;
 		}
 		return digitCount;
+	}
+
+	function flipOne(arr) {
+      let retArr = arr;
+      arr.forEach((value, index) => {
+        if (value === "1") {
+          retArr = ["1"].concat(arr.slice(0, index)).concat(arr.slice(index+1));
+        }
+      });
+      return retArr;
 	}
 
 	function parseInput(str) {
