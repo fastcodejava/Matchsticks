@@ -178,6 +178,16 @@
           "move": 1
         },
         {
+          "destination": "7",
+          "add": -2,
+          "move": 1
+        },
+        {
+          "destination": "11",
+          "add": -1,
+          "move": 2
+        },
+        {
           "destination": "12",
           "add": 2,
           "move": 0
@@ -235,6 +245,11 @@
           "move": 0
         },
         {
+          "destination": "11",
+          "add": -1,
+          "move": 2
+        },
+        {
           "destination": "13",
           "add": 2,
           "move": 0
@@ -250,6 +265,11 @@
           "destination": "1",
           "add": -2,
           "move": 0
+        },
+        {
+          "destination": "0",
+          "add": 2,
+          "move": 1
         },
         {
           "destination": "3",
@@ -270,6 +290,11 @@
           "destination": "9",
           "add": 2,
           "move": 0
+        },
+        {
+          "destination": "11",
+          "add": 2,
+          "move": 1
         },
         {
           "destination": "14",
@@ -324,6 +349,11 @@
           "move": 0
         },
         {
+          "destination": "11",
+          "add": -1,
+          "move": 2
+        },		
+        {
           "destination": "15",
           "add": 2,
           "move": 0
@@ -358,6 +388,11 @@
         {
           "destination": "9",
           "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "11",
+          "add": -2,
           "move": 1
         },
         {
@@ -440,6 +475,11 @@
           "move": 2
         },
         {
+          "destination": "11",
+          "add": -3,
+          "move": 0
+        },
+        {
           "destination": "13",
           "add": 0,
           "move": 2
@@ -520,6 +560,11 @@
           "destination": "8",
           "add": 1,
           "move": 0
+        },
+        {
+          "destination": "11",
+          "add": -2,
+          "move": 1
         },
         {
           "destination": "13",
@@ -2459,7 +2504,7 @@
         const output = document.getElementById('output');
         const type = document.querySelector('input[name="type"]:checked').value;
       output.innerHTML  = "Solving Puzzle";
-        // console.log(JSON.stringify(conf["99"]));
+        // console.log(JSON.stringify(conf["9"]));
         const sticksToMove = parseInt(dropdown);
         const results = solve(input, type, sticksToMove);
         output.innerHTML = results;
@@ -2484,19 +2529,20 @@
       let value = getInitialValue(input, type);
 
       function computeMinMax(sticksFloating, sticksMoved, sticksToMove, out, value, allowNegative, maxDigits, minValue, maxValue) {
+		// console.log(sticksFloating, sticksMoved);
           if (sticksFloating === 0 && sticksMoved === sticksToMove && type === "max" && isValid(type, out, value, minValue, maxValue)) {
+			//console.log(out);
             value = evaluate(out);
-        }
+			}
         if (sticksFloating === 2 && sticksMoved === sticksToMove && type === "max") {
           const out1 = out.concat(["1"]);
-          value = isValid(type, out1, value, minValue, maxValue) ? evaluate(out1) : value;
-          // console.log(out);
+          //console.log(out1);
+		  value = isValid(type, out1, value, minValue, maxValue) ? evaluate(out1) : value;
           //console.log(evaluate(out));
         }
         if (type === "min") {
           //console.log(out);
           // console.log(evaluate(out));
-          // type, out, value, allowNegative, maxDigits, minValue, maxValue
           if (sticksFloating === 0 && sticksMoved === sticksToMove && isValid(type, out, value, minValue, maxValue)) {
             value = evaluate(out);
           } else if (allowNegative && sticksFloating === 1 && sticksMoved === sticksToMove && -evaluate(out) < value) {
@@ -2554,7 +2600,7 @@
                                 //console.log(conf4[l]);
                                 const out = [conf1[i].destination, conf2[j].destination, conf3[k].destination, conf4[l].destination];
                                 //console.log(out);
-                            //value = computeMinMax(sticksFloating4, sticksMoved4, sticksToMove, out, value, false, 5, 10000, 99999);
+                            //value = computeMinMax(sticksFloating4, sticksMoved4, sticksToMove, out, value, false, 4, 1000, 9999);
                             value = computeMinMax(sticksFloating4, sticksMoved4, sticksToMove, out, value, true);
                             // }
                             }
