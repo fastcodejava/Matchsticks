@@ -37,7 +37,18 @@
     <option value="3">3</option>
     <option value="4">4</option>
   </select>
-  <!-- Basic HTML code for radio buttons -->
+
+  <label for="numMatchsticks">Number of Matchsticks in answer (optional):</label>
+  <select id="numMatchsticks">
+    <option value=""></option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+  
+  <p id="rangeValue"></p>
    
   <div class="radio-group">
 	Find: <input type="radio" id="type1" name="type" value="max"> <label for="type1">Max</label>
@@ -2501,18 +2512,26 @@
     };
 
     function solvePuzzle() {
+		// console.log(JSON.stringify(conf["9"]));
         const input = document.getElementById('textbox').value;
         const dropdown = document.getElementById('dropdown').value;
+        const numMatchstcks = document.getElementById('numMatchsticks').value;
         const output = document.getElementById('output');
+        const rangeValue = document.getElementById('rangeValue');
         const type = document.querySelector('input[name="type"]:checked').value;
-      output.innerHTML  = "Solving Puzzle";
-        // console.log(JSON.stringify(conf["9"]));
+
+		const numMatchsticks = numMatchstcks ? parseInt(numMatchstcks) : 0
+		const minValue = numMatchsticks ? 10**(numMatchsticks - 1) : 0;
+		const maxValue = numMatchsticks ? 10**numMatchsticks - 1: 0;
+
+		output.innerHTML  = "Solving Puzzle";
+		rangeValue.innerHTML  = numMatchsticks ? "Range (" + minValue + " - " + maxValue + ")" : "";
         const sticksToMove = parseInt(dropdown);
-        const results = solve(input, type, sticksToMove);
+        const results = solve(input, type, sticksToMove, numMatchsticks);
         output.innerHTML = results;
     }
 
-    function solve(input, type, sticksToMove) {
+    function solve(input, type, sticksToMove, numMatchsticks) {
         // var sticksMoved = 0, sticksFloating = 0;
         //console.log(JSON.stringify(conf["76"]));
 		const arr = parseInput(input);
@@ -2528,7 +2547,7 @@
 	  // console.log("Type " + type);
       // console.log(conf4);
       //let value = parseInt(input);
-      let value = getInitialValue(input, type);
+      let value = getInitialValue(input, type, numMatchsticks);
 
       function computeMinMax(sticksFloating, sticksMoved, sticksToMove, out, value, allowNegative, maxDigits, minValue, maxValue) {
 		// console.log(sticksFloating, sticksMoved);
@@ -2543,7 +2562,9 @@
           }
         return value;
       }
-
+	  const minValue = numMatchsticks ? 10**(numMatchsticks-1) : 0;
+	  const maxValue = numMatchsticks ? 10**numMatchsticks - 1: 0;
+	  
       for (let i = 0; conf1 && i < conf1.length; i++) {
             let sticksMoved1 = conf1[i].move;
             let sticksFloating1 = -1 * conf1[i].add;
@@ -2581,27 +2602,27 @@
                                 //console.log(conf4[l]);
                                 const out = [conf1[i].destination, conf2[j].destination, conf3[k].destination, conf4[l].destination];
                                 //console.log(out);
-                              // value = computeMinMax(sticksFloating4, sticksMoved4, sticksToMove, out, value, false, 4, 1000, 9999);
-                            value = computeMinMax(sticksFloating4, sticksMoved4, sticksToMove, out, value, true);
+                              value = computeMinMax(sticksFloating4, sticksMoved4, sticksToMove, out, value, false, numMatchsticks, minValue, maxValue);
+                            // value = computeMinMax(sticksFloating4, sticksMoved4, sticksToMove, out, value, true);
                             // }
                             }
                             if (arr.length === 3 && sticksMoved3 <= sticksToMove && Math.abs(sticksFloating3) <= sticksToMove) {
                               // console.log(conf1[i]);
                               const out = [conf1[i].destination, conf2[j].destination, conf3[k].destination];
-                              // value = computeMinMax(sticksFloating3, sticksMoved3, sticksToMove, out, value, false, 3, 100, 999);
-                              value = computeMinMax(sticksFloating3, sticksMoved3, sticksToMove, out, value);
+                              value = computeMinMax(sticksFloating3, sticksMoved3, sticksToMove, out, value, false, numMatchsticks, minValue, maxValue);
+                              //value = computeMinMax(sticksFloating3, sticksMoved3, sticksToMove, out, value);
                             }
                         }
                     }
                     if (arr.length === 2) {
                       const out = arr.length === 2 ? [conf1[i].destination, conf2[j].destination] : [];
-                      value = computeMinMax(sticksFloating2, sticksMoved2, sticksToMove, out, value, true);
+                      value = computeMinMax(sticksFloating2, sticksMoved2, sticksToMove, out, value, true, numMatchsticks, minValue, maxValue);
                     }
                   }
                 }
               const out = arr.length === 1 ? [conf1[i].destination] : [];
               if (arr.length === 1) {
-                value = computeMinMax(sticksFloating1, sticksMoved1, sticksToMove, out, value, true);
+                value = computeMinMax(sticksFloating1, sticksMoved1, sticksToMove, out, value, true, numMatchsticks, minValue, maxValue);
               }
             }
         return value;
@@ -2686,12 +2707,13 @@
 		return [...str];
 	}
 
-	function getInitialValue(str, type) {
-      const arr = parseInput(str);
-      for (let i = 0; i < arr.length; i++) {
-        arr[i] = type === "min" ? "9" : "1";
+	function getInitialValue(str, type, numMatchsticks) {
+      const arr = numMatchsticks? [] : parseInput(str);
+      for (let i = 0; i < (numMatchsticks ? numMatchsticks : arr.length); i++) {
+	  //console.log(i, numMatchsticks);
+        arr[i] = type === MIN ? "9" : "1";
       }
-      if (type === "min") {
+      if (type === MIN) {
         arr.push("9");
       }
 
