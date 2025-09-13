@@ -31,7 +31,10 @@
   <button onclick="solvePuzzle()">Submit</button>
   <button onclick="copyText()">Copy</button>
 
-  <p id="output"></p>
+	<br \>
+	<br \>
+  <!--p id="output"></p-->
+  <textarea id="output" rows="30" cols="50"></textarea>
 
   <script>
 	let identity = [{
@@ -40,7 +43,12 @@
 			"move": null
 		}];
 
-	const SUPERSCRIPT1 = "<sup>1</sup>";
+	//const SUPERSCRIPT1 = "<sup>1</sup>";
+//	const superscripts = {
+//	"0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴",
+//	"5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹"
+//	};
+	const SUPERSCRIPT1 = "¹";
 	const PLUS = "+";
 	const MINUS = "-";
 	const MULTIPLICATION = "x";
@@ -2706,7 +2714,7 @@
       addToConfigurationOne(conf);
       addToConfigurationSeven(conf);
       addCompositMapping(conf);
-	  // console.log(JSON.stringify(conf["112"]));
+	  // console.log(JSON.stringify(conf["18"]));
     };
 
     function solvePuzzle() {
@@ -2747,7 +2755,8 @@
           return !(results.includes(value) || value.trim().startsWith("" + num1) || value.trim().endsWith("" + result));
         }));
       }
-      output.innerHTML = results.length > 0 ? "Found " + results.length + " Solutions:<br \><br \>" + results.join("<br \>") : "No Solutions";
+      //output.innerHTML = results.length > 0 ? "Found " + results.length + " Solutions:<br \><br \>" + results.join("<br \>") : "No Solutions";
+      output.value = results.length > 0 ? "Found " + results.length + " Solutions:\n\n" + results.join("\n") : "No Solutions";
     }
 
     function solve(num1, num2, num3, operation, sticksToMove, sticksMoved, sticksFloating) {
@@ -2880,13 +2889,17 @@
         "move": 2
       };
       Object.keys(conf).forEach(key => {
-        if ((key.startsWith(("1")) || key.endsWith(("1"))) && key.length > 1) {
-          const key1 = key[1] + key[0];
-          if (key !== key1) {
+        if ((key.startsWith(("1")) || key.endsWith(("1")))) {
+          let key1;
+          if (key.length === 2) {
+            key1 = key[1] + key[0];
+          } else if (key.length === 3) {
+            key1 = key[2] + key[1] + key[0];
+          }
+          if (key1 && key !== key1) {
             const obj = JSON.parse(JSON.stringify(ob));
-            // obj.destination = parseInt(key1);
             obj.destination = key1;
-            conf[key].push(obj);
+            addItemToConf(conf[key], ob);
           }
         }
       });
@@ -2909,10 +2922,8 @@
         "move": 0
       };
       Object.keys(conf).forEach(key => {
-        if ((key.startsWith(("1")) || key.endsWith(("1"))) && key.length > 1) {
+        if ((key.startsWith(("1")) || key.endsWith(("1"))) && key.length === 2) {
           const key1 = key[1] + key[0];
-		  // const k0 = parseInt(key[0]);
-		  // const k1 = parseInt(key[1]);
 		  const k0 = key[0];
 		  const k1 = key[1];
             const obj = JSON.parse(JSON.stringify(ob));
@@ -2944,10 +2955,8 @@
         "move": 1
       };
       Object.keys(conf).forEach(key => {
-        if ((key.startsWith(("7")) || key.endsWith(("7"))) && key.length > 1) {
+        if ((key.startsWith(("7")) || key.endsWith(("7"))) && key.length === 2) {
           const key1 = key[1] + key[0];
-          // const k0 = parseInt(key[0]);
-          // const k1 = parseInt(key[1]);
           const k0 = key[0];
           const k1 = key[1];
           const obj = JSON.parse(JSON.stringify(ob));
@@ -3042,7 +3051,7 @@
         if (k < 10) {
           addCompositMappingAddOne(conf, key, conf[key[0]]);
         }
-        if (k > 10) {
+        if (k > 10 && k < 100) {
           const k1 = parseInt(key[0]);
           const k2 = parseInt(key[1]);
           if (k2 === 1) {
