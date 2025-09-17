@@ -2714,6 +2714,7 @@
       addToConfigurationOne(conf);
       addToConfigurationSeven(conf);
       addCompositMapping(conf);
+      addToConfigurationNumbersWithOne(conf);
 	  // console.log(JSON.stringify(conf["18"]));
     };
 
@@ -2723,7 +2724,8 @@
       const dropdown = document.getElementById('dropdown').value;
       const output = document.getElementById('output');
       output.innerHTML  = "Solving Puzzle";
-      // console.log(JSON.stringify(conf["99"]));
+      console.log(JSON.stringify(conf["111"]));
+      // console.log(JSON.stringify(conf["11"]));
       const arr = parseInput(text, "=");
       if (!arr || arr.length < 4 ) {
         output.innerHTML = "Bad equation provided";
@@ -2899,10 +2901,54 @@
           if (key1 && key !== key1) {
             const obj = JSON.parse(JSON.stringify(ob));
             obj.destination = key1;
-            addItemToConf(conf[key], ob);
+            addItemToConf(conf[key], obj);
           }
         }
       });
+    }
+
+    // This handles numbers with 1 e.g 111 -> 11, 14 or 41
+    function addToConfigurationNumbersWithOne(conf) {
+      const ob = {
+        "destination": 1,
+        "add": -2,
+        "move": 0
+      };
+      Object.keys(conf).forEach(key => {
+        if (key.indexOf(("1")) >= 0 ) {
+          const dest = key.replace("1", "");
+          if (dest) {
+            const obj = JSON.parse(JSON.stringify(ob));
+            obj.destination = dest;
+            addItemToConf(conf[key], obj);
+          }
+        }
+        for (let fromIndex = 0; fromIndex < key.length; fromIndex++) {
+          const dest = searchForSubstringAndReplace(key, "11", "4");
+          dest.forEach(dst => {
+            if (dst) {
+              const obj = JSON.parse(JSON.stringify(ob));
+              obj.destination = dst;
+              obj.move = 1;
+              obj.add = 0;
+              addItemToConf(conf[key], obj);
+            }
+            });
+          }
+      });
+    }
+
+    function searchForSubstringAndReplace(str, searchStr, replace) {
+      const result = [];
+      for (let fromIndex = 0; fromIndex < str.length; fromIndex++) {
+        const pos = str.indexOf(searchStr, fromIndex);
+        if (pos >= 0 ) {
+          const dest = str.substring(0, fromIndex) + str.substring(fromIndex, pos) + replace + str.substring(fromIndex + pos + 2);
+          result.push(dest);
+          // console.log(key, dest);
+        }
+      }
+      return result;
     }
 
     function addToConfigurationOne(conf) {
@@ -3093,7 +3139,7 @@
       // return conf;
     }
 
-    // This handles numbers that start with or ends with 1 e.g 51/15 and converts to single digits e.g 6
+    // This handles numbers that start with or ends with 1 e.g 51/15 and converts to single digits e.g 6
     function addCompositMappingOne(conf, key, confItem) {
       for (let i = 0; i < confItem.length; i++) {
         // const destination = parseInt("" + confItem[i].destination);
