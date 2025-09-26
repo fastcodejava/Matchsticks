@@ -2505,6 +2505,12 @@
           fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, MULTIPLICATION)
         },
         {
+          stcksFlting: 1,
+          movesRemaining: 1,
+          cond: (numb1, numb2, numb3) => numb1 === numb2 + numb3,
+          fn: (numb1, numb2, numb3) => createResponse1(numb1, numb2, numb3, PLUS)
+        },
+        {
           stcksFlting: 0,
           movesRemaining: 1,
           cond: (numb1, numb2, numb3) => numb1 === numb2 - numb3,
@@ -2607,6 +2613,12 @@
           movesRemaining: 2,
           cond: (numb1, numb2, numb3) => numb1 - numb2 === -numb3,
           fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, MINUS + numb3, MINUS)
+        },
+        {
+          stcksFlting: -1,
+          movesRemaining: 2,
+          cond: (numb1, numb2, numb3) => numb1 - numb2 === numb3,
+          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, MINUS)
         },
         {
           stcksFlting: 0,
@@ -2724,9 +2736,10 @@
       const dropdown = document.getElementById('dropdown').value;
       const output = document.getElementById('output');
       output.innerHTML  = "Solving Puzzle";
-      console.log(JSON.stringify(conf["111"]));
-      // console.log(JSON.stringify(conf["11"]));
+      //console.log(JSON.stringify(conf["111"]));
+
       const arr = parseInput(text, "=");
+
       if (!arr || arr.length < 4 ) {
         output.innerHTML = "Bad equation provided";
         return;
@@ -2827,8 +2840,8 @@
 		}
 		return results;
     }
-	
-	function parseInput(str, delim) {
+
+    function parseInput(str, delim) {
 		// 1 + 5 = 8
 		const i = str.indexOf(delim);
         const num3 = parseInt(str.substring(i+1).trim());
@@ -2907,7 +2920,7 @@
       });
     }
 
-    // This handles numbers with 1 e.g 111 -> 11, 14 or 41
+    // This handles numbers with 1e.g 111 -> 11, 14 or 41
     function addToConfigurationNumbersWithOne(conf) {
       const ob = {
         "destination": 1,
@@ -3015,7 +3028,74 @@
       });
     }
 
-	function addItemToConf(arr, obj) {
+    function processEqn(input) {
+        let inp = [];
+        let eqFound = false;
+        let res = 0;
+        for (let i = 0; i < input.length; i++) {
+          if (input[i] === '=') {
+            eqFound = true;
+          } else if (!eqFound) {
+            inp.push(parseInt(input[i]));
+          } else {
+            res = parseInt(input[i]);
+          }
+        }
+        inp = toRPN(inp);
+        if (evalRPN(inp) === res) {
+          console.log(inp, res);
+        }
+    }
+
+    function toRPN(tokens) {
+      const out = [];
+      const stack = [];
+      const prec = {'+': 1, '-': 1, '*': 2, '/': 2};
+      tokens.forEach(token => {
+        if (!isNaN(token)) {
+          out.push(Number(token));
+        } else if (token in prec) {
+          while (
+                  stack.length &&
+                  prec[stack[stack.length - 1]] >= prec[token]
+                  ) {
+            out.push(stack.pop());
+          }
+          stack.push(token);
+        } else if (token === '(') {
+          stack.push(token);
+        } else if (token === ')') {
+          while (stack.length && stack[stack.length - 1] !== '(') {
+            out.push(stack.pop());
+          }
+          stack.pop(); // pop '('
+        }
+      });
+      while (stack.length) out.push(stack.pop());
+      console.log(out);
+      return out;
+    }
+
+    function evalRPN(rpn) {
+      const stack = [];
+      rpn.forEach(token => {
+        if (typeof token === 'number') {
+          stack.push(token);
+        } else {
+          const b = stack.pop();
+          const a = stack.pop();
+          switch (token) {
+            case '+': stack.push(a + b); break;
+            case '-': stack.push(a - b); break;
+            case '*': stack.push(a * b); break;
+            case '/': stack.push(a / b); break;
+          }
+        }
+      });
+      return stack[0];
+    }
+
+    function addItemToConf(arr, obj) {
 		const confItem = arr.find(it => it.destination === obj.destination);
 
 		if (!confItem) arr.push(obj);
