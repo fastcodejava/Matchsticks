@@ -53,6 +53,7 @@
 	const MINUS = "-";
 	const MULTIPLICATION = "x";
     const DIVISION = "/";
+    const EQUAL = "=";
     let conf = {
       "0": [
         {
@@ -2401,10 +2402,22 @@
           fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, MINUS + numb3, MINUS)
         },
         {
+          stcksFlting: 0,
+          movesRemaining: 1,
+          cond: (numb1, numb2, numb3) => numb1 === numb2 && numb2 === numb3,
+          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, EQUAL)
+        },
+        {
           stcksFlting: 1,
           movesRemaining: 1,
           cond: (numb1, numb2, numb3) => numb1 - numb2 === -numb3,
           fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, MINUS + numb3, MINUS)
+        },
+        {
+          stcksFlting: 1,
+          movesRemaining: 1,
+          cond: (numb1, numb2, numb3) => numb1 === numb2 && numb2 === numb3,
+          fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, numb3, EQUAL)
         },
         {
           stcksFlting: 0,
@@ -2560,6 +2573,12 @@
         },
         {
           stcksFlting: 1,
+          movesRemaining: 0,
+          cond: (numb1, numb2, numb3) => numb1 === numb2 && numb2 === numb3,
+          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, EQUAL)
+        },
+        {
+          stcksFlting: 1,
           movesRemaining: 1,
           cond: (numb1, numb2, numb3) => numb3 >= 0 && numb1 === numb2 - numb3,
           fn: (numb1, numb2, numb3) => createResponseWithSuperscript1(numb1, numb2,  numb3, MINUS)
@@ -2569,6 +2588,12 @@
           movesRemaining: 0,
           cond: (numb1, numb2, numb3) => numb1 - numb2 === numb3,
           fn: (numb1, numb2, numb3) => createResponse(numb1, numb2,  PLUS + numb3, MINUS)
+        },
+        {
+          stcksFlting: 2,
+          movesRemaining: 0,
+          cond: (numb1, numb2, numb3) => numb1 === numb2 && numb2 === numb3,
+          fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, numb3, EQUAL)
         },
         {
           stcksFlting: 2,
@@ -2601,6 +2626,12 @@
           movesRemaining: 0,
           cond: (numb1, numb2, numb3) => numb1 * numb2 === numb3,
           fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, MULTIPLICATION)
+        },
+        {
+          stcksFlting: 0,
+          movesRemaining: 2,
+          cond: (numb1, numb2, numb3) => numb1 === numb2 && numb2 === numb3,
+          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, EQUAL)
         },
         {
           stcksFlting: 0,
@@ -2675,6 +2706,12 @@
           movesRemaining: 0,
           cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
           fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, DIVISION)
+        },
+        {
+          stcksFlting: 1,
+          movesRemaining: 1,
+          cond: (numb1, numb2, numb3) => numb1 === numb2 && numb2 === numb3,
+          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, EQUAL)
         },
         {
           stcksFlting: 1,
@@ -3232,7 +3269,7 @@
       }
     }
 
-    // This handles single digits numbers and pads with 1 e.g 5 to double digits e.g 51/15
+    // This handles single digits numbers and pads with 1 e.g 5 to double digits e.g 51/15
     function addCompositMappingAddOne(conf, key, confItem) {
       // addToConfItems(conf[key], 10 * parseInt(key) + 1, {move: 0, add: 2});
       // addToConfItems(conf[key], 10 + parseInt(key), {move: 0, add: 2});
