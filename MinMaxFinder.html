@@ -97,6 +97,16 @@
           "move": 1
         },
         {
+          "destination": "7",
+          "add": -3,
+          "move": 0
+        },
+        {
+          "destination": "4",
+          "add": -2,
+          "move": 1
+        },
+        {
           "destination": "8",
           "add": 1,
           "move": 0
@@ -2695,19 +2705,20 @@
                                 const out = [conf1[i].destination, conf2[j].destination, conf3[k].destination, conf4[l].destination];
                                 //console.log(out);
                               value = computeMinMax(sticksFloating4, sticksMoved4, sticksToMove, out, value, allowNegative, numMatchsticks, minValue, maxValue);
-                            // value = computeMinMax(sticksFloating4, sticksMoved4, sticksToMove, out, value, true);
                             // }
+								// console.log(out, value);
                             }
                             if (arr.length === 3 && sticksMoved3 <= sticksToMove && Math.abs(sticksFloating3) <= sticksToMove) {
                               // console.log(conf1[i]);
                               const out = [conf1[i].destination, conf2[j].destination, conf3[k].destination];
                               value = computeMinMax(sticksFloating3, sticksMoved3, sticksToMove, out, value, allowNegative, numMatchsticks, minValue, maxValue);
-                              //value = computeMinMax(sticksFloating3, sticksMoved3, sticksToMove, out, value);
+							  // console.log(out, value);
                             }
                         }
                     }
                     if (arr.length === 2) {
                       const out = arr.length === 2 ? [conf1[i].destination, conf2[j].destination] : [];
+					  console.log(out, value);
                       value = computeMinMax(sticksFloating2, sticksMoved2, sticksToMove, out, value, allowNegative, numMatchsticks, minValue, maxValue);
                     }
                   }
@@ -2733,6 +2744,26 @@
         value = isValid(MAX, out1, value, minValue, maxValue) ? evaluate(out1) : value;
         //console.log(evaluate(out));
         // return isValid(MAX, out1, value, minValue, maxValue) ? out1.join(""): out.join("");
+      }
+      if (sticksFloating === 3 && sticksMoved === sticksToMove) {
+        const out1 = outpt.concat(["7"]);
+        //console.log(out1);
+        value = isValid(MAX, out1, value, minValue, maxValue) ? evaluate(out1) : value;
+        //console.log(evaluate(out));
+        // return isValid(MAX, out1, value, minValue, maxValue) ? out1.join(""): out.join("");
+        const out2 = ["7"].concat(outpt);
+        //console.log(out1);
+        value = isValid(MAX, out2, value, minValue, maxValue) ? evaluate(out2) : value;
+      }
+      if (sticksFloating === 4 && sticksMoved === sticksToMove) {
+        const out1 = outpt.concat(["4"]);
+        //console.log(out1);
+        value = isValid(MAX, out1, value, minValue, maxValue) ? evaluate(out1) : value;
+        //console.log(evaluate(out));
+        // return isValid(MAX, out1, value, minValue, maxValue) ? out1.join(""): out.join("");
+        const out2 = ["4"].concat(outpt);
+        //console.log(out1);
+        value = isValid(MAX, out2, value, minValue, maxValue) ? evaluate(out2) : value;
       }
       return value;
     }
