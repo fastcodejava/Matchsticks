@@ -2438,6 +2438,12 @@
           fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, MULTIPLICATION)
         },
         {
+          stcksFlting: 0,
+          movesRemaining: 2,
+          cond: (numb1, numb2, numb3) => numb1 === numb2 + numb3,
+          fn: (numb1, numb2, numb3) => createResponse1(numb1, numb2, numb3, PLUS)
+        },
+        {
           stcksFlting: -1,
           movesRemaining: 2,
           cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
@@ -2516,6 +2522,12 @@
           movesRemaining: 0,
           cond: (numb1, numb2, numb3) => numb1 - numb2 === numb3,
           fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, MINUS)
+        },
+        {
+          stcksFlting: 0,
+          movesRemaining: 2,
+          cond: (numb1, numb2, numb3) => numb1 === numb2 / numb3,
+          fn: (numb1, numb2, numb3) => createResponse1(numb1, numb2, numb3, DIVISION)
         },
         {
           stcksFlting: 1,
@@ -2712,6 +2724,12 @@
           movesRemaining: 0,
           cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
           fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, DIVISION)
+        },
+        {
+          stcksFlting: 0,
+          movesRemaining: 2,
+          cond: (numb1, numb2, numb3) => numb1 === numb2 - numb3,
+          fn: (numb1, numb2, numb3) => createResponse1(numb1, numb2, numb3, MINUS)
         },
         {
           stcksFlting: 1,
