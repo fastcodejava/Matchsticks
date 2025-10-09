@@ -25,7 +25,7 @@
   <select id="dropdown">
     <option value="1">1</option>
     <option value="2">2</option>
-    <!--option value="option3">Option 3</option-->
+    <option value="3">3</option>
   </select>
 
   <button onclick="solvePuzzle()">Submit</button>
@@ -54,7 +54,7 @@
 	const MULTIPLICATION = "x";
     const DIVISION = "/";
     const EQUAL = "=";
-    let conf = {
+    const conf = {
       "0": [
         {
           "destination": "3",
@@ -95,6 +95,16 @@
           "destination": "11",
           "add": -2,
           "move": 0
+        },
+        {
+          "destination": "7",
+          "add": -3,
+          "move": 0
+        },
+        {
+          "destination": "4",
+          "add": -2,
+          "move": 1
         }
       ],
       "1": [
@@ -116,6 +126,21 @@
         {
           "destination": "11",
           "add": 2,
+          "move": 0
+        },
+        {
+          "destination": "3",
+          "add": 3,
+          "move": 0
+        },
+        {
+          "destination": "0",
+          "add": 4,
+          "move": 0
+        },
+        {
+          "destination": "9",
+          "add": 4,
           "move": 0
         }
       ],
@@ -159,6 +184,31 @@
           "destination": "12",
           "add": 2,
           "move": 0
+        },
+        {
+          "destination": "1",
+          "add": -3,
+          "move": 1
+        },
+        {
+          "destination": "4",
+          "add": -1,
+          "move": 2
+        },
+        {
+          "destination": "7",
+          "add": -2,
+          "move": 1
+        },
+        {
+          "destination": "7",
+          "add": -2,
+          "move": 1
+        },
+        {
+          "destination": "11",
+          "add": -1,
+          "move": 2
         }
       ],
       "3": [
@@ -211,12 +261,27 @@
           "destination": "13",
           "add": 2,
           "move": 0
+        },
+        {
+          "destination": "1",
+          "add": -3,
+          "move": 0
+        },
+        {
+          "destination": "11",
+          "add": -1,
+          "move": 2
         }
       ],
       "4": [
         {
           "destination": "11",
           "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "0",
+          "add": 2,
           "move": 1
         },
         {
@@ -228,6 +293,11 @@
           "destination": "3",
           "add": 1,
           "move": 1
+        },
+        {
+          "destination": "2",
+          "add": 1,
+          "move": 2
         },
         {
           "destination": "5",
@@ -248,6 +318,31 @@
           "destination": "14",
           "add": 2,
           "move": 0
+        },
+        {
+          "destination": "0",
+          "add": 2,
+          "move": 1
+        },
+        {
+          "destination": "2",
+          "add": 1,
+          "move": 2
+        },
+        {
+          "destination": "6",
+          "add": 2,
+          "move": 1
+        },
+        {
+          "destination": "8",
+          "add": 3,
+          "move": 0
+        },
+        {
+          "destination": "11",
+          "add": 2,
+          "move": 1
         }
       ],
       "5": [
@@ -295,6 +390,21 @@
           "destination": "15",
           "add": 2,
           "move": 0
+        },
+        {
+          "destination": "7",
+          "add": -2,
+          "move": 1
+        },
+        {
+          "destination": "1",
+          "add": -3,
+          "move": 1
+        },
+        {
+          "destination": "11",
+          "add": -1,
+          "move": 2
         }
       ],
       "6": [
@@ -337,6 +447,31 @@
           "destination": "16",
           "add": 2,
           "move": 0
+        },
+        {
+          "destination": "4",
+          "add": -2,
+          "move": 1
+        },
+        {
+          "destination": "7",
+          "add": -3,
+          "move": 1
+        },
+        {
+          "destination": "1",
+          "add": -4,
+          "move": 0
+        },
+        {
+          "destination": "1",
+          "add": -3,
+          "move": 1
+        },
+        {
+          "destination": "11",
+          "add": -2,
+          "move": 1
         }
       ],
       "7": [
@@ -363,6 +498,16 @@
         {
           "destination": "17",
           "add": 2,
+          "move": 0
+        },
+        {
+          "destination": "9",
+          "add": 3,
+          "move": 0
+        },
+        {
+          "destination": "0",
+          "add": 3,
           "move": 0
         }
       ],
@@ -431,6 +576,16 @@
           "destination": "19",
           "add": 1,
           "move": 1
+        },
+        {
+          "destination": "4",
+          "add": -3,
+          "move": 0
+        },
+        {
+          "destination": "11",
+          "add": -3,
+          "move": 0
         }
       ],
       "9": [
@@ -488,6 +643,21 @@
           "destination": "19",
           "add": 2,
           "move": 0
+        },
+        {
+          "destination": "7",
+          "add": -3,
+          "move": 0
+        },
+        {
+          "destination": "1",
+          "add": -4,
+          "move": 0
+        },
+        {
+          "destination": "11",
+          "add": -2,
+          "move": 1
         }
       ],
       "10": [
@@ -544,6 +714,16 @@
           "destination": "9",
           "add": -1,
           "move": 2
+        },
+        {
+          "destination": "6",
+          "add": -1,
+          "move": 2
+        },
+        {
+          "destination": "9",
+          "add": -1,
+          "move": 2
         }
       ],
       "13": [
@@ -561,12 +741,22 @@
           "destination": "6",
           "add": -1,
           "move": 2
+        },
+        {
+          "destination": "6",
+          "add": -1,
+          "move": 2
         }
       ],
       "14": [
         {
           "destination": "9",
           "add": 0,
+          "move": 2
+        },
+        {
+          "destination": "5",
+          "add": -1,
           "move": 2
         },
         {
@@ -604,6 +794,11 @@
           "destination": "4",
           "add": -1,
           "move": 1
+        },
+        {
+          "destination": "11",
+          "add": -1,
+          "move": 2
         }
       ],
       "18": [
@@ -1789,6 +1984,11 @@
           "destination": "92",
           "add": -1,
           "move": 0
+        },
+        {
+          "destination": "22",
+          "add": -2,
+          "move": 1
         }
       ],
       "83": [
@@ -1821,6 +2021,11 @@
           "destination": "93",
           "add": -1,
           "move": 0
+        },
+        {
+          "destination": "23",
+          "add": -2,
+          "move": 1
         }
       ],
       "84": [
