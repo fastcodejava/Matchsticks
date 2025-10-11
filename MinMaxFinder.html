@@ -2627,11 +2627,11 @@
 		output.innerHTML  = "Solving Puzzle";
 		rangeValue.innerHTML  = numMatchsticks ? "Range (" + minValue + " - " + maxValue + ")" : "";
         const sticksToMove = parseInt(dropdown);
-        const results = solve(input, type, sticksToMove, numMatchsticks);
+        const results = solve(input, type, sticksToMove, numMatchsticks, 0, output);
         output.innerHTML = results;
     }
 
-    function solve(input, type, sticksToMove, numMatchsticks, sticksFloating) {
+    function solve(input, type, sticksToMove, numMatchsticks, sticksFloating, output) {
         // var sticksMoved = 0, sticksFloating = 0;
         //console.log(JSON.stringify(conf["76"]));
 		const arr = parseInput(input);
@@ -2705,6 +2705,8 @@
                                 const out = [conf1[i].destination, conf2[j].destination, conf3[k].destination, conf4[l].destination];
                                 //console.log(out);
                               value = computeMinMax(sticksFloating4, sticksMoved4, sticksToMove, out, value, allowNegative, numMatchsticks, minValue, maxValue);
+							  // output.innerHTML = value + " (working)";
+							  //console.log(value);
                             // }
 								// console.log(out, value);
                             }
@@ -2770,7 +2772,9 @@
 
     function computeMin(sticksFloating, sticksMoved, sticksToMove, out, value, allowNegative, maxDigits, minValue, maxValue) {
       const outpt = out.filter(i => i != null);
-      if (sticksFloating === 0 && sticksMoved === sticksToMove && isValid(MIN, outpt, value, minValue, maxValue)) {
+	  const numDigits = outpt.reduce((sum, e) => sum + e.length, 0);
+	  
+      if (sticksFloating === 0 && sticksMoved === sticksToMove && numDigits === maxDigits && isValid(MIN, outpt, value, minValue, maxValue)) {
         value = evaluate(outpt);
       } else if (allowNegative && sticksFloating === 1 && sticksMoved === sticksToMove && -evaluate(outpt) < value) {
         value = -evaluate(outpt);
