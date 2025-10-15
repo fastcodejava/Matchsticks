@@ -54,7 +54,7 @@
 	const MULTIPLICATION = "x";
     const DIVISION = "/";
     const EQUAL = "=";
-    const conf = {
+    let conf = {
       "0": [
         {
           "destination": "3",
@@ -2599,6 +2599,12 @@
           movesRemaining: 0,
           cond: (numb1, numb2, numb3) => numb1 + numb2 === numb3,
           fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, PLUS)
+        },
+        {
+          stcksFlting: 0,
+          movesRemaining: 1,
+          cond: (numb1, numb2, numb3) => numb1 + numb2 === numb3,
+          fn: (numb1, numb2, numb3) => createResponse(numb1, MINUS + numb2, numb3, MINUS)
         },
         {
           stcksFlting: 1,
