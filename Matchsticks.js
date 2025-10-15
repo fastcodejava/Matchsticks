@@ -18,6 +18,11 @@
     let conf = {
       "0": [
         {
+          "destination": "0",
+          "add": 0,
+          "move": 0
+        },
+        {
           "destination": "3",
           "add": -1,
           "move": 1
@@ -2424,6 +2429,11 @@
           "destination": "x",
           "add": 0,
           "move": 2
+        },
+        {
+          "destination": "=",
+          "add": 0,
+          "move": 1
         }
       ],
       "-": [
@@ -2446,6 +2456,11 @@
           "destination": "x",
           "add": 1,
           "move": 1
+        },
+        {
+          "destination": "=",
+          "add": 1,
+          "move": 0
         },
         {
           "destination": null,
@@ -2473,6 +2488,11 @@
           "destination": "-",
           "add": -1,
           "move": 1
+        },
+        {
+          "destination": "=",
+          "add": 0,
+          "move": 2
         }
       ],
       "/": [
@@ -2495,28 +2515,38 @@
           "destination": "x",
           "add": 1,
           "move": 0
+        },
+        {
+          "destination": "=",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": null,
+          "add": -1,
+          "move": 0
         }
       ],
       "=": [
         {
-          "destination": "=",
-          "add": 0,
-          "move": 0
+            "destination": "=",
+            "add": 0,
+            "move": 0
         },
         {
-          "destination": "+",
-          "add": 0,
-          "move": 1
+            "destination": "+",
+            "add": 0,
+            "move": 1
         },
         {
-          "destination": "-",
-          "add": -1,
-          "move": 0
+            "destination": "-",
+            "add": -1,
+            "move": 0
         },
         {
-          "destination": "x",
-          "add": 0,
-          "move": 2
+            "destination": "x",
+            "add": 0,
+            "move": 2
         }
       ]
     };
@@ -2537,7 +2567,7 @@
     // };
 
     function solvePuzzle() {
-      // const text = "5 / 9 - 8 = 6";
+      // const text = "5 / 3 - 3 = 8";
       // const text = "9 x 2 - 5 = 7";
       // const text = "5 x 3 + 1 = 8";
       // const text = "4 - 3 x 7 = 7";
@@ -2561,7 +2591,6 @@
       // const text = "9 + 2 - 6 = 2";
       // const text = "5 x 2 - 5 = 45";
       // const text = "3 / 3 + 5 = 4";
-      // const text = "6 + 2 x 2 = 8";
       // const text = "11 - 9 - 3 = 2";
       // const text = "9 + 6 + 1 = 8";
       // const text = "6 + 6 x 2 = 7";
@@ -2569,7 +2598,18 @@
       // const text = "8 - 3 + 7 = 6";
       // const text = "4 x 3 + 5 = 6";
       //const text = "2 + 7 - 5 = 8";
-      const text = "3 x 2 - 9 = 5";
+      // const text = "3 x 2 - 9 = 5";
+      // const text = "2 + 4 + 8 = 8";
+      // const text = "1 x 9 + 9 = 6";
+      //    const text = "5 / 9 - 8 = 6";
+      // const text = "6 + 2 x 2 = 8";
+      //   const text = "1 x 9 + 9 = 6";
+      //   const text = "5 + 6 + 5 = 5";
+      //   const text = "3 / 9 + 6 = 5";
+      //    const text = "1 + 1 + 4 = 4";
+      //   const text = "2 - 8 - 7 = 7";
+      //   const text = "2 + 8 + 12 = 33";
+         const text = "3 x 3 + 3 = 0";
       const sticksToMove = 2;
 
       // console.log(JSON.stringify(conf["11"]));
@@ -2692,17 +2732,78 @@
         // console.log("Last calcSticksMoved");
 
         // console.log(runningInput);
-        if (sticksMoved === sticksToMove) {
+        if (sticksMoved === sticksToMove && sticksFloating >= 0) {
           // console.log(sticksFloating, runningInput);
-            results = results.concat(processOutput(runningInput, sticksFloating));
+          //   results = results.concat(processOutput(runningInput, sticksFloating, results));
+          //   const rslt = processOutput(runningInput, sticksFloating, results);
+            processInput(runningInput, sticksFloating, results);
+            // console.log(results);
+            // results = results.concat(rslt ? rslt : []);
           }
         }
         return results;
       }
 
+    function processInput(runningInput, sticksFloating, results) {
+        let runInput = splitArr(runningInput);
+        // console.log(runInput);
+        if (runInput.length < 2) return [];
+        let val;
 
-      function processOutput(runningInput, sticksFloating) {
-          const runInput = [], results = [];
+        // console.log(runInput);
+        runInput = runInput.map(inp => removeNulls(inp));
+        // console.log(runInput);
+
+        if (verifyResults(runInput)) addToResults(runInput, sticksFloating, results);
+
+        if (sticksFloating === 1) {
+            for (let idx = 0; idx < runInput.length; idx++) {
+                for (let jdx = 0; jdx < runInput[idx].length; jdx++) {
+                  if (isNumber(runInput[idx][jdx])) {
+                        const oldInput = runInput[idx][jdx];
+                        runInput[idx][jdx] = MINUS + runInput[idx][jdx];
+                        // console.log(runInput);
+                    if (verifyResults(runInput)) addToResults(runInput, 0, results);
+                        runInput[idx][jdx] = oldInput;
+                    }
+                }
+            }
+        }
+
+        if (sticksFloating === 2) {
+            // console.log(runInput);
+            for (let idx1 = 0; idx1 < runInput.length; idx1++) {
+                for (let jdx1 = 0; jdx1 < runInput[idx1].length; jdx1++) {
+                    if (isNumber(runInput[idx1][jdx1])) {
+                        const oldInput = runInput[idx1][jdx1];
+                        runInput[idx1][jdx1] = PLUS + runInput[idx1][jdx1];
+                        if (verifyResults(runInput)) addToResults(runInput, 0, results);
+
+                        runInput[idx1][jdx1] = MINUS + runInput[idx1][jdx1];
+                        if (verifyResults(runInput)) addToResults(runInput, 1, results);
+                        runInput[idx1][jdx1] = oldInput;
+                    }
+                    for (let idx2 = idx1; idx2 < runInput.length; idx2++) {
+                        const start = idx2 > idx1 ? 0 : jdx1 + 1;
+                        for (let jdx2 = start; jdx2 < runInput[idx2].length; jdx2++) {
+                            if (isNumber(runInput[idx1][jdx1]) && isNumber(runInput[idx2][jdx2])) {
+                                const oldInput1 = runInput[idx1][jdx1];
+                                const oldInput2 = runInput[idx2][jdx2];
+                                runInput[idx1][jdx1] = MINUS + runInput[idx1][jdx1];
+                                runInput[idx2][jdx2] = MINUS + runInput[idx2][jdx2];
+                                if (verifyResults(runInput)) addToResults(runInput, 0, results);
+                                runInput[idx1][jdx1] = oldInput1;
+                                runInput[idx2][jdx2] = oldInput2;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    function processOutput1(runningInput, sticksFloating, results) {
+          const runInput = [];
           const eqIdx = runningInput.indexOf("=");
           let nullFound = false;
           for (let idx1 = 0; idx1 < eqIdx; idx1++) {
@@ -2769,7 +2870,7 @@
                       const val = evalRPN(toRPN(runInput));
                       // console.log(val, reslt);
                       if (val === reslt) {
-                          addToResults(runInput, reslt, results);
+                          addToResults(runInput, results);
                           // let resp = createResp(runInput, reslt);
                           // if (!results.includes(resp)) {
                           //   results.push(resp);
@@ -2800,9 +2901,120 @@
                     runInput.push(runningInput.slice(start));
                 }
             }
+            return runInput;
       }
 
-    function addToResults(runInput, reslt, results) {
+    function removeNulls(arr) {
+        let nullFound = false;
+        const retArr = [];
+        for (let idx = 0; idx < arr.length; idx++) {
+            if (nullFound) {
+                retArr[retArr.length -1] += arr[idx];
+                nullFound = false;
+            } else if (arr[idx] !== null) {
+                retArr.push(arr[idx])
+            } else {
+                nullFound = true;
+            }
+        }
+        return retArr;
+    }
+
+    function addToResults(runInput, sticksFloating, results) {
+      //console.log(sticksFloating, runInput);
+        if (sticksFloating === 0) {
+        const resp = createResp(runInput);
+        if (!results.includes(resp)) {
+            results.push(resp);
+        }
+      }
+        if (sticksFloating === 1) {
+            for (let idx = 0; idx < runInput.length; idx++) {
+                for (let jdx = 0; jdx < runInput[idx].length; jdx++) {
+                    if (isNumber(runInput[idx][jdx])) {
+                        const val = runInput[idx][jdx];
+                        runInput[idx][jdx] += SUPERSCRIPT1;
+                        const resp = createResp(runInput);
+                        if (!results.includes(resp)) {
+                            results.push(resp);
+                        }
+                        runInput[idx][jdx] = val;
+                    }
+                }
+            }
+        }
+
+      if (sticksFloating === 2) {
+        // console.log(runInput);
+        for (let idx1 = 0; idx1 < runInput.length; idx1++) {
+          for (let jdx1 = 0; jdx1 < runInput[idx1].length; jdx1++) {
+            if (isNumber(runInput[idx1][jdx1])) {
+              const oldInput = runInput[idx1][jdx1];
+              runInput[idx1][jdx1] = PLUS + runInput[idx1][jdx1];
+              const resp = createResp(runInput);
+              if (!results.includes(resp)) {
+                results.push(resp);
+              }
+              runInput[idx1][jdx1] = oldInput;
+            }
+            for (let idx2 = idx1; idx2 < runInput.length; idx2++) {
+              const start = idx2 > idx1 ? 0 : jdx1 + 1;
+              for (let jdx2 = start; jdx2 < runInput[idx2].length; jdx2++) {
+                if (isNumber(runInput[idx1][jdx1]) && isNumber(runInput[idx2][jdx2])) {
+                  const oldInput1 = runInput[idx1][jdx1];
+                  const oldInput2 = runInput[idx2][jdx2];
+                  runInput[idx1][jdx1] += SUPERSCRIPT1;
+                  runInput[idx2][jdx2] += SUPERSCRIPT1;
+                  const resp = createResp(runInput);
+                  if (!results.includes(resp)) {
+                    results.push(resp);
+                  }
+                  runInput[idx1][jdx1] = oldInput1;
+                  runInput[idx2][jdx2] = oldInput2;
+                }
+              }
+            }
+          }
+        }
+      }
+
+        // if (sticksFloating === 2) {
+        //     // console.log(runInput);
+        //     for (let idx = 0; idx < runInput.length; idx++) {
+        //         for (let jdx = 0; jdx < runInput[idx].length; jdx++) {
+        //         for (let kdx = jdx + 1; kdx < runInput[idx].length; kdx++) {
+        //             if (isNumber(runInput[idx][jdx]) && isNumber(runInput[idx][kdx])) {
+        //                 const val1 = runInput[idx][jdx];
+        //                 const val2 = runInput[idx][kdx];
+        //                 runInput[idx][jdx] += SUPERSCRIPT1;
+        //                 runInput[idx][kdx] += SUPERSCRIPT1;
+        //                 const resp = createResp(runInput);
+        //                 if (!results.includes(resp)) {
+        //                     results.push(resp);
+        //                 }
+        //                 runInput[idx][jdx] = val1;
+        //                 runInput[idx][kdx] = val2;
+        //             }
+        //         }
+        //         }
+        //     }
+        // }
+    }
+
+    function verifyResults(runInput) {
+        let val;
+        return runInput.every(inp => {
+            // const retArr = removeNulls(inp);
+            const tmpVal = evalRPN(toRPN(inp));
+            if (tmpVal === undefined) return false;
+            if (val === undefined)
+                val = tmpVal;
+
+            return val === tmpVal;
+        });
+    }
+
+    function addToResults1(runInput, reslt, results) {
       let resp = createResp(runInput, reslt, results);
       if (!results.includes(resp)) {
         results.push(resp);
@@ -2854,7 +3066,20 @@
         });
       }
 
-    function createResp(arr, result) {
+    function createResp(runInput) {
+        const respArr = runInput.map(inp => inp.join(" "));
+        return respArr.join(EQUAL);
+    }
+
+    function createRespSingle(arr) {
+        let reslt = [];
+        for (let idx = 0; idx < arr.length; idx++) {
+            reslt.push(arr[idx].join(" "));
+        }
+        return reslt.join(EQUAL);
+    }
+
+    function createResp1(arr, result) {
       let reslt = "";
       arr.forEach(r => {reslt += r + " "});
       return reslt + EQUAL + result;
@@ -3011,7 +3236,7 @@
         }
         inp = toRPN(inp);
         if (evalRPN(inp) === res) {
-          console.log(inp, res);
+          // console.log(inp, res);
         }
     }
 
