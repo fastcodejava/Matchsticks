@@ -3016,7 +3016,8 @@
       addToConfigurationSeven(conf);
       addCompositMapping(conf);
       addToConfigurationNumbersWithOne(conf);
-	  // console.log(JSON.stringify(conf["18"]));
+	  addReverseConfiguration(conf);
+	  // console.log(JSON.stringify(conf["17"]));
     };
 
     function solvePuzzle() {
@@ -3239,6 +3240,21 @@
           }
       });
     }
+
+    function addReverseConfiguration(conf) {
+      Object.keys(conf).forEach(key => {
+		const confArr = conf[key];
+		for (let i = 0; i < confArr.length; i++) {
+			const obj = JSON.parse(JSON.stringify(confArr[i]));
+			obj.destination = key; 
+			obj.move = confArr[i].move; 
+			obj.add = -confArr[i].add; 
+			//console.log(confArr[i].destination);
+			if (conf[confArr[i].destination])
+				addItemToConf(conf[confArr[i].destination], obj);
+		}
+	  });
+	}
 
     function searchForSubstringAndReplace(str, searchStr, replace) {
       const result = [];
