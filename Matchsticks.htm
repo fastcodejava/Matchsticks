@@ -2928,6 +2928,18 @@
           fn: (numb1, numb2, numb3) => [createResponse(MINUS + numb1, MINUS + numb2, numb3, DIVISION), createResponse(numb1, MINUS + numb2, MINUS + numb3, DIVISION), createResponse(MINUS + numb1, numb2, MINUS + numb3, DIVISION)]
         },
         {
+          stcksFlting: 0,
+          movesRemaining: 1,
+          cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
+          fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, numb3, DIVISION)
+        },
+        {
+          stcksFlting: 0,
+          movesRemaining: 1,
+          cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
+          fn: (numb1, numb2, numb3) => [createResponse(numb1, MINUS + numb2, numb3, DIVISION), createResponse(numb1, numb2, MINUS + numb3, DIVISION), createResponse(MINUS + numb1, numb2, numb3, DIVISION)]
+        },
+        {
           stcksFlting: 2,
           movesRemaining: 0,
           cond: (numb1, numb2, numb3) => numb1 * numb2 === numb3,
@@ -3017,7 +3029,7 @@
       addCompositMapping(conf);
       addToConfigurationNumbersWithOne(conf);
 	  addReverseConfiguration(conf);
-	  // console.log(JSON.stringify(conf["17"]));
+	  console.log(JSON.stringify(conf["85"]));
     };
 
     function solvePuzzle() {
