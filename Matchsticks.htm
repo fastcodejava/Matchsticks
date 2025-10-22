@@ -54,6 +54,7 @@
 	const MULTIPLICATION = "x";
     const DIVISION = "/";
     const EQUAL = "=";
+    const SPACE = " ";
     let conf = {
       "0": [
         {
@@ -3016,6 +3017,149 @@
       ]
     };
 
+    const confSigns = {
+      "+": [
+        {
+          "destination": "+",
+          "add": 0,
+          "move": 0
+        },
+        {
+          "destination": "-",
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": "/",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "x",
+          "add": 0,
+          "move": 2
+        },
+        {
+          "destination": "=",
+          "add": 0,
+          "move": 1
+        }
+      ],
+      "-": [
+        {
+          "destination": "-",
+          "add": 0,
+          "move": 0
+        },
+        {
+          "destination": "+",
+          "add": 1,
+          "move": 0
+        },
+        {
+          "destination": "/",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "x",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "=",
+          "add": 1,
+          "move": 0
+        },
+        {
+          "destination": null,
+          "add": -1,
+          "move": 0
+        }
+      ],
+      "x": [
+        {
+          "destination": "x",
+          "add": 0,
+          "move": 0
+        },
+        {
+          "destination": "+",
+          "add": 0,
+          "move": 2
+        },
+        {
+          "destination": "/",
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": "-",
+          "add": -1,
+          "move": 1
+        },
+        {
+          "destination": "=",
+          "add": 0,
+          "move": 2
+        }
+      ],
+      "/": [
+        {
+          "destination": "/",
+          "add": 0,
+          "move": 0
+        },
+        {
+          "destination": "+",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": "-",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "x",
+          "add": 1,
+          "move": 0
+        },
+        {
+          "destination": "=",
+          "add": 1,
+          "move": 1
+        },
+        {
+          "destination": null,
+          "add": -1,
+          "move": 0
+        }
+      ],
+      "=": [
+        {
+          "destination": "=",
+          "add": 0,
+          "move": 0
+        },
+        {
+          "destination": "+",
+          "add": 0,
+          "move": 1
+        },
+        {
+          "destination": "-",
+          "add": -1,
+          "move": 0
+        },
+        {
+          "destination": "x",
+          "add": 0,
+          "move": 2
+        }
+      ]
+    };
+
     window.onload = function () {
       addIdentityAll(conf);
       for (let i = 1; i < 100; i++) {
@@ -3034,25 +3178,30 @@
 
     function solvePuzzle() {
       const text = document.getElementById('textbox').value;
-      const stcksToMove = document.getElementById('dropdown').value;
+      const sticksToMove = parseInt(document.getElementById('dropdown').value);
       const output = document.getElementById('output');
+      output.innerHTML  = "";
       output.innerHTML  = "Solving Puzzle";
       //console.log(JSON.stringify(conf["111"]));
 
-      const arr = parseInput(text, "=");
+      let results;
+      let arr = parseInput(text, EQUAL);
 
-      if (!arr || arr.length < 4 ) {
-        output.innerHTML = "Bad equation provided";
-        return;
+      if (arr && arr.length === 4 ) {
+          results = solvePuzzleForTwo(arr, sticksToMove);
+      } else {
+        arr = text.match(/(\d+\.?\d*|\+|\-|x|\/|\(|\)|=)/g);
+        results = solvePuzzleForThree(arr, sticksToMove);
       }
-
-      if (arr.length === 4) {
-        solvePuzzleForTwo(arr, stcksToMove, output);
-      }
+        if (results && results.length > 0) {
+            // output.value = results.length > 0 ? "Found " + results.length + " Solutions:\n\n" + results.join("\n") : "No Solutions";
+            output.value = "Found " + results.length + " Solutions:\n\n" + results.join("\n");
+        } else {
+            output.innerHTML = "No Solutions or Bad equation provided";
+        }
     }
 
-
-    function solvePuzzleForTwo(arr, stcksToMove, output) {
+    function solvePuzzleForTwo(arr, sticksToMove) {
       const operation = arr && arr.length > 0 ? arr[0] : "Unknown operation";
       const result = arr[3];
       const num1 = arr[1];
@@ -3060,32 +3209,30 @@
       let results = [];
 
       console.log(num1 + " " + num2 + " " + result);
-      const sticksToMove = parseInt(stcksToMove);
-      results = solve(num1, num2, result, operation, sticksToMove, 0, 0);
+      results = solveForTwo(num1, num2, result, operation, sticksToMove, 0, 0);
       if (num1 < 0) {
-        // const reslts = results.concat(solve(-num1, num2, result, operation, sticksToMove, 1, 1, {num1: true}));
-        const reslts = results.concat(solve(-num1, num2, result, operation, sticksToMove, 1, 1));
+        // const reslts = results.concat(solveForTwo(-num1, num2, result, operation, sticksToMove, 1, 1, {num1: true}));
+        const reslts = results.concat(solveForTwo(-num1, num2, result, operation, sticksToMove, 1, 1));
         results = results.concat(reslts.filter(value => {
           return !(results.includes(value) || value.trim().startsWith("" + num1));
         }));
       }
       if (result < 0) {
-        const reslts = results.concat(solve(num1, num2, -result, operation, sticksToMove, 1, 1));
+        const reslts = results.concat(solveForTwo(num1, num2, -result, operation, sticksToMove, 1, 1));
         results = results.concat(reslts.filter(value => {
           return !(results.includes(value) || value.trim().endsWith("" + result));
         }));
       }
       if (num1 < 0 && result < 0) {
-        const reslts = results.concat(solve(-num1, num2, -result, operation, sticksToMove, 2, 2));
+        const reslts = results.concat(solveForTwo(-num1, num2, -result, operation, sticksToMove, 2, 2));
         results = results.concat(reslts.filter(value => {
           return !(results.includes(value) || value.trim().startsWith("" + num1) || value.trim().endsWith("" + result));
         }));
       }
-      //output.innerHTML = results.length > 0 ? "Found " + results.length + " Solutions:<br \><br \>" + results.join("<br \>") : "No Solutions";
-      output.value = results.length > 0 ? "Found " + results.length + " Solutions:\n\n" + results.join("\n") : "No Solutions";
+      return results;
     }
 
-    function solve(num1, num2, num3, operation, sticksToMove, sticksMoved, sticksFloating) {
+    function solveForTwo(num1, num2, num3, operation, sticksToMove, sticksMoved, sticksFloating) {
       let results = [];
 	  // var sticksMoved = 0, sticksFloating = 0;
       //console.log(JSON.stringify(conf["76"]));
@@ -3152,34 +3299,335 @@
 		return results;
     }
 
+    function solvePuzzleForThree(input, sticksToMove, numMatchsticks, stcksFloating) {
+      // console.log(input);
+      let sticksMoved = 0; sticksFloating = 0, results = [];
+      let done = false;
+      let lastelement = true;
+      // const runningInput = [];
+      // for (let i = 0; i < tracking.length; i++) {
+      //   tracking[i] = 0;
+      // }
+
+      const confArr = [];
+
+      for (let i = 0; i < input.length; i++) {
+        //let confN;
+
+        // if (typeof input[i] === 'number') {
+        //   confN = typeof input[i] === 'number' ? conf[input[i]] : confSigns[input[i]];
+        //   confN = typeof parseInt(input[i]) === 'number' ? conf[input[i]] : confSigns[input[i].trim()];
+        // console.log(input[i], confSigns[input[i].trim()]);
+        // console.log(i, input[i]);
+        // console.log(i, input[i], parseInt(input[i]) !== NaN);
+        confArr.push(isNumber(input[i]) ? conf[input[i]] : confSigns[input[i].trim()]);
+      }
+      let total = 1;
+      for (let idx = 0; idx < confArr.length; idx++) {
+        // console.log(idx, confArr[idx]);
+        total *= confArr[idx].length;
+      }
+
+      // const total = N1 * N2 * N3 * N4 * N5 * N6 * N7;
+      const N1 = confArr[0].length;
+      const N2 = confArr[1].length;
+      const N3 = confArr[2].length;
+      const N4 = confArr[3].length;
+      const N5 = confArr[4].length;
+      const N6 = confArr[5].length;
+      const N7 = confArr[6].length;
+
+      for (let idx = 0; idx < total; idx++) {
+        const runningInput = [];
+
+        const i1 = Math.floor(idx / (N2*N3*N4*N5*N6*N7)) % N1;
+        const i2 = Math.floor(idx / (N3*N4*N5*N6*N7)) % N2;
+        const i3 = Math.floor(idx / (N4*N5*N6*N7)) % N3;
+        const i4 = Math.floor(idx / (N5*N6*N7)) % N4;
+        const i5 = Math.floor(idx / (N6*N7)) % N5;
+        const i6 = Math.floor(idx / (N7)) % N6;
+        const i7 = idx % N7;
+
+        // console.log(i1, N1);
+
+        // console.log("1st calcSticksMoved");
+        let obj = calcSticksMoved(confArr, 0, i1, 0, 0);
+        let sticksMoved = obj.sticksMoved;
+        let sticksFloating = obj.sticksFloating;
+        runningInput.push(obj.value);
+        if (sticksMoved > sticksToMove || Math.abs(sticksFloating) > sticksToMove) {
+          continue;
+        }
+
+        // console.log("2nd calcSticksMoved");
+        obj = calcSticksMoved(confArr, 1, i2, sticksMoved, sticksFloating);
+        sticksMoved = obj.sticksMoved;
+        sticksFloating = obj.sticksFloating;
+        // console.log(i2, obj.value);
+        runningInput.push(obj.value);
+        if (sticksMoved > sticksToMove || Math.abs(sticksFloating) > sticksToMove) {
+          continue;
+        }
+
+        obj = calcSticksMoved(confArr, 2, i3, sticksMoved, sticksFloating);
+        sticksMoved = obj.sticksMoved;
+        sticksFloating = obj.sticksFloating;
+        runningInput.push(obj.value);
+        if (sticksMoved > sticksToMove || Math.abs(sticksFloating) > sticksToMove) {
+          continue;
+        }
+
+        obj = calcSticksMoved(confArr, 3, i4, sticksMoved, sticksFloating);
+        sticksMoved = obj.sticksMoved;
+        sticksFloating = obj.sticksFloating;
+        runningInput.push(obj.value);
+        if (sticksMoved > sticksToMove || Math.abs(sticksFloating) > sticksToMove) {
+          continue;
+        }
+
+        obj = calcSticksMoved(confArr, 4, i5, sticksMoved, sticksFloating);
+        sticksMoved = obj.sticksMoved;
+        sticksFloating = obj.sticksFloating;
+        runningInput.push(obj.value);
+        if (sticksMoved > sticksToMove || Math.abs(sticksFloating) > sticksToMove) {
+          continue;
+        }
+
+        obj = calcSticksMoved(confArr, 5, i6, sticksMoved, sticksFloating);
+        sticksMoved = obj.sticksMoved;
+        sticksFloating = obj.sticksFloating;
+        runningInput.push(obj.value);
+        if (sticksMoved > sticksToMove || Math.abs(sticksFloating) > sticksToMove) {
+          continue;
+        }
+
+        obj = calcSticksMoved(confArr, 6, i7, sticksMoved, sticksFloating);
+        sticksMoved = obj.sticksMoved;
+        sticksFloating = obj.sticksFloating;
+        runningInput.push(obj.value);
+        if (sticksMoved > sticksToMove || Math.abs(sticksFloating) > sticksToMove) {
+          continue;
+        }
+        // console.log("Last calcSticksMoved");
+
+        // console.log(runningInput);
+        if (sticksMoved === sticksToMove && sticksFloating >= 0) {
+          // console.log(sticksFloating, runningInput);
+          //   results = results.concat(processOutput(runningInput, sticksFloating, results));
+          //   const rslt = processOutput(runningInput, sticksFloating, results);
+          processInput(runningInput, sticksFloating, results);
+          // console.log(results);
+          // results = results.concat(rslt ? rslt : []);
+        }
+      }
+      return results;
+    }
+
+
+    function processInput(runningInput, sticksFloating, results) {
+      let runInput = splitArr(runningInput);
+      // console.log(runInput);
+      if (runInput.length < 2) return [];
+      let val;
+
+      // console.log(runInput);
+      runInput = runInput.map(inp => removeNulls(inp));
+      // console.log(runInput);
+
+      if (verifyResults(runInput)) buildResponse(runInput, sticksFloating, results);
+
+      if (sticksFloating === 1) {
+        for (let idx = 0; idx < runInput.length; idx++) {
+          for (let jdx = 0; jdx < runInput[idx].length; jdx++) {
+            if (isNumber(runInput[idx][jdx])) {
+              const oldInput = runInput[idx][jdx];
+              runInput[idx][jdx] = MINUS + runInput[idx][jdx];
+              // console.log(runInput);
+              if (verifyResults(runInput)) buildResponse(runInput, 0, results);
+              runInput[idx][jdx] = oldInput;
+            }
+          }
+        }
+      }
+
+      if (sticksFloating === 2) {
+        // console.log(runInput);
+        for (let idx1 = 0; idx1 < runInput.length; idx1++) {
+          for (let jdx1 = 0; jdx1 < runInput[idx1].length; jdx1++) {
+            if (isNumber(runInput[idx1][jdx1])) {
+              const oldInput = runInput[idx1][jdx1];
+              runInput[idx1][jdx1] = PLUS + runInput[idx1][jdx1];
+              if (verifyResults(runInput)) buildResponse(runInput, 0, results);
+
+              runInput[idx1][jdx1] = MINUS + runInput[idx1][jdx1];
+              if (verifyResults(runInput)) buildResponse(runInput, 1, results);
+              runInput[idx1][jdx1] = oldInput;
+            }
+            for (let idx2 = idx1; idx2 < runInput.length; idx2++) {
+              const start = idx2 > idx1 ? 0 : jdx1 + 1;
+              for (let jdx2 = start; jdx2 < runInput[idx2].length; jdx2++) {
+                if (isNumber(runInput[idx1][jdx1]) && isNumber(runInput[idx2][jdx2])) {
+                  const oldInput1 = runInput[idx1][jdx1];
+                  const oldInput2 = runInput[idx2][jdx2];
+                  runInput[idx1][jdx1] = MINUS + runInput[idx1][jdx1];
+                  runInput[idx2][jdx2] = MINUS + runInput[idx2][jdx2];
+                  if (verifyResults(runInput)) buildResponse(runInput, 0, results);
+                  runInput[idx1][jdx1] = oldInput1;
+                  runInput[idx2][jdx2] = oldInput2;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    function removeNulls(arr) {
+      let nullFound = false;
+      const retArr = [];
+      for (let idx = 0; idx < arr.length; idx++) {
+        if (nullFound) {
+          retArr[retArr.length -1] += arr[idx];
+          nullFound = false;
+        } else if (arr[idx] !== null) {
+          retArr.push(arr[idx])
+        } else {
+          nullFound = true;
+        }
+      }
+      return retArr;
+    }
+
+    function splitArr(runningInput) {
+      const runInput = [];
+      let start = 0, end = 0, eqIdx = 0;
+      while (eqIdx >= 0) {
+        eqIdx = runningInput.indexOf("=", start);
+        end = eqIdx;
+        // console.log(start, end);
+        // console.log(runningInput.slice(start, end));
+        if (eqIdx >= 0) {
+          runInput.push(runningInput.slice(start, end));
+          start = end + 1;
+        } else {
+          runInput.push(runningInput.slice(start));
+        }
+      }
+      return runInput;
+    }
+
+
+    function buildResponse(runInput, sticksFloating, results) {
+      //console.log(sticksFloating, runInput);
+      if (sticksFloating === 0) {
+        addToResults(runInput, results);
+      }
+      if (sticksFloating === 1) {
+        for (let idx = 0; idx < runInput.length; idx++) {
+          for (let jdx = 0; jdx < runInput[idx].length; jdx++) {
+            if (isNumber(runInput[idx][jdx])) {
+              const val = runInput[idx][jdx];
+              runInput[idx][jdx] += SUPERSCRIPT1;
+              addToResults(runInput, results);
+              runInput[idx][jdx] = val;
+            }
+          }
+        }
+      }
+
+      if (sticksFloating === 2) {
+        // console.log(runInput);
+        for (let idx1 = 0; idx1 < runInput.length; idx1++) {
+          for (let jdx1 = 0; jdx1 < runInput[idx1].length; jdx1++) {
+            if (isNumber(runInput[idx1][jdx1])) {
+              const oldInput = runInput[idx1][jdx1];
+              runInput[idx1][jdx1] = PLUS + runInput[idx1][jdx1];
+              addToResults(runInput, results);
+              runInput[idx1][jdx1] = oldInput;
+            }
+            for (let idx2 = idx1; idx2 < runInput.length; idx2++) {
+              const start = idx2 > idx1 ? 0 : jdx1 + 1;
+              for (let jdx2 = start; jdx2 < runInput[idx2].length; jdx2++) {
+                if (isNumber(runInput[idx1][jdx1]) && isNumber(runInput[idx2][jdx2])) {
+                  const oldInput1 = runInput[idx1][jdx1];
+                  const oldInput2 = runInput[idx2][jdx2];
+                  runInput[idx1][jdx1] += SUPERSCRIPT1;
+                  runInput[idx2][jdx2] += SUPERSCRIPT1;
+                  addToResults(runInput, results);
+                  runInput[idx1][jdx1] = oldInput1;
+                  runInput[idx2][jdx2] = oldInput2;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    function verifyResults(runInput) {
+      let val;
+      return runInput.every(inp => {
+        // const retArr = removeNulls(inp);
+        const tmpVal = evalRPN(toRPN(inp));
+        if (tmpVal === undefined) return false;
+        if (val === undefined)
+          val = tmpVal;
+
+        return val === tmpVal;
+      });
+    }
+
+    function calcSticksMoved(confArr, num, indx, sticksMvd, sticksFlting) {
+      // console.log(confArr[num]);
+      // console.log(confArr[num][indx]);
+      if (confArr[num][indx] === undefined) {
+        // console.log(num, indx, confArr[num]);
+        // console.log(num, indx);
+        return {};
+      }
+      let sticksMoved = sticksMvd + confArr[num][indx].move;
+      let sticksFloating = sticksFlting + -1 * confArr[num][indx].add;
+      if (confArr[num][indx].add < 0) {
+        sticksMoved += -1 * confArr[num][indx].add;
+      }
+      return {sticksFloating: sticksFloating, sticksMoved: sticksMoved, value: confArr[num][indx].destination};
+    }
+
+    function addToResults(runInput, results) {
+      const result = createResp(runInput);
+      if (!results.includes(result)) {
+        results.push(result);
+      }
+    }
+
+    function createResp(runInput) {
+      const respArr = runInput.map(inp => inp.join(SPACE));
+      return respArr.join(SPACE + EQUAL + SPACE);
+    }
+
     function parseInput(str, delim) {
 		// 1 + 5 = 8
+        const signs = [PLUS, MINUS, MULTIPLICATION, DIVISION];
 		const i = str.indexOf(delim);
         const num3 = parseInt(str.substring(i+1).trim());
 		const s = str.substring(0, i).trim();
-        let arr = breakInput(s, num3, PLUS);
-        if (arr) return arr;
-        arr = breakInput(s, num3, MINUS);
-        if (arr) return arr;
-        arr = breakInput(s, num3, MULTIPLICATION);
-        if (arr) return arr;
-        arr = breakInput(s, num3, DIVISION);
-        if (arr) return arr;
-
-		return arr;
+        return signs.map(sign => breakInput(s, num3, sign)).find(v => v != null);
 	}
 
     function breakInput(str, num3, sign) {
-      const arr = [];
       const j = str.indexOf(sign);
       if (j > 0) {
-        arr[0] = sign;
-        arr[1] = parseInt(str.substring(0, j).trim());
-        arr[2] = parseInt(str.substring(j+1).trim());
-        arr[3] = num3;
-        return arr;
+        const part1 = str.substring(0, j).trim();
+        const part2 = str.substring(j+1).trim();
+        return isNumber(part1) && isNumber(part2) ? [sign, parseInt(part1), parseInt(part2), num3]: null;
       }
       return null;
+    }
+
+    function isNumber(str) {
+      // console.log(str);
+      // return !isNaN(str) && str.trim() !== "";
+      return !isNaN(Number(str)) && str.trim() !== "";
     }
 
     function addIdentity(arr, num) {
@@ -3376,7 +3824,7 @@
     function toRPN(tokens) {
       const out = [];
       const stack = [];
-      const prec = {'+': 1, '-': 1, '*': 2, '/': 2};
+      const prec = {'+': 1, '-': 1, 'x': 2, '*': 2, '/': 2};
       tokens.forEach(token => {
         if (!isNaN(token)) {
           out.push(Number(token));
@@ -3398,7 +3846,7 @@
         }
       });
       while (stack.length) out.push(stack.pop());
-      console.log(out);
+      // console.log(out);
       return out;
     }
 
@@ -3414,6 +3862,7 @@
             case '+': stack.push(a + b); break;
             case '-': stack.push(a - b); break;
             case '*': stack.push(a * b); break;
+            case 'x': stack.push(a * b); break;
             case '/': stack.push(a / b); break;
           }
         }
