@@ -3029,13 +3029,12 @@
       addCompositMapping(conf);
       addToConfigurationNumbersWithOne(conf);
 	  addReverseConfiguration(conf);
-	  console.log(JSON.stringify(conf["85"]));
+	  //console.log(JSON.stringify(conf["85"]));
     };
 
     function solvePuzzle() {
-      var results = [];
       const text = document.getElementById('textbox').value;
-      const dropdown = document.getElementById('dropdown').value;
+      const stcksToMove = document.getElementById('dropdown').value;
       const output = document.getElementById('output');
       output.innerHTML  = "Solving Puzzle";
       //console.log(JSON.stringify(conf["111"]));
@@ -3046,12 +3045,22 @@
         output.innerHTML = "Bad equation provided";
         return;
       }
+
+      if (arr.length === 4) {
+        solvePuzzleForTwo(arr, stcksToMove, output);
+      }
+    }
+
+
+    function solvePuzzleForTwo(arr, stcksToMove, output) {
       const operation = arr && arr.length > 0 ? arr[0] : "Unknown operation";
       const result = arr[3];
       const num1 = arr[1];
       const num2 = arr[2];
+      let results = [];
+
       console.log(num1 + " " + num2 + " " + result);
-      const sticksToMove = parseInt(dropdown);
+      const sticksToMove = parseInt(stcksToMove);
       results = solve(num1, num2, result, operation, sticksToMove, 0, 0);
       if (num1 < 0) {
         // const reslts = results.concat(solve(-num1, num2, result, operation, sticksToMove, 1, 1, {num1: true}));
