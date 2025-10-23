@@ -529,6 +529,11 @@
           "destination": "17",
           "add": 2,
           "move": 0
+        },
+        {
+          "destination": null,
+          "add": -3,
+          "move": 0
         }
       ],
       "8": [
@@ -2714,7 +2719,7 @@
                               // console.log(conf1[i]);
                               const out = [conf1[i].destination, conf2[j].destination, conf3[k].destination];
                               value = computeMinMax(sticksFloating3, sticksMoved3, sticksToMove, out, value, allowNegative, numMatchsticks, minValue, maxValue);
-							  // console.log(out, value);
+							  //console.log(out, value);
                             }
                         }
                     }
@@ -2754,7 +2759,7 @@
         //console.log(evaluate(out));
         // return isValid(MAX, out1, value, minValue, maxValue) ? out1.join(""): out.join("");
         const out2 = ["7"].concat(outpt);
-        //console.log(out1);
+        //console.log(out2);
         value = isValid(MAX, out2, value, minValue, maxValue) ? evaluate(out2) : value;
       }
       if (sticksFloating === 4 && sticksMoved === sticksToMove) {
