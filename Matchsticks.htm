@@ -3330,12 +3330,6 @@
                         // console.log(reslt);
                         if (reslt.length > 0) {
                           // console.log(num1 + " " + num2 + " " + num3);
-                          // console.log(conf1[i].destination + " " + conf2[j].destination + " " + conf3[k].destination);
-                          // for (res of reslt) {
-                          //   res += " " + createResponseDesc(confArr);
-                          //   console.log(res);
-                          // }
-                          // console.log(showDescription);
                           if (showDescription)
                             reslt = reslt.map(rs => rs + " " + createResponseDesc(confArr));
                           reslt = reslt.filter((value, indx, self) => self.indexOf(value) === indx);
@@ -3727,7 +3721,7 @@
         } else if (cf.add < 0) {
           desc.push("removed " + -cf.add + " sticks from " + conf.number);
         }
-        if (cf.move !== 0) {
+        if (cf.move) {
           desc.push("moved " + cf.move + " sticks in " + conf.number);
         }
       }
