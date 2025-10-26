@@ -28,6 +28,8 @@
     <option value="3">3</option>
   </select>
 
+  Show Description: <input type="checkbox" id="description" name="description">
+
   <button onclick="solvePuzzle()">Submit</button>
   <button onclick="copyText()">Copy</button>
 
@@ -142,6 +144,11 @@
         {
           "destination": "9",
           "add": 4,
+          "move": 0
+        },
+        {
+          "destination": null,
+          "add": -2,
           "move": 0
         }
       ],
@@ -2609,6 +2616,12 @@
         {
           stcksFlting: 0,
           movesRemaining: 2,
+          cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
+          fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, numb3, DIVISION)
+        },
+        {
+          stcksFlting: 0,
+          movesRemaining: 2,
           cond: (numb1, numb2, numb3) => numb1 === 1 && numb2 === numb3,
           fn: (numb1, numb2, numb3) => createResponse(null, numb2, PLUS + numb3, PLUS)
         },
@@ -2737,6 +2750,12 @@
           movesRemaining: 0,
           cond: (numb1, numb2, numb3) => -numb1 + numb2 === -numb3,
           fn: (numb1, numb2, numb3) => createResponse(MINUS + numb1, numb2, MINUS + numb3, PLUS)
+        },
+        {
+          stcksFlting: 0,
+          movesRemaining: 0,
+          cond: (numb1, numb2, numb3) => numb1 === null && numb2 === numb3,
+          fn: (numb1, numb2, numb3) => createResponse(null, numb2, numb3, PLUS)
         }
       ],
       "-": [
@@ -3026,6 +3045,12 @@
           cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
           fn: (numb1, numb2, numb3) => [createResponse(numb1, numb2, PLUS + numb3, DIVISION), createResponse(MINUS + numb1, numb2, MINUS + numb3, DIVISION), createResponse(MINUS + numb1, MINUS + numb2, numb3, DIVISION), createResponse(numb1, MINUS + numb2, MINUS + numb3, DIVISION)]
         },
+        {
+          stcksFlting: 2,
+          movesRemaining: 0,
+          cond: (numb1, numb2, numb3) => numb1 * numb2 === numb3,
+          fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, numb3, MULTIPLICATION)
+        }
       ]
     };
 
@@ -3192,6 +3217,10 @@
       const text = document.getElementById('textbox').value;
       const sticksToMove = parseInt(document.getElementById('dropdown').value);
       const output = document.getElementById('output');
+      const showDescription = document.getElementById("description").checked;
+
+      // console.log(showDescription);
+
       output.innerHTML  = "";
       output.innerHTML  = "Solving Puzzle";
       //console.log(JSON.stringify(conf["111"]));
@@ -3200,7 +3229,7 @@
       let arr = parseInput(text, EQUAL);
 
       if (arr && arr.length === 4 ) {
-          results = solvePuzzleForTwo(arr, sticksToMove);
+          results = solvePuzzleForTwo(arr, sticksToMove, showDescription);
       } else {
         arr = text.match(/(\d+\.?\d*|\+|\-|x|\/|\(|\)|=)/g);
         results = solvePuzzleForThree(arr, sticksToMove);
@@ -3213,7 +3242,7 @@
         }
     }
 
-    function solvePuzzleForTwo(arr, sticksToMove) {
+    function solvePuzzleForTwo(arr, sticksToMove, showDescription) {
       const operation = arr && arr.length > 0 ? arr[0] : "Unknown operation";
       const result = arr[3];
       const num1 = arr[1];
@@ -3221,22 +3250,22 @@
       let results = [];
 
       console.log(num1 + " " + num2 + " " + result);
-      results = solveForTwo(num1, num2, result, operation, sticksToMove, 0, 0);
+      results = solveForTwo(num1, num2, result, operation, sticksToMove, 0, 0, showDescription);
       if (num1 < 0) {
         // const reslts = results.concat(solveForTwo(-num1, num2, result, operation, sticksToMove, 1, 1, {num1: true}));
-        const reslts = results.concat(solveForTwo(-num1, num2, result, operation, sticksToMove, 1, 1));
+        const reslts = results.concat(solveForTwo(-num1, num2, result, operation, sticksToMove, 1, 1, showDescription));
         results = results.concat(reslts.filter(value => {
           return !(results.includes(value) || value.trim().startsWith("" + num1));
         }));
       }
       if (result < 0) {
-        const reslts = results.concat(solveForTwo(num1, num2, -result, operation, sticksToMove, 1, 1));
+        const reslts = results.concat(solveForTwo(num1, num2, -result, operation, sticksToMove, 1, 1, showDescription));
         results = results.concat(reslts.filter(value => {
           return !(results.includes(value) || value.trim().endsWith("" + result));
         }));
       }
       if (num1 < 0 && result < 0) {
-        const reslts = results.concat(solveForTwo(-num1, num2, -result, operation, sticksToMove, 2, 2));
+        const reslts = results.concat(solveForTwo(-num1, num2, -result, operation, sticksToMove, 2, 2, showDescription));
         results = results.concat(reslts.filter(value => {
           return !(results.includes(value) || value.trim().startsWith("" + num1) || value.trim().endsWith("" + result));
         }));
@@ -3244,7 +3273,7 @@
       return results;
     }
 
-    function solveForTwo(num1, num2, num3, operation, sticksToMove, sticksMoved, sticksFloating) {
+    function solveForTwo(num1, num2, num3, operation, sticksToMove, sticksMoved, sticksFloating, showDescription) {
       let results = [];
 	  // var sticksMoved = 0, sticksFloating = 0;
       //console.log(JSON.stringify(conf["76"]));
@@ -3287,21 +3316,35 @@
 					}
 					if (sticksMoved3 <= sticksToMove && Math.abs(sticksFloating3) <= sticksToMove) {
 						// console.log(sticksFloating + " " + sticksMoved + " " + sticksToMove);
-						// console.log(conf1[i].destination + " " + conf2[j].destination + " " + conf3[k].destination);
+						//console.log(conf1[i].destination + " " + conf2[j].destination + " " + conf3[k].destination);
 						//resultStr = resultStr ? resultStr : verifyAndCreateResponse(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3);
                       // console.log(conf1[i]);
 						let reslt = verifyAndCreateResponse(getValueWithSign(conf1[i].destination, num1), getValueWithSign(conf2[j].destination, num2), getValueWithSign(conf3[k].destination, num3), operation, sticksFloating3, sticksToMove - sticksMoved3);
-                      // console.log(reslt);
-                      reslt = reslt.filter((value, indx, self) => self.indexOf(value) === indx);
-                      // console.log(reslt);
-                      reslt = reslt.filter((value, indx, self) => results.indexOf(value) < 0);
-                      if (reslt.length > 0) {
-                        // console.log(num1 + " " + num2 + " " + num3);
-                        // console.log(conf1[i].destination + " " + conf2[j].destination + " " + conf3[k].destination);
-                        results = results.concat(reslt);
+                      //console.log(reslt);
+					  if (reslt) {
+					    const confArr = [
+                          {"number": num1, "conf": conf1[i]},
+                          {"number": num2, "conf": conf2[j]},
+                          {"number": num3, "conf": conf3[k]},
+                        ];
+                        // console.log(reslt);
+                        if (reslt.length > 0) {
+                          // console.log(num1 + " " + num2 + " " + num3);
+                          // console.log(conf1[i].destination + " " + conf2[j].destination + " " + conf3[k].destination);
+                          // for (res of reslt) {
+                          //   res += " " + createResponseDesc(confArr);
+                          //   console.log(res);
+                          // }
+                          // console.log(showDescription);
+                          if (showDescription)
+                            reslt = reslt.map(rs => rs + " " + createResponseDesc(confArr));
+                          reslt = reslt.filter((value, indx, self) => self.indexOf(value) === indx);
+                          reslt = reslt.filter((value, indx, self) => results.indexOf(value) < 0);
+                          results = results.concat(reslt);
                             // results = results.concat(reslt.filter(it => !results.includes(it)));
                         }
 						// console.log(results);
+                      }
 					}
 				}
 			}
@@ -3674,6 +3717,22 @@
         return performOperation(op, numb1, numb2, numb3, stcksFlting, movesRemaining);
 	}
 
+
+	function createResponseDesc(confArr) {
+      let desc = [];
+      for (const conf of confArr) {
+        const cf = conf.conf;
+        if (cf.add > 0) {
+          desc.push("added " + cf.add + " sticks in " + conf.number);
+        } else if (cf.add < 0) {
+          desc.push("removed " + -cf.add + " sticks from " + conf.number);
+        }
+        if (cf.move !== 0) {
+          desc.push("moved " + cf.move + " sticks in " + conf.number);
+        }
+      }
+      return "(" + desc.join() + ")";
+    }
     function addToConfigurationFlipDigits(conf) {
       const ob = {
         "destination": 1,
@@ -3791,7 +3850,7 @@
     }
 
     function getValueWithSign(destination, num) {
-      return num < 0 ? -destination : destination;
+      return num !== null && num < 0 ? -destination : destination;
     }
 
     function addToConfigurationSeven(conf) {
@@ -3939,6 +3998,7 @@
 	}
 	
 	function createResponse(numb1, numb2, numb3, op) {
+		if (numb2 === null || numb3 === null) return null;
 		return numb1 !== null ? numb1 + " " + op + " " + numb2 + " = " + numb3 : op + numb2 + " = " + numb3 ;
 	}
 
@@ -4041,17 +4101,17 @@
     function performOperation(oper, numb1, numb2, numb3, stcksFlting, movesRemaining) {
       let results = [];
       calcConf[oper].forEach(item => {
-            let num1 = parseInt(numb1);
-            let num2 = parseInt(numb2);
-            let num3 = parseInt(numb3);
-            if (item.stcksFlting === stcksFlting && item.movesRemaining === movesRemaining
+            let num1 = numb1 === null ? null : parseInt(numb1);
+            let num2 = numb2 === null ? null : parseInt(numb2);
+            let num3 = numb3 === null ? null : parseInt(numb3);
+            if (numb2 !== null && numb3 !== null && item.stcksFlting === stcksFlting && item.movesRemaining === movesRemaining
               && item.cond.apply(null, [num1, num2, num3])) {
               const result = item.fn.apply(null, [numb1, numb2, numb3]);
               // console.log(item.cond.apply(null, [numb1, numb2, numb3]));
               // console.log(result);
               if (Array.isArray(result)) {
                 results = results.concat(result);
-              } else {
+              } else if (result) {
                 results.push(result);
               }
             }
