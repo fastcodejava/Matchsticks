@@ -3219,8 +3219,6 @@
       const output = document.getElementById('output');
       const showDescription = document.getElementById("description").checked;
 
-      // console.log(showDescription);
-
       output.innerHTML  = "";
       output.innerHTML  = "Solving Puzzle";
       //console.log(JSON.stringify(conf["111"]));
@@ -3733,7 +3731,7 @@
         }
         if (desc) descArr.push(desc);
       }
-      return "(" + descArr.join(".") + ")";
+      return descArr.length ? "(" + descArr.join(".") + ")" : "";
     }
     function addToConfigurationFlipDigits(conf) {
       const ob = {
