@@ -3713,19 +3713,27 @@
 
 
 	function createResponseDesc(confArr) {
-      let desc = [];
+      let descArr = [];
       for (const conf of confArr) {
         const cf = conf.conf;
-        if (cf.add > 0) {
-          desc.push("added " + cf.add + " sticks in " + conf.number);
+        let desc = null;
+        if (cf.move && cf.add !== 0) {
+          desc = "Moved " + cf.move + " sticks and ";
+          if (cf.add > 0) {
+            desc += "added " + cf.add + " sticks in " + conf.number;
+          } else if (cf.add < 0) {
+            desc += "removed " + -cf.add + " sticks from " + conf.number;
+          }
+        } else if (cf.add > 0) {
+          desc = "Added " + cf.add + " sticks in " + conf.number;
         } else if (cf.add < 0) {
-          desc.push("removed " + -cf.add + " sticks from " + conf.number);
+          desc = "Removed " + -cf.add + " sticks from " + conf.number;
+        } else if (cf.move) {
+          desc = "Moved " + cf.move + " sticks in " + conf.number;
         }
-        if (cf.move) {
-          desc.push("moved " + cf.move + " sticks in " + conf.number);
-        }
+        if (desc) descArr.push(desc);
       }
-      return "(" + desc.join() + ")";
+      return "(" + descArr.join(".") + ")";
     }
     function addToConfigurationFlipDigits(conf) {
       const ob = {
