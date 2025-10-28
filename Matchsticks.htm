@@ -3222,7 +3222,7 @@
 
       output.innerHTML  = "";
       output.innerHTML  = "Solving Puzzle";
-      //console.log(JSON.stringify(conf["111"]));
+      console.log(JSON.stringify(conf["51"]));
 
       let results;
       let arr = parseInput(text, EQUAL);
@@ -3237,7 +3237,7 @@
             // output.value = results.length > 0 ? "Found " + results.length + " Solutions:\n\n" + results.join("\n") : "No Solutions";
             output.value = "Found " + results.length + " Solutions" +  (showInstructions ? "(with instructions)" : "") + ":\n\n" + results.join("\n");
         } else {
-            output.innerHTML = "No Solutions or Bad equation provided";
+            output.value = "No Solutions or Bad equation provided";
         }
     }
 
@@ -4047,16 +4047,10 @@
 
             for (let i = 0; i < conf[key[0]].length; i++) {
             for (let j = 0; j < conf[key[1]].length; j++) {
-              // if (key === "32") {
-                // console.log(key[0] + " " + key[1] + " " + firstConf.destination + " " + conf[key[1]][j].destination);
-                // console.log(conf[key[0]]);
-                // console.log(conf[key[1]]);
-              // }
               const firstConf = conf[key[0]][i];
               const secondConf = conf[key[1]][j];
               let move = firstConf.move + secondConf.move;
-              // const destination = parseInt("" + firstConf.destination + secondConf.destination);
-              const destination = firstConf.destination + secondConf.destination;
+              const destination = (firstConf.destination !== null ? firstConf.destination : "") + (secondConf.destination !== null ? secondConf.destination : "");
 
               const mv =  matchMoves(firstConf.add, secondConf.add);
 
