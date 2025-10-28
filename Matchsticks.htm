@@ -2975,7 +2975,8 @@
           stcksFlting: 2,
           movesRemaining: 0,
           cond: (numb1, numb2, numb3) => numb1 * numb2 === numb3,
-          fn: (numb1, numb2, numb3) => [createResponse(numb1, numb2, PLUS + numb3, MULTIPLICATION), createResponse(PLUS + numb1, numb2, numb3, MULTIPLICATION), createResponse(numb1, PLUS + numb2, numb3, MULTIPLICATION), createResponse(MINUS + numb1, numb2, MINUS + numb3, MULTIPLICATION), createResponse(MINUS + numb1, MINUS + numb2, numb3, MULTIPLICATION), createResponse(numb1, MINUS + numb2, MINUS + numb3, MULTIPLICATION)]
+          fn: (numb1, numb2, numb3) => [createResponseWithTwoSticks(numb1, numb2, numb3), createResponse(MINUS + numb1, numb2, MINUS + numb3, MULTIPLICATION), createResponse(MINUS + numb1, MINUS + numb2, numb3, MULTIPLICATION), createResponse(numb1, MINUS + numb2, MINUS + numb3, MULTIPLICATION)]
+          // fn: (numb1, numb2, numb3) => [createResponse(numb1, numb2, PLUS + numb3, MULTIPLICATION), createResponse(PLUS + numb1, numb2, numb3, MULTIPLICATION), createResponse(numb1, PLUS + numb2, numb3, MULTIPLICATION), createResponse(MINUS + numb1, numb2, MINUS + numb3, MULTIPLICATION), createResponse(MINUS + numb1, MINUS + numb2, numb3, MULTIPLICATION), createResponse(numb1, MINUS + numb2, MINUS + numb3, MULTIPLICATION)]
         }
       ],
       "/": [
@@ -3043,7 +3044,7 @@
           stcksFlting: 2,
           movesRemaining: 0,
           cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
-          fn: (numb1, numb2, numb3) => [createResponse(numb1, numb2, PLUS + numb3, DIVISION), createResponse(MINUS + numb1, numb2, MINUS + numb3, DIVISION), createResponse(MINUS + numb1, MINUS + numb2, numb3, DIVISION), createResponse(numb1, MINUS + numb2, MINUS + numb3, DIVISION)]
+          fn: (numb1, numb2, numb3) => [createResponseWithTwoSticks(numb1, numb2, numb3, DIVISION), createResponse(MINUS + numb1, numb2, MINUS + numb3, DIVISION), createResponse(MINUS + numb1, MINUS + numb2, numb3, DIVISION), createResponse(numb1, MINUS + numb2, MINUS + numb3, DIVISION)]
         },
         {
           stcksFlting: 2,
@@ -4110,7 +4111,7 @@
               // console.log(item.cond.apply(null, [numb1, numb2, numb3]));
               // console.log(result);
               if (Array.isArray(result)) {
-                results = results.concat(result);
+                results = results.concat(result.flat());
               } else if (result) {
                 results.push(result);
               }
