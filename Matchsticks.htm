@@ -28,7 +28,7 @@
     <option value="3">3</option>
   </select>
 
-  Show Description: <input type="checkbox" id="description" name="description">
+  Show Instructions: <input type="checkbox" id="instructions" name="instructions">
 
   <button onclick="solvePuzzle()">Submit</button>
   <button onclick="copyText()">Copy</button>
@@ -3218,7 +3218,7 @@
       const text = document.getElementById('textbox').value;
       const sticksToMove = parseInt(document.getElementById('dropdown').value);
       const output = document.getElementById('output');
-      const showDescription = document.getElementById("description").checked;
+      const showInstructions = document.getElementById("instructions").checked;
 
       output.innerHTML  = "";
       output.innerHTML  = "Solving Puzzle";
@@ -3228,20 +3228,20 @@
       let arr = parseInput(text, EQUAL);
 
       if (arr && arr.length === 4 ) {
-          results = solvePuzzleForTwo(arr, sticksToMove, showDescription);
+          results = solvePuzzleForTwo(arr, sticksToMove, showInstructions);
       } else {
         arr = text.match(/(\d+\.?\d*|\+|\-|x|\/|\(|\)|=)/g);
         results = solvePuzzleForThree(arr, sticksToMove);
       }
         if (results && results.length > 0) {
             // output.value = results.length > 0 ? "Found " + results.length + " Solutions:\n\n" + results.join("\n") : "No Solutions";
-            output.value = "Found " + results.length + " Solutions:\n\n" + results.join("\n");
+            output.value = "Found " + results.length + " Solutions" +  (showInstructions ? "(with instructions)" : "") + ":\n\n" + results.join("\n");
         } else {
             output.innerHTML = "No Solutions or Bad equation provided";
         }
     }
 
-    function solvePuzzleForTwo(arr, sticksToMove, showDescription) {
+    function solvePuzzleForTwo(arr, sticksToMove, showInstructions) {
       const operation = arr && arr.length > 0 ? arr[0] : "Unknown operation";
       const result = arr[3];
       const num1 = arr[1];
@@ -3249,22 +3249,22 @@
       let results = [];
 
       console.log(num1 + " " + num2 + " " + result);
-      results = solveForTwo(num1, num2, result, operation, sticksToMove, 0, 0, showDescription);
+      results = solveForTwo(num1, num2, result, operation, sticksToMove, 0, 0, showInstructions);
       if (num1 < 0) {
         // const reslts = results.concat(solveForTwo(-num1, num2, result, operation, sticksToMove, 1, 1, {num1: true}));
-        const reslts = results.concat(solveForTwo(-num1, num2, result, operation, sticksToMove, 1, 1, showDescription));
+        const reslts = results.concat(solveForTwo(-num1, num2, result, operation, sticksToMove, 1, 1, showInstructions));
         results = results.concat(reslts.filter(value => {
           return !(results.includes(value) || value.trim().startsWith("" + num1));
         }));
       }
       if (result < 0) {
-        const reslts = results.concat(solveForTwo(num1, num2, -result, operation, sticksToMove, 1, 1, showDescription));
+        const reslts = results.concat(solveForTwo(num1, num2, -result, operation, sticksToMove, 1, 1, showInstructions));
         results = results.concat(reslts.filter(value => {
           return !(results.includes(value) || value.trim().endsWith("" + result));
         }));
       }
       if (num1 < 0 && result < 0) {
-        const reslts = results.concat(solveForTwo(-num1, num2, -result, operation, sticksToMove, 2, 2, showDescription));
+        const reslts = results.concat(solveForTwo(-num1, num2, -result, operation, sticksToMove, 2, 2, showInstructions));
         results = results.concat(reslts.filter(value => {
           return !(results.includes(value) || value.trim().startsWith("" + num1) || value.trim().endsWith("" + result));
         }));
@@ -3272,7 +3272,7 @@
       return results;
     }
 
-    function solveForTwo(num1, num2, num3, operation, sticksToMove, sticksMoved, sticksFloating, showDescription) {
+    function solveForTwo(num1, num2, num3, operation, sticksToMove, sticksMoved, sticksFloating, showInstructions) {
       let results = [];
 	  // var sticksMoved = 0, sticksFloating = 0;
       //console.log(JSON.stringify(conf["76"]));
@@ -3329,7 +3329,7 @@
                         // console.log(reslt);
                         if (reslt.length > 0) {
                           // console.log(num1 + " " + num2 + " " + num3);
-                          if (showDescription)
+                          if (showInstructions)
                             reslt = reslt.map(rs => rs + " " + createResponseDesc(confArr));
                           reslt = reslt.filter((value, indx, self) => self.indexOf(value) === indx);
                           reslt = reslt.filter((value, indx, self) => results.indexOf(value) < 0);
