@@ -2975,7 +2975,7 @@
           stcksFlting: 2,
           movesRemaining: 0,
           cond: (numb1, numb2, numb3) => numb1 * numb2 === numb3,
-          fn: (numb1, numb2, numb3) => [createResponseWithTwoSticks(numb1, numb2, numb3), createResponse(MINUS + numb1, numb2, MINUS + numb3, MULTIPLICATION), createResponse(MINUS + numb1, MINUS + numb2, numb3, MULTIPLICATION), createResponse(numb1, MINUS + numb2, MINUS + numb3, MULTIPLICATION)]
+          fn: (numb1, numb2, numb3) => [createResponseWithTwoSticks(numb1, numb2, numb3, MULTIPLICATION), createResponse(MINUS + numb1, numb2, MINUS + numb3, MULTIPLICATION), createResponse(MINUS + numb1, MINUS + numb2, numb3, MULTIPLICATION), createResponse(numb1, MINUS + numb2, MINUS + numb3, MULTIPLICATION)]
           // fn: (numb1, numb2, numb3) => [createResponse(numb1, numb2, PLUS + numb3, MULTIPLICATION), createResponse(PLUS + numb1, numb2, numb3, MULTIPLICATION), createResponse(numb1, PLUS + numb2, numb3, MULTIPLICATION), createResponse(MINUS + numb1, numb2, MINUS + numb3, MULTIPLICATION), createResponse(MINUS + numb1, MINUS + numb2, numb3, MULTIPLICATION), createResponse(numb1, MINUS + numb2, MINUS + numb3, MULTIPLICATION)]
         }
       ],
@@ -3220,9 +3220,9 @@
       const output = document.getElementById('output');
       const showInstructions = document.getElementById("instructions").checked;
 
-      output.innerHTML  = "";
-      output.innerHTML  = "Solving Puzzle";
-      console.log(JSON.stringify(conf["51"]));
+      output.value  = "";
+      output.value  = "Solving Puzzle";
+      // console.log(JSON.stringify(conf["51"]));
 
       let results;
       let arr = parseInput(text, EQUAL);
