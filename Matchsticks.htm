@@ -2658,6 +2658,12 @@
         {
           stcksFlting: 1,
           movesRemaining: 1,
+          cond: (numb1, numb2, numb3) => numb1 - numb2 === numb3,
+          fn: (numb1, numb2, numb3) => createResponseWithTwoSticks(numb1, numb2, numb3, MINUS)
+        },
+        {
+          stcksFlting: 1,
+          movesRemaining: 1,
           cond: (numb1, numb2, numb3) => numb1 === numb2 && numb2 === numb3,
           fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, numb3, EQUAL)
         },
