@@ -2758,6 +2758,12 @@
           fn: (numb1, numb2, numb3) => createResponse(MINUS + numb1, numb2, MINUS + numb3, PLUS)
         },
         {
+          stcksFlting: 2,
+          movesRemaining: 0,
+          cond: (numb1, numb2, numb3) => numb2 > 0 && numb1 - numb2 === -numb3,
+          fn: (numb1, numb2, numb3) => createResponse(numb1, MINUS + numb2, MINUS + numb3, PLUS)
+        },
+        {
           stcksFlting: 0,
           movesRemaining: 0,
           cond: (numb1, numb2, numb3) => numb1 === null && numb2 === numb3,
@@ -3215,7 +3221,7 @@
       addToConfigurationOne(conf);
       addToConfigurationSeven(conf);
       addCompositMapping(conf);
-      //addToConfigurationNumbersWithOne(conf);
+      addToConfigurationNumbersWithOne(conf);
 	  addReverseConfiguration(conf);
 	  //console.log(JSON.stringify(conf["85"]));
     };
@@ -3228,7 +3234,7 @@
 
       output.value  = "";
       output.value  = "Solving Puzzle";
-      console.log(JSON.stringify(conf["11"]));
+      //console.log(JSON.stringify(conf["11"]));
 
       let results;
       let arr = parseInput(text, EQUAL);
