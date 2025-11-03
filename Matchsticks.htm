@@ -3215,7 +3215,7 @@
       addToConfigurationOne(conf);
       addToConfigurationSeven(conf);
       addCompositMapping(conf);
-      addToConfigurationNumbersWithOne(conf);
+      //addToConfigurationNumbersWithOne(conf);
 	  addReverseConfiguration(conf);
 	  //console.log(JSON.stringify(conf["85"]));
     };
@@ -3228,7 +3228,7 @@
 
       output.value  = "";
       output.value  = "Solving Puzzle";
-      // console.log(JSON.stringify(conf["51"]));
+      console.log(JSON.stringify(conf["11"]));
 
       let results;
       let arr = parseInput(text, EQUAL);
@@ -3979,7 +3979,7 @@
                     // console.log(num);
                     // console.log(arr[i]);
                     // const dest = parseInt(confItem.destination);
-					arr[i].destination = "" + increment + confItem.destination;
+					arr[i].destination = "" + increment + (confItem.destination !== null ? confItem.destination : "");
 					if (debug) {
                         console.log(key + " " + key1 + " " + arr[i].destination);
                     }
@@ -4083,11 +4083,14 @@
       for (let i = 0; i < confItem.length; i++) {
         // const destination = parseInt("" + confItem[i].destination);
         const destination = confItem[i].destination;
-        if (confItem[i].add === 1) {
-          addToConfItems(conf[key], destination, {add: -1, move: confItem[i].move + 1});
-        } if (confItem[i].add === 2) {
-          addToConfItems(conf[key], destination, {add: 0, move: confItem[i].move + 2});
-        }
+		
+        if (destination !== null) {
+			if (confItem[i].add === 1) {
+			  addToConfItems(conf[key], destination, {add: -1, move: confItem[i].move + 1});
+			} if (confItem[i].add === 2) {
+			  addToConfItems(conf[key], destination, {add: 0, move: confItem[i].move + 2});
+			}
+		}
       }
     }
 
