@@ -2959,7 +2959,7 @@
           stcksFlting: 1,
           movesRemaining: 1,
           cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
-          fn: (numb1, numb2, numb3) => [createResponse(MINUS + numb1, MINUS + numb2, numb3, DIVISION), createResponse(numb1, MINUS + numb2, MINUS + numb3, DIVISION), createResponse(MINUS + numb1, numb2, MINUS + numb3, DIVISION)]
+          fn: (numb1, numb2, numb3) => [createResponseWithTwoSticks(numb1, numb2, numb3, DIVISION)]
         },
         {
           stcksFlting: -1,
@@ -2972,12 +2972,6 @@
           movesRemaining: 0,
           cond: (numb1, numb2, numb3) => numb1 * numb2 === numb3,
           fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, numb3, MULTIPLICATION)
-        },
-        {
-          stcksFlting: 1,
-          movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
-          fn: (numb1, numb2, numb3) => [createResponse(MINUS + numb1, MINUS + numb2, numb3, DIVISION), createResponse(numb1, MINUS + numb2, MINUS + numb3, DIVISION), createResponse(MINUS + numb1, numb2, MINUS + numb3, DIVISION)]
         },
         {
           stcksFlting: 0,
