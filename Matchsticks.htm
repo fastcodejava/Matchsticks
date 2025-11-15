@@ -2764,6 +2764,12 @@
           fn: (numb1, numb2, numb3) => createResponse(numb1, MINUS + numb2, MINUS + numb3, PLUS)
         },
         {
+          stcksFlting: 2,
+          movesRemaining: 0,
+          cond: (numb1, numb2, numb3) => numb2 > 0 && numb1 - numb2 === numb3,
+          fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, MINUS + numb2, numb3, PLUS)
+        },		
+        {
           stcksFlting: 0,
           movesRemaining: 0,
           allowNull: true,
