@@ -3076,6 +3076,33 @@
     };
 
     const confSigns = {
+      "null": [
+        {
+          "destination": "+",
+          "add": 2,
+          "move": 0
+        },
+        {
+          "destination": "-",
+          "add": 1,
+          "move": 0
+        },
+        {
+          "destination": "/",
+          "add": 1,
+          "move": 0
+        },
+        {
+          "destination": "x",
+          "add": 2,
+          "move": 0
+        },
+        {
+          "destination": null,
+          "add": 0,
+          "move": 0
+        }
+      ],
       "+": [
         {
           "destination": "+",
@@ -3242,17 +3269,26 @@
 
       output.value  = "";
       output.value  = "Solving Puzzle";
-      //console.log(JSON.stringify(conf["11"]));
+      // console.log(JSON.stringify(conf["23"]));
+      // console.log(JSON.stringify(conf["29"]));
+      // console.log(JSON.stringify(conf["49"]));
 
       let results;
       let arr = parseInput(text, EQUAL);
 
       if (arr && arr.length === 4 ) {
           results = solvePuzzleForTwo(arr, sticksToMove, showInstructions);
+          const inpArr = convertToArray(arr);
+          // console.log(inpArr);
+        if (inpArr.length > 5) {
+            const res = solvePuzzleForThree(inpArr, sticksToMove);
+            results = results.concat(res);
+          }
       } else {
         arr = text.match(/(\d+\.?\d*|\+|\-|x|\/|\(|\)|=)/g);
         results = solvePuzzleForThree(arr, sticksToMove);
       }
+      results = results.filter((v, i, a) => a.indexOf(v) === i);
         if (results && results.length > 0) {
             // output.value = results.length > 0 ? "Found " + results.length + " Solutions:\n\n" + results.join("\n") : "No Solutions";
             output.value = "Found " + results.length + " Solutions" +  (showInstructions ? "(with instructions)" : "") + ":\n\n" + results.join("\n");
@@ -3375,16 +3411,10 @@
       const confArr = [];
 
       for (let i = 0; i < input.length; i++) {
-        //let confN;
-
-        // if (typeof input[i] === 'number') {
-        //   confN = typeof input[i] === 'number' ? conf[input[i]] : confSigns[input[i]];
-        //   confN = typeof parseInt(input[i]) === 'number' ? conf[input[i]] : confSigns[input[i].trim()];
-        // console.log(input[i], confSigns[input[i].trim()]);
-        // console.log(i, input[i]);
-        // console.log(i, input[i], parseInt(input[i]) !== NaN);
-        confArr.push(isNumber(input[i]) ? conf[input[i]] : confSigns[input[i].trim()]);
+        confArr.push(getConf(input[i], sticksToMove));
       }
+      // console.log(JSON.stringify(confArr[0]));
+
       let total = 1;
       for (let idx = 0; idx < confArr.length; idx++) {
         // console.log(idx, confArr[idx]);
@@ -3400,7 +3430,11 @@
       const N6 = confArr[5].length;
       const N7 = confArr[6].length;
 
+      const arraysEqual = (a, b) =>
+              a === b || (Array.isArray(a) && Array.isArray(b) && a.length === b.length && a.every((v, i) => v === b[i]));
+
       for (let idx = 0; idx < total; idx++) {
+        let prevRrunningInput = [];
         const runningInput = [];
 
         const i1 = Math.floor(idx / (N2*N3*N4*N5*N6*N7)) % N1;
@@ -3474,11 +3508,14 @@
         // console.log("Last calcSticksMoved");
 
         // console.log(runningInput);
-        if (sticksMoved === sticksToMove && sticksFloating >= 0) {
+        if (runningInput.indexOf(EQUAL) > 0 && !arraysEqual(prevRrunningInput, runningInput) && sticksMoved === sticksToMove && sticksFloating >= 0) {
           // console.log(sticksFloating, runningInput);
+          // console.log(total, idx);
           //   results = results.concat(processOutput(runningInput, sticksFloating, results));
           //   const rslt = processOutput(runningInput, sticksFloating, results);
+
           processInput(runningInput, sticksFloating, results);
+          prevRrunningInput = runningInput;
           // console.log(results);
           // results = results.concat(rslt ? rslt : []);
         }
@@ -3497,7 +3534,10 @@
       runInput = runInput.map(inp => removeNulls(inp));
       // console.log(runInput);
 
-      if (verifyResults(runInput)) buildResponse(runInput, sticksFloating, results);
+      if (verifyResults(runInput)) {
+          // console.log(runInput);
+          buildResponse(runInput, sticksFloating, results);
+      }
 
       if (sticksFloating === 1) {
         for (let idx = 0; idx < runInput.length; idx++) {
@@ -3505,8 +3545,10 @@
             if (isNumber(runInput[idx][jdx])) {
               const oldInput = runInput[idx][jdx];
               runInput[idx][jdx] = MINUS + runInput[idx][jdx];
-              // console.log(runInput);
-              if (verifyResults(runInput)) buildResponse(runInput, 0, results);
+              if (verifyResults(runInput)) {
+                  // console.log(runInput);
+                  buildResponse(runInput, 0, results);
+              }
               runInput[idx][jdx] = oldInput;
             }
           }
@@ -3549,7 +3591,7 @@
       let nullFound = false;
       const retArr = [];
       for (let idx = 0; idx < arr.length; idx++) {
-        if (nullFound) {
+        if (nullFound && arr[idx] !== null && isNumber(retArr[retArr.length -1]) && isNumber(arr[idx])) {
           retArr[retArr.length -1] += arr[idx];
           nullFound = false;
         } else if (arr[idx] !== null) {
@@ -3701,7 +3743,7 @@
     function isNumber(str) {
       // console.log(str);
       // return !isNaN(str) && str.trim() !== "";
-      return !isNaN(Number(str)) && str.trim() !== "";
+      return typeof str === "number" || !isNaN(Number(str)) && str.trim() !== "";
     }
 
     function addIdentity(arr, num) {
@@ -3900,6 +3942,31 @@
       });
     }
 
+    function convertToArray(arr, i) {
+      const operation = arr[0];
+      const result = arr[3];
+      const num1 = arr[1];
+      const num2 = arr[2];
+
+      let input = [];
+      if (num1 >= 10) {
+        input = breakInp(num1).concat([operation, num2, EQUAL, result]);
+      } else if (num2 >= 10) {
+        input = [num1, operation];
+        input = input.concat(breakInp(num2)).concat([EQUAL, result]);
+      } else if (result >= 10) {
+        input = [num1, operation, num2, EQUAL];
+        input = input.concat(breakInp(result));
+      } else {
+        input = [num1, operation, num2, EQUAL, result];
+      }
+      return input;
+    }
+
+    function breakInp(input) {
+      return input < 10 ? [input] : [Math.floor(input / 10), null, input%10] ;
+    }
+
     function processEqn(input) {
         let inp = [];
         let eqFound = false;
@@ -4017,7 +4084,21 @@
 		});
 		return conf;
 	}
-	
+
+
+    function getConf(input, sticksToMove) {
+      if (input === null || input === undefined) return confSigns["null"];
+      const cf = isNumber(input) ? conf[input] : confSigns[input.trim()];
+      const cff = [];
+      cf.forEach(c => {
+        if (Math.abs(c.add) <= sticksToMove && c.move <= sticksToMove) {
+          const obj = cff.find(c1 => c1.destination === c.destination);
+          if (obj === null || obj === undefined) cff.push(c);
+        }
+      });
+      return cff;
+    }
+
 	function createResponse(numb1, numb2, numb3, op) {
 		if (numb2 === null || numb3 === null) return null;
 		return numb1 !== null ? numb1 + " " + op + " " + numb2 + " = " + numb3 : op + numb2 + " = " + numb3 ;
