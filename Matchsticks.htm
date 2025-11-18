@@ -3278,12 +3278,16 @@
 
       if (arr && arr.length === 4 ) {
           results = solvePuzzleForTwo(arr, sticksToMove, showInstructions);
-          const inpArr = convertToArray(arr);
-          // console.log(inpArr);
-        if (inpArr.length > 5) {
-            const res = solvePuzzleForThree(inpArr, sticksToMove);
-            results = results.concat(res);
+          for (let i = 0; i < 3; i++) {
+            const inpArr = convertToArray(arr, i);
+            console.log(inpArr);
+            // if (inpArr.length > 5) {
+            if (inpArr !== arr) {
+              const res = solvePuzzleForThree(inpArr, sticksToMove);
+              results = results.concat(res);
+            }
           }
+          // console.log(inpArr);
       } else {
         arr = text.match(/(\d+\.?\d*|\+|\-|x|\/|\(|\)|=)/g);
         results = solvePuzzleForThree(arr, sticksToMove);
@@ -3947,20 +3951,27 @@
       const result = arr[3];
       const num1 = arr[1];
       const num2 = arr[2];
-
-      let input = [];
-      if (num1 >= 10) {
-        input = breakInp(num1).concat([operation, num2, EQUAL, result]);
-      } else if (num2 >= 10) {
-        input = [num1, operation];
-        input = input.concat(breakInp(num2)).concat([EQUAL, result]);
-      } else if (result >= 10) {
-        input = [num1, operation, num2, EQUAL];
-        input = input.concat(breakInp(result));
-      } else {
-        input = [num1, operation, num2, EQUAL, result];
+      
+      const inp = [num1, operation, num2, EQUAL, result];
+      const input = [];
+      let j = 0, numj = 0;
+      let found = false;
+      while (j < inp.length) {
+        const num = inp[j];
+        if (numj === i && isNumber(num) && num >= 10) {
+          input.push(Math.floor(num/10));
+          input.push(null);
+          input.push(num%10);
+          numj++;
+          found = true;
+        } else {
+          if (isNumber(num)) numj++;
+          input.push(inp[j]);
+        }
+        j++;
       }
-      return input;
+      
+      return found ? input : arr;
     }
 
     function breakInp(input) {
