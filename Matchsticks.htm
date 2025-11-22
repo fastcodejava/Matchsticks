@@ -3281,12 +3281,13 @@
 
       let results;
       let arr = parseInput(text, EQUAL);
+      console.log(arr);
 
       if (arr && arr.length === 4 ) {
           results = solvePuzzleForTwo(arr, sticksToMove, showInstructions);
           for (let i = 0; i < 3; i++) {
             const inpArr = convertToArray(arr, i);
-            console.log(inpArr);
+            // console.log(inpArr);
             // if (inpArr.length > 5) {
             if (inpArr !== arr) {
               const res = solvePuzzleForThree(inpArr, sticksToMove);
@@ -3732,17 +3733,18 @@
     }
 
     function parseInput(str, delim) {
-		// 1 + 5 = 8
         const signs = [PLUS, MINUS, MULTIPLICATION, DIVISION];
 		const i = str.indexOf(delim);
-        const num3 = parseInt(str.substring(i+1).trim());
-		const s = str.substring(0, i).trim();
+        const str2 = str.substring(i+1).trim();
+        if (signs.find(sign => str2.indexOf(sign) > 0)) return null;
+        const num3 = parseInt(str2);
+        const s = str.substring(0, i).trim();
         return signs.map(sign => breakInput(s, num3, sign)).find(v => v != null);
 	}
 
     function breakInput(str, num3, sign) {
       const j = str.indexOf(sign);
-      if (j > 0) {
+      if (j > 0 && isNumber(num3)) {
         const part1 = str.substring(0, j).trim();
         const part2 = str.substring(j+1).trim();
         return isNumber(part1) && isNumber(part2) ? [sign, parseInt(part1), parseInt(part2), num3]: null;
