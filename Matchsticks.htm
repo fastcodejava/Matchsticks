@@ -3385,7 +3385,7 @@
 						//console.log(conf1[i].destination + " " + conf2[j].destination + " " + conf3[k].destination);
 						//resultStr = resultStr ? resultStr : verifyAndCreateResponse(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3);
                       // console.log(conf1[i]);
-						let reslt = verifyAndCreateResponse(getValueWithSign(conf1[i].destination, num1), getValueWithSign(conf2[j].destination, num2), getValueWithSign(conf3[k].destination, num3), operation, sticksFloating3, sticksToMove - sticksMoved3);
+                      let reslt = verifyAndCreateResponse(getValueWithSign(conf1[i].destination, num1), getValueWithSign(conf2[j].destination, num2), getValueWithSign(conf3[k].destination, num3), operation, sticksFloating3, sticksToMove - sticksMoved3);
                       //console.log(reslt);
 					  if (reslt) {
 					    const confArr = [
@@ -3753,9 +3753,7 @@
     }
 
     function isNumber(str) {
-      // console.log(str);
-      // return !isNaN(str) && str.trim() !== "";
-      return typeof str === "number" || !isNaN(Number(str)) && str.trim() !== "";
+      return str !== null && (typeof str === "number" || !isNaN(Number(str)) && str.trim() !== "");
     }
 
     function addIdentity(arr, num) {
@@ -3925,7 +3923,8 @@
     }
 
     function getValueWithSign(destination, num) {
-      return num !== null && num < 0 ? -destination : destination;
+      if (destination === null) return null;
+      return num !== null && num < 0 ? -destination : destination !== null ? destination : null;
     }
 
     function addToConfigurationSeven(conf) {
@@ -4119,7 +4118,7 @@
     }
 
 	function createResponse(numb1, numb2, numb3, op) {
-		if (numb2 === null || numb3 === null) return null;
+      if (!isNumber(numb1) || numb2 === null || numb3 === null) return null;
 		return numb1 !== null ? numb1 + " " + op + " " + numb2 + " = " + numb3 : op + numb2 + " = " + numb3 ;
 	}
 
@@ -4218,11 +4217,11 @@
 
     function performOperation(oper, numb1, numb2, numb3, stcksFlting, movesRemaining) {
       let results = [];
+      let num1 = numb1 === null ? null : parseInt(numb1);
+      let num2 = numb2 === null ? null : parseInt(numb2);
+      let num3 = numb3 === null ? null : parseInt(numb3);
       calcConf[oper].forEach(item => {
-            let num1 = numb1 === null ? null : parseInt(numb1);
-            let num2 = numb2 === null ? null : parseInt(numb2);
-            let num3 = numb3 === null ? null : parseInt(numb3);
-            const numValid = item.allowNull ? numb2 !== null && numb3 !== null : numb1 !== null && numb2 !== null && numb3 !== null;
+        const numValid = item.allowNull ? numb2 !== null && numb3 !== null : numb1 !== null && numb2 !== null && numb3 !== null;
         if (numValid && item.stcksFlting === stcksFlting && item.movesRemaining === movesRemaining
               && item.cond.apply(null, [num1, num2, num3])) {
               const result = item.fn.apply(null, [numb1, numb2, numb3]);
