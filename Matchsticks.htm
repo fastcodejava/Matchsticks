@@ -2650,6 +2650,12 @@
           fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, EQUAL)
         },
         {
+          stcksFlting: -2,
+          movesRemaining: 2,
+          cond: (numb1, numb2, numb3) => 10*numb1 + numb2 === numb3,
+          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3)
+        },
+        {
           stcksFlting: 1,
           movesRemaining: 1,
           cond: (numb1, numb2, numb3) => numb1 - numb2 === -numb3,
@@ -2852,6 +2858,12 @@
           fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, PLUS)
         },
         {
+          stcksFlting: -1,
+          movesRemaining: 1,
+          cond: (numb1, numb2, numb3) => 10*numb1 + numb2 === numb3,
+          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3)
+        },
+        {
           stcksFlting: 1,
           movesRemaining: 0,
           cond: (numb1, numb2, numb3) => numb1 - numb2 === numb3,
@@ -2948,6 +2960,12 @@
           movesRemaining: 2,
           cond: (numb1, numb2, numb3) => numb1 - numb2 === numb3,
           fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, MINUS)
+        },
+        {
+          stcksFlting: -2,
+          movesRemaining: 2,
+          cond: (numb1, numb2, numb3) => 10*numb1 + numb2 === numb3,
+          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3)
         },
         {
           stcksFlting: 0,
@@ -3053,6 +3071,12 @@
           movesRemaining: 0,
           cond: (numb1, numb2, numb3) => numb1 * numb2 === numb3,
           fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, MULTIPLICATION)
+        },
+        {
+          stcksFlting: -1,
+          movesRemaining: 1,
+          cond: (numb1, numb2, numb3) => 10*numb1 + numb2 === numb3,
+          fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3)
         },
         {
           stcksFlting: 1,
@@ -4119,7 +4143,10 @@
 
 	function createResponse(numb1, numb2, numb3, op) {
       if (!isNumber(numb1) || numb2 === null || numb3 === null) return null;
-		return numb1 !== null ? numb1 + " " + op + " " + numb2 + " = " + numb3 : op + numb2 + " = " + numb3 ;
+
+		return op ?
+                numb1 !== null ? numb1 + " " + op + " " + numb2 + " = " + numb3 : op + numb2 + " = " + numb3
+                : numb1 + "" + numb2 + " = " + numb3;
 	}
 
 	function createResponse1(numb1, numb2, numb3, op) {
