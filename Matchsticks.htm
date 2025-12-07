@@ -2812,7 +2812,7 @@
         {
           stcksFlting: 0,
           movesRemaining: 2,
-          cond: (numb1, numb2, numb3) => numb1 === numb2 / numb3,
+          cond: (numb1, numb2, numb3) => numb3 !== 0 && numb1 === numb2 / numb3,
           fn: (numb1, numb2, numb3) => createResponse1(numb1, numb2, numb3, DIVISION)
         },
         {
@@ -2836,13 +2836,13 @@
         {
           stcksFlting: 0,
           movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
+          cond: (numb1, numb2, numb3) => numb2 !== 0 && numb1 / numb2 === numb3,
           fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, DIVISION)
         },
         {
           stcksFlting: 1,
           movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
+          cond: (numb1, numb2, numb3) => numb2 !== 0 && numb1 / numb2 === numb3,
           fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, numb3, DIVISION)
         },
         {
@@ -2988,13 +2988,13 @@
         {
           stcksFlting: 1,
           movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
+          cond: (numb1, numb2, numb3) => numb2 !== 0 && numb1 / numb2 === numb3,
           fn: (numb1, numb2, numb3) => [createResponseWithTwoSticks(numb1, numb2, numb3, DIVISION)]
         },
         {
           stcksFlting: -1,
           movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
+          cond: (numb1, numb2, numb3) => numb2 !== 0 && numb1 / numb2 === numb3,
           fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, DIVISION)
         },
         {
@@ -3006,13 +3006,13 @@
         {
           stcksFlting: 0,
           movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
+          cond: (numb1, numb2, numb3) => numb2 !== 0 && numb1 / numb2 === numb3,
           fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, numb3, DIVISION)
         },
         {
           stcksFlting: 0,
           movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
+          cond: (numb1, numb2, numb3) => numb2 !== 0 && numb1 / numb2 === numb3,
           fn: (numb1, numb2, numb3) => [createResponse(numb1, MINUS + numb2, numb3, DIVISION), createResponse(numb1, numb2, MINUS + numb3, DIVISION), createResponse(MINUS + numb1, numb2, numb3, DIVISION)]
         },
         {
@@ -3027,7 +3027,7 @@
         {
           stcksFlting: 0,
           movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
+          cond: (numb1, numb2, numb3) => numb2 !== 0 && numb1 / numb2 === numb3,
           fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, DIVISION)
         },
         {
@@ -3057,7 +3057,7 @@
         {
           stcksFlting: 1,
           movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
+          cond: (numb1, numb2, numb3) => numb2 !== 0 && numb1 / numb2 === numb3,
           fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, numb3, DIVISION)
         },
         {
@@ -3093,7 +3093,7 @@
         {
           stcksFlting: 2,
           movesRemaining: 0,
-          cond: (numb1, numb2, numb3) => numb1 / numb2 === numb3,
+          cond: (numb1, numb2, numb3) => numb2 !== 0 && numb1 / numb2 === numb3,
           fn: (numb1, numb2, numb3) => [createResponseWithTwoSticks(numb1, numb2, numb3, DIVISION), createResponse(MINUS + numb1, numb2, MINUS + numb3, DIVISION), createResponse(MINUS + numb1, MINUS + numb2, numb3, DIVISION), createResponse(numb1, MINUS + numb2, MINUS + numb3, DIVISION)]
         },
         {
@@ -3720,7 +3720,7 @@
       return runInput.every(inp => {
         // const retArr = removeNulls(inp);
         const tmpVal = evalRPN(toRPN(inp));
-        if (tmpVal === undefined) return false;
+        if (tmpVal === undefined || !isNumber(Number(tmpVal))) return false;
         if (val === undefined)
           val = tmpVal;
 
@@ -4070,7 +4070,8 @@
             case '-': stack.push(a - b); break;
             case '*': stack.push(a * b); break;
             case 'x': stack.push(a * b); break;
-            case '/': stack.push(a / b); break;
+            case '/': stack.push(b === 0 ? undefined : a / b); break;
+            // case '/': stack.push(b !== 0 ? a / b : -1); break;
           }
         }
       });
