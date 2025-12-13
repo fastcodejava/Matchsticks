@@ -54,6 +54,9 @@
 	Find: <input type="radio" id="type1" name="type" value="max"> <label for="type1">Max</label>
 	<input type="radio" id="type2" name="type" value="min"> <label for="type2">Min</label>
   </div>
+
+    Show Instructions: <input type="checkbox" id="instructions" name="instructions">
+
   <br />
     <!--
     <label>
@@ -233,6 +236,16 @@
         {
           "destination": "11",
           "add": -1,
+          "move": 2
+        },
+        {
+          "destination": "17",
+          "add": 0,
+          "move": 3
+        },		
+        {
+          "destination": "71",
+          "add": 0,
           "move": 2
         },
         {
@@ -422,6 +435,16 @@
           "move": 2
         },		
         {
+          "destination": "17",
+          "add": 0,
+          "move": 3
+        },		
+        {
+          "destination": "71",
+          "add": 0,
+          "move": 2
+        },		
+        {
           "destination": "15",
           "add": 2,
           "move": 0
@@ -457,6 +480,16 @@
           "destination": "7",
           "add": -3,
           "move": 1
+        },
+        {
+          "destination": "71",
+          "add": -1,
+          "move": 2
+        },
+        {
+          "destination": "711",
+          "add": 0,
+          "move": 3
         },
         {
           "destination": "8",
@@ -635,6 +668,11 @@
       ],
       "9": [
         {
+          "destination": "9",
+          "add": 0,
+          "move": 0
+        },
+        {
           "destination": "0",
           "add": 0,
           "move": 1
@@ -668,6 +706,16 @@
           "destination": "7",
           "add": -3,
           "move": 0
+        },
+        {
+          "destination": "71",
+          "add": -1,
+          "move": 2
+        },
+        {
+          "destination": "711",
+          "add": 0,
+          "move": 3
         },
         {
           "destination": "1",
@@ -2624,19 +2672,30 @@
         const output = document.getElementById('output');
         const rangeValue = document.getElementById('rangeValue');
         const type = document.querySelector('input[name="type"]:checked').value;
+        const showInstructions = document.getElementById("instructions").checked;
 
-		const numMatchsticks = numMatchstcks ? parseInt(numMatchstcks) : 0
+		const numMatchsticks = numMatchstcks ? parseInt(numMatchstcks) : 0;
 		const minValue = numMatchsticks ? 10**(numMatchsticks - 1) : 0;
 		const maxValue = numMatchsticks ? 10**numMatchsticks - 1: 0;
 
 		output.innerHTML  = "Solving Puzzle";
 		rangeValue.innerHTML  = numMatchsticks ? "Range (" + minValue + " - " + maxValue + ")" : "";
         const sticksToMove = parseInt(dropdown);
-        const results = solve(input, type, sticksToMove, numMatchsticks, 0, output);
-        output.innerHTML = results;
+        const confArr = [
+            {"number": input[0], "conf": null},
+            {"number": input[1], "conf": null},
+            {"number": input[2], "conf": null},
+            {"number": input[3], "conf": null}
+        ];
+
+        const results = solve(input, type, sticksToMove, numMatchsticks, 0, showInstructions ? confArr : null);
+
+        const instructions  = showInstructions ? createResponseDesc(confArr) : "";
+
+        output.innerHTML = results + (showInstructions ? " (" + instructions + ")" : "");
     }
 
-    function solve(input, type, sticksToMove, numMatchsticks, sticksFloating, output) {
+    function solve(input, type, sticksToMove, numMatchsticks, sticksFloating, confArr) {
         // var sticksMoved = 0, sticksFloating = 0;
         //console.log(JSON.stringify(conf["76"]));
 		const arr = parseInput(input);
@@ -2649,7 +2708,7 @@
         let conf3 = conf[num3];
         let conf4 = conf[num4];
 
-	  // console.log("Type " + type);
+        // console.log("Type " + type);
       // console.log(conf4);
       //let value = parseInt(input);
       let value = getInitialValue(input, type, numMatchsticks);
@@ -2673,6 +2732,7 @@
 	  const allowNegative = minValue && maxValue ? false : true;
 	  
       for (let i = 0; conf1 && i < conf1.length; i++) {
+          if (confArr) confArr[0].conf = conf1[i];
             let sticksMoved1 = conf1[i].move;
             let sticksFloating1 = -1 * conf1[i].add + (sticksFloating ? sticksFloating : 0);
             if (conf1[i].add < 0) {
@@ -2686,7 +2746,7 @@
                 for (let j = 0; conf2 && j < conf2.length; j++) { //
                     var sticksMoved2 = sticksMoved1 + conf2[j].move;
                     var sticksFloating2 = -1 * conf2[j].add + sticksFloating1;
-
+                    if (confArr) confArr[1].conf = conf2[j];
                     if (conf2[j].add < 0) {
                         sticksMoved2 += -1 * conf2[j].add;
                     }
@@ -2698,14 +2758,15 @@
                             if (conf3[k].add < 0) {
                                 sticksMoved3 += -1 * conf3[k].add;
                             }
-
-                          for (let l = 0; conf4 && l < conf4.length; l++) {
+                            if (confArr) confArr[2].conf = conf3[k];
+                            for (let l = 0; conf4 && l < conf4.length; l++) {
                               let sticksMoved4 = sticksMoved3 + conf4[l].move;
                               let sticksFloating4 = sticksFloating3 + -1 * conf4[l].add;
                               if (conf4[l].add < 0) {
                                 sticksMoved4 += -1 * conf4[l].add;
                               }
-                              // if (sticksMoved4 <= sticksToMove && Math.abs(sticksFloating4) <= sticksToMove) {
+                                if (confArr) confArr[3].conf = conf4[l];
+                                // if (sticksMoved4 <= sticksToMove && Math.abs(sticksFloating4) <= sticksToMove) {
                                 //console.log(conf4[l]);
                                 const out = [conf1[i].destination, conf2[j].destination, conf3[k].destination, conf4[l].destination];
                                 //console.log(out);
@@ -2783,7 +2844,7 @@
         value = evaluate(outpt);
       } else if (allowNegative && sticksFloating === 1 && sticksMoved === sticksToMove && -evaluate(outpt) < value) {
         value = -evaluate(outpt);
-        // console.log(value);
+        //console.log(value);
         // return out.join("");
       }
       if (sticksFloating === 2 && sticksMoved === sticksToMove) {
@@ -2804,6 +2865,7 @@
     function isValid(type, out, value, minValue, maxValue) {
       const valueToEvaluate = evaluate(out);
       if (type === MIN) {
+		//console.log(valueToEvaluate, minValue, maxValue);
         return minValue && maxValue ?  valueToEvaluate >= minValue && valueToEvaluate <= maxValue && valueToEvaluate < value : valueToEvaluate < value;
       }
       if (type === MAX) {
@@ -2853,6 +2915,35 @@
 
       return parseInt(arr.join(""));
     }
+
+
+    function createResponseDesc(confArr) {
+        let descArr = [];
+        console.log(confArr);
+        for (const conf of confArr) {
+            const cf = conf.conf;
+            let desc = null;
+            if (cf) {
+                if (cf.move && cf.add !== 0) {
+                    desc = "Moved " + cf.move + " sticks and ";
+                    if (cf.add > 0) {
+                        desc += "added " + cf.add + " sticks in " + conf.number;
+                    } else if (cf.add < 0) {
+                        desc += "removed " + -cf.add + " sticks from " + conf.number;
+                    }
+                } else if (cf.add > 0) {
+                    desc = "Added " + cf.add + " sticks in " + conf.number;
+                } else if (cf.add < 0) {
+                    desc = "Removed " + -cf.add + " sticks from " + conf.number;
+                } else if (cf.move) {
+                    desc = "Moved " + cf.move + " sticks in " + conf.number;
+                }
+            }
+            if (desc) descArr.push(desc);
+        }
+        return descArr.length ? descArr.join(","): "";
+    }
+
 
     function addIdentity(arr, num) {
 		const ar = [{
