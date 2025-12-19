@@ -2652,7 +2652,7 @@
         {
           stcksFlting: -2,
           movesRemaining: 2,
-          cond: (numb1, numb2, numb3) => 10*numb1 + numb2 === numb3,
+          cond: (numb1, numb2, numb3) => (numb1 > 0 && numb2 < 10 && 10*numb1 + numb2 === numb3) || (numb1 > 0 && numb2 >= 10 && 100*numb1 + numb2 === numb3),
           fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3)
         },
         {
@@ -2860,7 +2860,7 @@
         {
           stcksFlting: -1,
           movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => 10*numb1 + numb2 === numb3,
+          cond: (numb1, numb2, numb3) => (numb2 < 10 && 10*numb1 + numb2 === numb3) || (numb2 >= 10 && 100*numb1 + numb2 === numb3),
           fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3)
         },
         {
@@ -2964,7 +2964,7 @@
         {
           stcksFlting: -2,
           movesRemaining: 2,
-          cond: (numb1, numb2, numb3) => 10*numb1 + numb2 === numb3,
+          cond: (numb1, numb2, numb3) => (numb2 < 10 && 10*numb1 + numb2 === numb3) || (numb2 >= 10 && 100*numb1 + numb2 === numb3),
           fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3)
         },
         {
@@ -3075,7 +3075,7 @@
         {
           stcksFlting: -1,
           movesRemaining: 1,
-          cond: (numb1, numb2, numb3) => 10*numb1 + numb2 === numb3,
+          cond: (numb1, numb2, numb3) => (numb2 < 10 && 10*numb1 + numb2 === numb3) || (numb2 >= 10 && 100*numb1 + numb2 === numb3),
           fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3)
         },
         {
@@ -3325,6 +3325,7 @@
             // if (inpArr.length > 5) {
             if (inpArr !== arr) {
               const res = solvePuzzleForThree(inpArr, sticksToMove);
+              // console.log(res);
               results = results.concat(res);
             }
           }
@@ -3585,6 +3586,7 @@
       }
 
       if (sticksFloating === 1) {
+        // console.log(runInput);
         for (let idx = 0; idx < runInput.length; idx++) {
           for (let jdx = 0; jdx < runInput[idx].length; jdx++) {
             if (isNumber(runInput[idx][jdx])) {
@@ -3726,16 +3728,9 @@
     }
     
     function verifyResults(runInput) {
-      let val;
-      return runInput.every(inp => {
-        // const retArr = removeNulls(inp);
-        const tmpVal = evalRPN(toRPN(inp));
-        if (tmpVal === undefined || !isNumber(Number(tmpVal))) return false;
-        if (val === undefined)
-          val = tmpVal;
-
-        return val === tmpVal;
-      });
+      const resArr = runInput.map(inp => evalRPN(toRPN(inp)));
+      // console.log(resArr);
+      return resArr.every(v => resArr[0] !== undefined && v === resArr[0]);
     }
 
     function calcSticksMoved(confArr, num, indx, sticksMvd, sticksFlting) {
@@ -4258,13 +4253,14 @@
       let num1 = numb1 === null ? null : parseInt(numb1);
       let num2 = numb2 === null ? null : parseInt(numb2);
       let num3 = numb3 === null ? null : parseInt(numb3);
+      // console.log(numb1, numb2, numb3, stcksFlting, movesRemaining);
       calcConf[oper].forEach(item => {
         const numValid = item.allowNull ? numb2 !== null && numb3 !== null : numb1 !== null && numb2 !== null && numb3 !== null;
         if (numValid && item.stcksFlting === stcksFlting && item.movesRemaining === movesRemaining
               && item.cond.apply(null, [num1, num2, num3])) {
               const result = item.fn.apply(null, [numb1, numb2, numb3]);
               // console.log(item.cond.apply(null, [numb1, numb2, numb3]));
-              // console.log(result);
+              console.log(result);
               if (Array.isArray(result)) {
                 results = results.concat(result.flat());
               } else if (result) {
