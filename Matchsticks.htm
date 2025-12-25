@@ -3004,6 +3004,12 @@
           fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, numb3, MULTIPLICATION)
         },
         {
+          stcksFlting: 1,
+          movesRemaining: 0,
+          cond: (numb1, numb2, numb3) => (numb1 === 0 || numb2 === 0) && numb3 === 0,
+          fn: (numb1, numb2, numb3) => [createResponse(numb1, MINUS + numb2, numb3, MULTIPLICATION), createResponse(numb1, numb2, MINUS + numb3, MULTIPLICATION), createResponse(MINUS + numb1, numb2, numb3, MULTIPLICATION)]
+        },
+        {
           stcksFlting: 0,
           movesRemaining: 1,
           cond: (numb1, numb2, numb3) => numb2 !== 0 && numb1 / numb2 === numb3,
@@ -3315,7 +3321,7 @@
 
       let results;
       let arr = parseInput(text, EQUAL);
-      console.log(arr);
+      // console.log(arr);
 
       if (arr && arr.length === 4 ) {
           results = solvePuzzleForTwo(arr, sticksToMove, showInstructions);
@@ -3350,7 +3356,7 @@
       const num2 = arr[2];
       let results = [];
 
-      console.log(num1 + " " + num2 + " " + result);
+      // console.log(num1 + " " + num2 + " " + result);
       results = solveForTwo(num1, num2, result, operation, sticksToMove, 0, 0, showInstructions);
       if (num1 < 0) {
         // const reslts = results.concat(solveForTwo(-num1, num2, result, operation, sticksToMove, 1, 1, {num1: true}));
@@ -4260,7 +4266,7 @@
               && item.cond.apply(null, [num1, num2, num3])) {
               const result = item.fn.apply(null, [numb1, numb2, numb3]);
               // console.log(item.cond.apply(null, [numb1, numb2, numb3]));
-              console.log(result);
+              // console.log(result);
               if (Array.isArray(result)) {
                 results = results.concat(result.flat());
               } else if (result) {
