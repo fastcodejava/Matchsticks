@@ -57,6 +57,7 @@
     const DIVISION = "/";
     const EQUAL = "=";
     const SPACE = " ";
+    const SEPARATOR = "----x----";
     let conf = {
       "0": [
         {
@@ -3007,7 +3008,7 @@
           stcksFlting: 1,
           movesRemaining: 0,
           cond: (numb1, numb2, numb3) => (numb1 === 0 || numb2 === 0) && numb3 === 0,
-          fn: (numb1, numb2, numb3) => [createResponse(numb1, MINUS + numb2, numb3, MULTIPLICATION), createResponse(numb1, numb2, MINUS + numb3, MULTIPLICATION), createResponse(MINUS + numb1, numb2, numb3, MULTIPLICATION)]
+          fn: (numb1, numb2, numb3) => [SEPARATOR, createResponse(numb1, MINUS + numb2, numb3, MULTIPLICATION), createResponse(numb1, numb2, MINUS + numb3, MULTIPLICATION), createResponse(MINUS + numb1, numb2, numb3, MULTIPLICATION),SEPARATOR]
         },
         {
           stcksFlting: 0,
@@ -3025,6 +3026,7 @@
           stcksFlting: 2,
           movesRemaining: 0,
           cond: (numb1, numb2, numb3) => numb1 * numb2 === numb3,
+          // fn: (numb1, numb2, numb3) => [createResponseWithTwoSticks(numb1, numb2, numb3, MULTIPLICATION)]
           fn: (numb1, numb2, numb3) => [createResponseWithTwoSticks(numb1, numb2, numb3, MULTIPLICATION), createResponse(MINUS + numb1, numb2, MINUS + numb3, MULTIPLICATION), createResponse(MINUS + numb1, MINUS + numb2, numb3, MULTIPLICATION), createResponse(numb1, MINUS + numb2, MINUS + numb3, MULTIPLICATION)]
           // fn: (numb1, numb2, numb3) => [createResponse(numb1, numb2, PLUS + numb3, MULTIPLICATION), createResponse(PLUS + numb1, numb2, numb3, MULTIPLICATION), createResponse(numb1, PLUS + numb2, numb3, MULTIPLICATION), createResponse(MINUS + numb1, numb2, MINUS + numb3, MULTIPLICATION), createResponse(MINUS + numb1, MINUS + numb2, numb3, MULTIPLICATION), createResponse(numb1, MINUS + numb2, MINUS + numb3, MULTIPLICATION)]
         }
@@ -3340,7 +3342,7 @@
         arr = text.match(/(\d+\.?\d*|\+|\-|x|\/|\(|\)|=)/g);
         results = solvePuzzleForThree(arr, sticksToMove);
       }
-      results = results.filter((v, i, a) => a.indexOf(v) === i);
+      results = results.filter((v, i, a) => v === SEPARATOR || a.indexOf(v) === i);
         if (results && results.length > 0) {
             // output.value = results.length > 0 ? "Found " + results.length + " Solutions:\n\n" + results.join("\n") : "No Solutions";
             output.value = "Found " + results.length + " Solutions" +  (showInstructions ? "(with instructions)" : "") + ":\n\n" + results.join("\n");
@@ -3362,19 +3364,21 @@
         // const reslts = results.concat(solveForTwo(-num1, num2, result, operation, sticksToMove, 1, 1, {num1: true}));
         const reslts = results.concat(solveForTwo(-num1, num2, result, operation, sticksToMove, 1, 1, showInstructions));
         results = results.concat(reslts.filter(value => {
-          return !(results.includes(value) || value.trim().startsWith("" + num1));
+          return !(value !== SEPARATOR || (results.includes(value) || value.trim().startsWith("" + num1)));
         }));
       }
       if (result < 0) {
         const reslts = results.concat(solveForTwo(num1, num2, -result, operation, sticksToMove, 1, 1, showInstructions));
         results = results.concat(reslts.filter(value => {
-          return !(results.includes(value) || value.trim().endsWith("" + result));
+          // return !(results.includes(value) || value.trim().endsWith("" + result));
+          return !(value !== SEPARATOR || (results.includes(value) || value.trim().startsWith("" + num1)));
         }));
       }
       if (num1 < 0 && result < 0) {
         const reslts = results.concat(solveForTwo(-num1, num2, -result, operation, sticksToMove, 2, 2, showInstructions));
         results = results.concat(reslts.filter(value => {
           return !(results.includes(value) || value.trim().startsWith("" + num1) || value.trim().endsWith("" + result));
+          return !(value !== SEPARATOR || (results.includes(value) || value.trim().startsWith("" + num1)) || value.trim().endsWith("" + result));
         }));
       }
       return results;
@@ -3427,24 +3431,25 @@
 						//resultStr = resultStr ? resultStr : verifyAndCreateResponse(conf1[i].destination, conf2[j].destination, conf3[k].destination, operation, sticksFloating3);
                       // console.log(conf1[i]);
                       let reslt = verifyAndCreateResponse(getValueWithSign(conf1[i].destination, num1), getValueWithSign(conf2[j].destination, num2), getValueWithSign(conf3[k].destination, num3), operation, sticksFloating3, sticksToMove - sticksMoved3);
-                      //console.log(reslt);
+                      // console.log(reslt);
 					  if (reslt) {
 					    const confArr = [
                           {"number": num1, "conf": conf1[i]},
                           {"number": num2, "conf": conf2[j]},
                           {"number": num3, "conf": conf3[k]},
                         ];
-                        // console.log(reslt);
+                        console.log(reslt);
                         if (reslt.length > 0) {
                           // console.log(num1 + " " + num2 + " " + num3);
                           if (showInstructions)
                             reslt = reslt.map(rs => rs + " " + createResponseDesc(confArr));
-                          reslt = reslt.filter((value, indx, self) => self.indexOf(value) === indx);
-                          reslt = reslt.filter((value, indx, self) => results.indexOf(value) < 0);
+                          reslt = reslt.filter((value, indx, self) => value === SEPARATOR || self.indexOf(value) === indx);
+                          reslt = reslt.filter((value, indx, self) => value === SEPARATOR || results.indexOf(value) < 0);
                           results = results.concat(reslt);
                             // results = results.concat(reslt.filter(it => !results.includes(it)));
+                          console.log(results);
+                          results = removeContiguousDuplicates(results, SEPARATOR);
                         }
-						// console.log(results);
                       }
 					}
 				}
@@ -3701,16 +3706,17 @@
 
 
     function buildResponseWithTwoSticks(runInput, results) {
+      let reslts = [];
       for (let idx1 = 0; idx1 < runInput.length; idx1++) {
         for (let jdx1 = 0; jdx1 < runInput[idx1].length; jdx1++) {
           if (isNumber(runInput[idx1][jdx1])) {
             const oldInput = runInput[idx1][jdx1];
             runInput[idx1][jdx1] = PLUS + runInput[idx1][jdx1];
-            addToResults(runInput, results);
+            addToResults(runInput, reslts);
             runInput[idx1][jdx1] = oldInput;
             if (runInput[idx1][jdx1] === "0" || runInput[idx1][jdx1] === "1") {
               runInput[idx1][jdx1] = runInput[idx1][jdx1] + SUPERSCRIPT1 + SUPERSCRIPT1;
-              addToResults(runInput, results);
+              addToResults(runInput, reslts);
               runInput[idx1][jdx1] = oldInput;
             }
           }
@@ -3722,7 +3728,7 @@
                 const oldInput2 = runInput[idx2][jdx2];
                 runInput[idx1][jdx1] += SUPERSCRIPT1;
                 runInput[idx2][jdx2] += SUPERSCRIPT1;
-                addToResults(runInput, results);
+                addToResults(runInput, reslts);
                 runInput[idx1][jdx1] = oldInput1;
                 runInput[idx2][jdx2] = oldInput2;
               }
@@ -3730,6 +3736,12 @@
           }
         }
       }
+      if (reslts.length > 0) {
+        reslts = [SEPARATOR].concat(reslts);
+        reslts.push(SEPARATOR);
+        results = results.concat(reslts);
+      }
+      console.log(results);
       return results;
     }
     
@@ -3862,6 +3874,11 @@
           }
         }
       });
+    }
+
+    function removeContiguousDuplicates(arr, elem) {
+      if (!Array.isArray(arr)) throw new TypeError('arr must be an array');
+      return arr.filter((v, i) => v !== elem || (i === 0 || v !== arr[i - 1]));
     }
 
     // This handles numbers with 1e.g 111 -> 11, 14 or 41
@@ -4166,11 +4183,13 @@
 	}
 
 	function createResponseWithSuperscript (numb1, numb2, numb3, op) {
-		return numb1 !== null ? [numb1 + SUPERSCRIPT1 + " " + op + " " + numb2 + " = " + numb3,
+		return numb1 !== null ? [SEPARATOR,
+		        numb1 + SUPERSCRIPT1 + " " + op + " " + numb2 + " = " + numb3,
 		      numb1 + " " + op + " " + numb2 + SUPERSCRIPT1 + " = " + numb3,
-		      numb1 + " " + op + " " + numb2 + " = " + numb3 + SUPERSCRIPT1] :
-                [op + numb2 + " = " + numb3 + SUPERSCRIPT1,
-                  op + numb2 + SUPERSCRIPT1 + " = " + numb3];
+		      numb1 + " " + op + " " + numb2 + " = " + numb3 + SUPERSCRIPT1, SEPARATOR] :
+                [SEPARATOR, op + numb2 + " = " + numb3 + SUPERSCRIPT1,
+                  op + numb2 + SUPERSCRIPT1 + " = " + numb3,
+                  SEPARATOR];
 	}
 
     function createResponseWithPrefix(numb1, numb2, numb3, op, prefix) {
