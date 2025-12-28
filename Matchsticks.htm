@@ -3344,8 +3344,7 @@
       }
       results = results.filter((v, i, a) => v === SEPARATOR || a.indexOf(v) === i);
         if (results && results.length > 0) {
-            // output.value = results.length > 0 ? "Found " + results.length + " Solutions:\n\n" + results.join("\n") : "No Solutions";
-            output.value = "Found " + results.length + " Solutions" +  (showInstructions ? "(with instructions)" : "") + ":\n\n" + results.join("\n");
+            output.value = "Found " + results.filter(v => v !== SEPARATOR).length + " Solutions" +  (showInstructions ? "(with instructions)" : "") + ":\n\n" + results.join("\n");
         } else {
             output.value = "No Solutions or Bad equation provided";
         }
@@ -3438,7 +3437,7 @@
                           {"number": num2, "conf": conf2[j]},
                           {"number": num3, "conf": conf3[k]},
                         ];
-                        console.log(reslt);
+                        // console.log(reslt);
                         if (reslt.length > 0) {
                           // console.log(num1 + " " + num2 + " " + num3);
                           if (showInstructions)
@@ -3447,7 +3446,7 @@
                           reslt = reslt.filter((value, indx, self) => value === SEPARATOR || results.indexOf(value) < 0);
                           results = results.concat(reslt);
                             // results = results.concat(reslt.filter(it => !results.includes(it)));
-                          console.log(results);
+                          // console.log(results);
                           results = removeContiguousDuplicates(results, SEPARATOR);
                         }
                       }
@@ -3741,7 +3740,7 @@
         reslts.push(SEPARATOR);
         results = results.concat(reslts);
       }
-      console.log(results);
+      // console.log(results);
       return results;
     }
     
