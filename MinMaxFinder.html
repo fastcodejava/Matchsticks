@@ -38,7 +38,7 @@
     <option value="4">4</option>
   </select>
 
-  <label for="numMatchsticks">Number of Matchsticks in answer (optional):</label>
+  <label for="numMatchsticks">Number of digits in answer (optional):</label>
   <select id="numMatchsticks">
     <option value=""></option>
     <option value="1">1</option>
@@ -246,7 +246,7 @@
         {
           "destination": "71",
           "add": 0,
-          "move": 2
+          "move": 3
         },
         {
           "destination": "12",
@@ -442,7 +442,7 @@
         {
           "destination": "71",
           "add": 0,
-          "move": 2
+          "move": 3
         },		
         {
           "destination": "15",
@@ -618,6 +618,11 @@
         {
           "destination": "11",
           "add": -3,
+          "move": 0
+        },
+        {
+          "destination": "7",
+          "add": -4,
           "move": 0
         },
         {
@@ -2769,7 +2774,7 @@
                                 // if (sticksMoved4 <= sticksToMove && Math.abs(sticksFloating4) <= sticksToMove) {
                                 //console.log(conf4[l]);
                                 const out = [conf1[i].destination, conf2[j].destination, conf3[k].destination, conf4[l].destination];
-                                //console.log(out);
+                                // console.log(out);
                               value = computeMinMax(sticksFloating4, sticksMoved4, sticksToMove, out, value, allowNegative, numMatchsticks, minValue, maxValue);
 							  // output.innerHTML = value + " (working)";
 							  //console.log(value);
@@ -2780,7 +2785,7 @@
                               // console.log(conf1[i]);
                               const out = [conf1[i].destination, conf2[j].destination, conf3[k].destination];
                               value = computeMinMax(sticksFloating3, sticksMoved3, sticksToMove, out, value, allowNegative, numMatchsticks, minValue, maxValue);
-							  //console.log(out, value);
+							  console.log(out, value);
                             }
                         }
                     }
