@@ -2665,6 +2665,12 @@
         {
           stcksFlting: 1,
           movesRemaining: 1,
+          cond: (numb1, numb2, numb3) => numb2 >= 0 && numb1 + numb2 === numb3,
+          fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, MINUS + numb2, numb3, MINUS)
+        },
+        {
+          stcksFlting: 1,
+          movesRemaining: 1,
           cond: (numb1, numb2, numb3) => numb1 - numb2 === numb3,
           fn: (numb1, numb2, numb3) => createResponseWithTwoSticks(numb1, numb2, numb3, MINUS)
         },
@@ -2859,6 +2865,12 @@
           fn: (numb1, numb2, numb3) => createResponse(numb1, numb2, numb3, PLUS)
         },
         {
+          stcksFlting: 1,
+          movesRemaining: 0,
+          cond: (numb1, numb2, numb3) => numb2 >= 0 && numb1 + numb2 === numb3,
+          fn: (numb1, numb2, numb3) => createResponse(numb1, MINUS + numb2, numb3, MINUS)
+        },
+        {
           stcksFlting: -1,
           movesRemaining: 1,
           cond: (numb1, numb2, numb3) => (numb2 < 10 && 10*numb1 + numb2 === numb3) || (numb2 >= 10 && 100*numb1 + numb2 === numb3),
@@ -2928,7 +2940,7 @@
           stcksFlting: 2,
           movesRemaining: 0,
           cond: (numb1, numb2, numb3) => numb1 + numb2 === numb3,
-          fn: (numb1, numb2, numb3) => createResponseWithSuperscript(numb1, numb2, numb3, PLUS)
+          fn: (numb1, numb2, numb3) => [...createResponseWithSuperscript(numb1, numb2, numb3, PLUS), ...createResponseWithSuperscript(numb1, MINUS + numb2, numb3, MINUS)]
         }
       ],
       "x": [
@@ -3327,22 +3339,24 @@
 
       if (arr && arr.length === 4 ) {
           results = solvePuzzleForTwo(arr, sticksToMove, showInstructions);
-          for (let i = 0; i < 3; i++) {
+          // console.log(results);
+        for (let i = 0; i < 3; i++) {
             const inpArr = convertToArray(arr, i);
             // console.log(inpArr);
             // if (inpArr.length > 5) {
             if (inpArr !== arr) {
-              const res = solvePuzzleForThree(inpArr, sticksToMove);
+              const res = solvePuzzleForThree(inpArr, sticksToMove, results);
               // console.log(res);
-              results = results.concat(res);
+              results = results.concat(removeContiguousDuplicates(res, SEPARATOR));
             }
           }
           // console.log(inpArr);
       } else {
         arr = text.match(/(\d+\.?\d*|\+|\-|x|\/|\(|\)|=)/g);
-        results = solvePuzzleForThree(arr, sticksToMove);
+        results = solvePuzzleForThree(arr, sticksToMove, []);
       }
       results = results.filter((v, i, a) => v === SEPARATOR || a.indexOf(v) === i);
+      results = removeContiguousDuplicates(results, SEPARATOR);
         if (results && results.length > 0) {
             output.value = "Found " + results.filter(v => v !== SEPARATOR).length + " Solutions" +  (showInstructions ? "(with instructions)" : "") + ":\n\n" + results.join("\n");
         } else {
@@ -3447,7 +3461,7 @@
                           results = results.concat(reslt);
                             // results = results.concat(reslt.filter(it => !results.includes(it)));
                           // console.log(results);
-                          results = removeContiguousDuplicates(results, SEPARATOR);
+                            results = removeContiguousDuplicates(results, SEPARATOR);
                         }
                       }
 					}
@@ -3459,10 +3473,10 @@
 		return results;
     }
 
-    function solvePuzzleForThree(input, sticksToMove, numMatchsticks, stcksFloating) {
+    function solvePuzzleForThree(input, sticksToMove, results, numMatchsticks, stcksFloating) {
       // console.log(input);
       let sticksMoved = 0; sticksFloating = 0;
-      let results = [];
+      // let results = [];
 
       const confArr = [];
 
@@ -3621,12 +3635,14 @@
           for (let jdx1 = 0; jdx1 < runInput[idx1].length; jdx1++) {
             if (isNumber(runInput[idx1][jdx1])) {
               const oldInput = runInput[idx1][jdx1];
-              runInput[idx1][jdx1] = PLUS + runInput[idx1][jdx1];
+              //runInput[idx1][jdx1] = PLUS + runInput[idx1][jdx1];
+              runInput[idx1][jdx1] = PLUS + oldInput;
               if (verifyResults(runInput)) {
                 results = buildResponse(runInput, 0, results);
               }
 
-              runInput[idx1][jdx1] = MINUS + runInput[idx1][jdx1];
+              //runInput[idx1][jdx1] = MINUS + runInput[idx1][jdx1];
+              runInput[idx1][jdx1] = MINUS + oldInput;
               if (verifyResults(runInput)) {
                 results = buildResponse(runInput, 1, results);
               }
@@ -3638,8 +3654,8 @@
                 if (isNumber(runInput[idx1][jdx1]) && isNumber(runInput[idx2][jdx2])) {
                   const oldInput1 = runInput[idx1][jdx1];
                   const oldInput2 = runInput[idx2][jdx2];
-                  runInput[idx1][jdx1] = MINUS + runInput[idx1][jdx1];
-                  runInput[idx2][jdx2] = MINUS + runInput[idx2][jdx2];
+                  runInput[idx1][jdx1] = MINUS + oldInput1;
+                  runInput[idx2][jdx2] = MINUS + oldInput2;
                   if (verifyResults(runInput)) {
                     results  = buildResponse(runInput, 0, results);
                   }
@@ -3701,6 +3717,7 @@
               const val = runInput[idx][jdx];
               runInput[idx][jdx] += SUPERSCRIPT1;
               addToResults(runInput, results);
+              // console.log(runInput);
               runInput[idx][jdx] = val;
             }
           }
@@ -3746,11 +3763,12 @@
           }
         }
       }
-      if (reslts.length > 0) {
+      if (reslts.length > 1) {
         reslts = [SEPARATOR].concat(reslts);
         reslts.push(SEPARATOR);
-        results = results.concat(reslts);
       }
+      console.log(reslts);
+      results = results.concat(reslts);
       // console.log(results);
       return results;
     }
@@ -4295,7 +4313,7 @@
               && item.cond.apply(null, [num1, num2, num3])) {
               const result = item.fn.apply(null, [numb1, numb2, numb3]);
               // console.log(item.cond.apply(null, [numb1, numb2, numb3]));
-              // console.log(result);
+              console.log(result);
               if (Array.isArray(result)) {
                 results = results.concat(result.flat());
               } else if (result) {
