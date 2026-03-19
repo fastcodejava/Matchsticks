@@ -656,6 +656,16 @@
           "move": 0
         },
         {
+          "destination": "71",
+          "add": -2,
+          "move": 1
+        },
+        {
+          "destination": "17",
+          "add": -2,
+          "move": 1
+        },
+        {
           "destination": "81",
           "add": 2,
           "move": 0
@@ -2785,7 +2795,7 @@
                               // console.log(conf1[i]);
                               const out = [conf1[i].destination, conf2[j].destination, conf3[k].destination];
                               value = computeMinMax(sticksFloating3, sticksMoved3, sticksToMove, out, value, allowNegative, numMatchsticks, minValue, maxValue);
-							  console.log(out, value);
+							  // console.log(out, value);
                             }
                         }
                     }
@@ -2807,25 +2817,25 @@
     function computeMax(sticksFloating, sticksMoved, sticksToMove, out, value, allowNegative, maxDigits, minValue, maxValue) {
       const outpt = out.filter(i => i != null);
       if (sticksFloating === 0 && sticksMoved === sticksToMove && isValid(MAX, outpt, value, minValue, maxValue)) {
-        //console.log(out);
+        console.log(out);
         value = evaluate(outpt);
         // return out.join("");
       }
       if (sticksFloating === 2 && sticksMoved === sticksToMove) {
         const out1 = outpt.concat(["1"]);
-        //console.log(out1);
+        console.log(out1);
         value = isValid(MAX, out1, value, minValue, maxValue) ? evaluate(out1) : value;
-        //console.log(evaluate(out));
+        // console.log(evaluate(out));
         // return isValid(MAX, out1, value, minValue, maxValue) ? out1.join(""): out.join("");
       }
       if (sticksFloating === 3 && sticksMoved === sticksToMove) {
         const out1 = outpt.concat(["7"]);
-        //console.log(out1);
+        // console.log(out1);
         value = isValid(MAX, out1, value, minValue, maxValue) ? evaluate(out1) : value;
         //console.log(evaluate(out));
         // return isValid(MAX, out1, value, minValue, maxValue) ? out1.join(""): out.join("");
         const out2 = ["7"].concat(outpt);
-        //console.log(out2);
+        // console.log(out2);
         value = isValid(MAX, out2, value, minValue, maxValue) ? evaluate(out2) : value;
       }
       if (sticksFloating === 4 && sticksMoved === sticksToMove) {
